@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
 use Auth;
+use App\Models\User;
+use App\Models\Status;
+
 
 class ProfileController extends Controller
 {
@@ -23,7 +25,10 @@ class ProfileController extends Controller
         $user = User::whereEmail($email)->first();
         if(!$user) abort(404);
 
-        return view('profile.index', compact('user') );
+        $statuses = $user->statuses()->notReply()->orderBy('created_at', 'desc')->paginate(10);
+        $authUserIsFriend = Auth::user()->isFriendsWith($user);
+
+        return view('profile.index', compact('user', 'statuses', 'authUserIsFriend') );
     }
 
     public function edit()
