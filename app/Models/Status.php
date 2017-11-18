@@ -21,13 +21,26 @@ class Status extends Model
         return $this->belongsTo('App\Models\User', 'user_id');
     }
 
+    public function scopeNotReply($query)
+    {
+        return $query->whereNull('parent_id');
+    }
+
+
     public function replies()
     {
         return $this->hasMany('App\Models\Status', 'parent_id');
     }
 
-    public function scopeNotReply($query)
+    public function likes()
     {
-        return $query->whereNull('parent_id');
+        return $this->morphMany('App\Models\Like', 'likeable');
     }
+
+    public function likesString()
+    {
+        $count = $this->likes->count();
+        return $count." ".(str_plural('like', $count));
+    }
+
 }

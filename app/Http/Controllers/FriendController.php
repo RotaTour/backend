@@ -78,4 +78,25 @@ class FriendController extends Controller
         ->route('profile.show', ['email'=>$email])
         ->with('info','Friend request accepted.');
     }
+
+    public function leaveFriendship($email)
+    {
+        $user = User::where('email', $email)->first();
+        if (!$user) {
+            return redirect()
+            ->route('index')
+            ->with('info', 'That user could not be found');
+        }
+
+        if (Auth::user()->isFriendsWith($user)){
+            
+            Auth::user()->deleteFriend($user);
+            
+            return redirect()->back()
+            ->with('info', "You leave the friendship with {$user->getFirstNameOrUsername()}.");
+        } else {
+            return redirect()->back()
+            ->with('info', "You aren't friend of {$user->getFirstNameOrUsername()}.");;
+        }
+    }
 }

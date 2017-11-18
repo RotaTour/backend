@@ -25,6 +25,8 @@ Route::get('/user/{email}', 'ProfileController@show')->name('profile.show');
 Route::get('/friends', 'FriendController@index')->name('friend.index');
 Route::get('/friends/add/{email}', 'FriendController@getAdd')->name('friend.add');
 Route::get('/friends/accept/{email}', 'FriendController@getAccept')->name('friend.accept');
+Route::post('/friends/leavefriendship/{email}', 'FriendController@leaveFriendship')->name('friend.leave');
 
 Route::post('/status', 'StatusController@postStatus')->name('status.store');
 Route::post('/status/{statusId}/reply', 'StatusController@postReply')->name('status.reply');
+Route::get('/status/{statusId}/like', 'StatusController@getLike')->name('status.like');

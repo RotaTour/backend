@@ -22,8 +22,10 @@
                         <p>{{ $status->body }}</p>
                         <ul class="list-inline">
                             <li>{{ $status->created_at->diffForHumans() }}</li>
-                            <li><a href="#">Like</a></li>
-                            <li>10 likes</li>
+                            @if( $status->user->id !== Auth::user()->id )
+                                <li><a href="{{ route('status.like', ['statusId'=>$status->id]) }}">Like</a></li>
+                            @endif
+                            <li>{{ $status->likesString() }}</li>
                         </ul>
 
                         @foreach( $status->replies as $reply)
@@ -40,8 +42,10 @@
                                 <p>{{ $reply->body }}</p> 
                                 <ul class="list-inline">
                                     <li>{{ $reply->created_at->diffForHumans() }}</li>
-                                    <li><a href="#">Like</a></li>
-                                    <li>10 likes</li>
+                                    @if( $reply->user->id !== Auth::user()->id )
+                                        <li><a href="{{ route('status.like', ['statusId'=>$reply->id]) }}">Like</a></li>
+                                    @endif
+                                    <li>{{ $reply->likesString() }}</li>
                                 </ul>
                             </div>
                         </div>
@@ -77,6 +81,12 @@
         <a href="{{route('friend.accept', ['email'=>$user->email])}}" class="btn btn-primary">Accept friend request</a>
     @elseif (Auth::user()->isFriendsWith($user))
         <p>You and {{ $user->getNameOrUsername() }} are friends</p>
+
+        <form action="{{route('friend.leave', ['email'=>$user->email])}}" method="post">
+            {{ csrf_field() }}
+            <input type="submit" value="leave friendship" class="btn btn-primary">
+        </form>
+
     @elseif (Auth::user()->id != $user->id )
         <a href="{{route('friend.add', ['email'=>$user->email])}}" class="btn btn-primary">Add as friend</a>
     @endif
