@@ -16,6 +16,9 @@ Uma simples rede social criada usando o Laravel Framework.
 - Comentários
 - Likes
 
+## Screenshots
+<a href="https://github.com/saulobr88/socia-vel/tree/master/screenshots">Clique aqui</a>
+
 
 ## About Laravel
 
