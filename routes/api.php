@@ -13,9 +13,19 @@ use Illuminate\Http\Request;
 |
 */
 
+/*
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+*/
 
-Route::resource('users', 'Api\UserController');
-Route::get('users/{email}/status', 'Api\UserController@getStatus')->name('users.getstatus');
+Route::group(['middleware'=>'cors'], function(){
+    Route::post('login', 'Api\AuthenticateController@authenticate')->name('api.auth');
+    Route::get('getuser', 'Api\AuthenticateController@getUser')->name('api.getuser');
+
+    Route::group(['middleware'=>'jwt.auth'], function(){
+        Route::resource('users', 'Api\UserController');
+        Route::get('users/{email}/status', 'Api\UserController@getStatus')->name('users.getstatus');
+    });
+});
+

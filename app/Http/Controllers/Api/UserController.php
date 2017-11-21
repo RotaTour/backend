@@ -53,13 +53,12 @@ class UserController extends Controller
          * @todo implementar o ModelNotFound Exception Handler
          */
         if (!$user){
-            $returnData = array(
+            return response()->json([
                 'status' => 'error',
-                'message' => 'Record not found!'
-            );
-            return json_encode($returnData);
+                'message' => 'Record not found',
+            ], 400);
         } else {
-            return $user;
+            return response()->json($user, 200);
         }
         
     }
