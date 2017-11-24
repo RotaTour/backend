@@ -1,5 +1,22 @@
 <?php
 
+/*
+ * https://mattstauffer.com/blog/laravel-on-heroku-using-a-postgresql-database/
+ * http://devdocs.salvaorenick.com/deploying-laravel-5-application-to-heroku/
+ */
+if (env('APP_ENV') != 'local'){
+    $url = parse_url(getenv("DATABASE_URL"));
+    $host = $url["host"];
+    $username = $url["user"];
+    $password = $url["pass"];
+    $database = substr($url["path"], 1);
+ } else {
+    $host = 'localhost';
+    $username = 'forge';
+    $password = '';
+    $database = 'forgedb'; 
+ }
+
 return [
 
     /*
@@ -13,7 +30,8 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    //'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'heroku'),
 
     /*
     |--------------------------------------------------------------------------
@@ -61,6 +79,19 @@ return [
             'database' => env('DB_DATABASE', 'forge'),
             'username' => env('DB_USERNAME', 'forge'),
             'password' => env('DB_PASSWORD', ''),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'schema' => 'public',
+            'sslmode' => 'prefer',
+        ],
+        
+        'heroku' => [
+            'driver' => 'pgsql',
+            'host' => $host,
+            'port' => env('DB_PORT', '5432'),
+            'database' => $database,
+            'username' => $username,
+            'password' => $password,
             'charset' => 'utf8',
             'prefix' => '',
             'schema' => 'public',
