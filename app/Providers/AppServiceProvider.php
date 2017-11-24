@@ -13,7 +13,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // https://laracasts.com/discuss/channels/laravel/how-i-can-force-all-my-routes-to-be-https-not-http?page=1
+        if (env('APP_ENV') === 'production') {
+            URL::forceSchema('https');
+        }
     }
 
     /**
