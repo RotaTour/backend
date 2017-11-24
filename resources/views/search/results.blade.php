@@ -1,10 +1,10 @@
 @extends('layouts.default')
 
 @section('content')
-    <h3>Your search for "{{ Request::input('query') }}"</h3>
+    <h3>Sua pesquisa por "{{ Request::input('query') }}"</h3>
 
     @if( !$users->count() )
-    <p>No results found, sorry.</p>
+    <p>Sem resultados, desculpe.</p>
     @else
     <div class="rows">
         <div class="col-lg-12">

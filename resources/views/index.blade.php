@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('content')
-<h3>Welcome to Sociavel</h3>
-<p>The best Social Network, like ever...</p>
+<h3>Bem vindo ao RotaTour</h3>
+<p>A melhor rede social para Turismo!!!</p>
 
 @endsection

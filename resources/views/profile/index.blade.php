@@ -6,7 +6,7 @@
     @include('users.partials.userblock')
     <hr>
     @if(!$statuses->count())
-        <p>{{ $user->getFirstNameOrUsername() }} hasn't posted anything, yet.</p>
+        <p>{{ $user->getFirstNameOrUsername() }} não publicou, ainda.</p>
         @else
             @foreach($statuses as $status)
                 <div class="media">
@@ -62,7 +62,7 @@
                                     <strong>{{ $errors->first("reply-{$status->id}") }}</strong>
                                 </span>
                                 @endif
-                                <input type="submit" value="Reply" class="btn btn-default btn-sm">
+                                <input type="submit" value="Responder" class="btn btn-default btn-sm">
                             </div>
                         </form>
                         @endif
@@ -76,24 +76,24 @@
 <div class="col-lg-4 col-lg-offset-3">
     <!-- Friends, friends requests -->
     @if(Auth::user()->hasFriendRequestPending($user))
-        <p>Waiting for {{ $user->getNameOrUsername() }} to accept your request</p>
+        <p>Esperando por {{ $user->getNameOrUsername() }} aceitar a sua solicitação de amizade</p>
     @elseif(Auth::user()->hasFriendRequestReceived($user))
-        <a href="{{route('friend.accept', ['email'=>$user->email])}}" class="btn btn-primary">Accept friend request</a>
+        <a href="{{route('friend.accept', ['email'=>$user->email])}}" class="btn btn-primary">Aceitar a requisição de amizade</a>
     @elseif (Auth::user()->isFriendsWith($user))
-        <p>You and {{ $user->getNameOrUsername() }} are friends</p>
+        <p>Você e {{ $user->getNameOrUsername() }} são amigos</p>
 
         <form action="{{route('friend.leave', ['email'=>$user->email])}}" method="post">
             {{ csrf_field() }}
-            <input type="submit" value="leave friendship" class="btn btn-primary">
+            <input type="submit" value="Deixar a amizade" class="btn btn-primary">
         </form>
 
     @elseif (Auth::user()->id != $user->id )
-        <a href="{{route('friend.add', ['email'=>$user->email])}}" class="btn btn-primary">Add as friend</a>
+        <a href="{{route('friend.add', ['email'=>$user->email])}}" class="btn btn-primary">Adicionar como amigo</a>
     @endif
 
-    <h4>{{ $user->getFirstNameOrUsername() }}'s friends.</h4>
+    <h4>Amigos de {{ $user->getFirstNameOrUsername() }}</h4>
     @if(!$user->friends()->count())
-    <p>{{ $user->getFirstNameOrUsername() }} has no friends.</p>
+    <p>{{ $user->getFirstNameOrUsername() }} não possui amigos.</p>
     @else
         @foreach($user->friends() as $user)
             @include('users.partials.userblock')

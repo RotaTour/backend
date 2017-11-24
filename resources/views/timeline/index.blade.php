@@ -6,14 +6,14 @@
         <form action="{{ route('status.store') }}" method="post" role="form">
             {{ csrf_field() }}
             <div class="form-group {{ $errors->has('status') ? 'has-error': '' }}">
-                <textarea name="status" rows="2" class="form-control" placeholder="What's up {{Auth::user()->getFirstNameOrUsername()}}?"></textarea>
+                <textarea name="status" rows="2" class="form-control" placeholder="Quer compartilhar algo {{Auth::user()->getFirstNameOrUsername()}}?"></textarea>
                 @if ($errors->has('status'))
                 <span class="help-block">
                     <strong>{{ $errors->first('status') }}</strong>
                 </span>
                 @endif
             </div>
-            <button type="submit" class="btn btn-default">Update status</button>
+            <button type="submit" class="btn btn-default">Publicar status</button>
         </form>
     </div>
 </div>
@@ -22,7 +22,7 @@
     <div class="col-lg-5">
         <!--Timeline statuses and replies -->
         @if(!$statuses->count())
-        <p>There's nothing in your timeline, yet.</p>
+        <p>Não há o que mostrar na sua linha do tempo, ainda.</p>
         @else
             @foreach($statuses as $status)
                 <div class="media">
@@ -93,7 +93,7 @@
                                     <strong>{{ $errors->first("reply-{$status->id}") }}</strong>
                                 </span>
                                 @endif
-                                <input type="submit" value="Reply" class="btn btn-default btn-sm">
+                                <input type="submit" value="Responder" class="btn btn-default btn-sm">
                             </div>
                         </form>
                     </div>

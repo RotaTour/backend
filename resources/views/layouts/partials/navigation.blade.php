@@ -1,7 +1,9 @@
 <nav class="navbar navbar-default" role="navigation">
     <div class="container">
         <div class="navbar-header">
-            <a href="{{ route('index') }}" class="navbar-brand">Sociavel</a>
+            <a href="{{ route('index') }}" class="navbar-brand">
+                {{ config('app.name', 'RotaTur') }}
+            </a>
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
@@ -13,13 +15,13 @@
             @if( Auth::check() )
             <ul class="nav navbar-nav navbar-left">
                 <li><a href="{{ route('index') }}">Timeline</a></li>
-                <li><a href="{{ route('friend.index') }}">Friends</a></li>
+                <li><a href="{{ route('friend.index') }}">Amigos</a></li>
             </ul>
             <form action="{{ route('search.results')}}" role="search" class="navbar-form navbar-left">
                 <div class="form-group">
-                    <input type="text" name="query" id="query" class="form-control" placeholder="Find People" >
+                    <input type="text" name="query" id="query" class="form-control" placeholder="Encontre pessoas" >
                 </div>
-                <button type="submit" class="btn btn-default">Search</button>
+                <button type="submit" class="btn btn-default">Pesquisar</button>
             </form>
             @endif
 
@@ -35,12 +37,12 @@
                         &nbsp;<span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{ route('profile.edit') }}">Update Profile</a></li>
+                        <li><a href="{{ route('profile.edit') }}">Atualizar Perfil</a></li>
                         <li>
                             <a href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
                                             document.getElementById('logout-form').submit();">
-                                Logout
+                                Sair
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 {{ csrf_field() }}
@@ -49,8 +51,8 @@
                     </ul>
                 </li>
                 @else
-                <li><a href="{{ route('register') }}">Sign up</a></li>
-                <li><a href="{{ route('login') }}">Sign in</a></li>
+                <li><a href="{{ route('register') }}">Registar</a></li>
+                <li><a href="{{ route('login') }}">Entrar</a></li>
                 @endif
             </ul>
         </div>
