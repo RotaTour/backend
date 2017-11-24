@@ -11,6 +11,11 @@
 |
 */
 
+// https://laracasts.com/discuss/channels/laravel/how-i-can-force-all-my-routes-to-be-https-not-http?page=1
+if (env('APP_ENV') === 'production') {
+    URL::forceSchema('https');
+}
+
 Route::get('/', 'HomeController@index')->name('index');
 
 Auth::routes();
