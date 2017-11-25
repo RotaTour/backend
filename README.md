@@ -1,3 +1,11 @@
+# RotaTour
+Uma rede social para Turismo!
+criada usando o Laravel Framework.
+
+## Screenshots
+<a href="https://github.com/RotaTour/backend/tree/master/screenshots">Clique aqui</a>
+
+---
 
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
@@ -7,17 +15,6 @@
     <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
     <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
-
-# Socia-Vel
-Uma simples rede social criada usando o Laravel Framework.
-
-## Funcionalidades
-- Amigos
-- Comentários
-- Likes
-
-## Screenshots
-<a href="https://github.com/saulobr88/socia-vel/tree/master/screenshots">Clique aqui</a>
 
 
 ## About Laravel
