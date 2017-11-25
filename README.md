@@ -2,7 +2,7 @@
 Uma rede social para Turismo!
 criada usando o Laravel Framework.
 
-<p align="center"><img src="https://github.com/RotaTour/backend/blob/master/screenshots/logo_v2.png" width="500" height="420"></p>
+<p align="center"><img src="https://github.com/RotaTour/backend/blob/master/screenshots/logo_v2.png" width="600" height="420"></p>
 
 ## Screenshots
 <a href="https://github.com/RotaTour/backend/tree/master/screenshots">Clique aqui</a>
