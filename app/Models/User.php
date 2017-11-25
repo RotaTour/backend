@@ -78,7 +78,10 @@ class User extends Authenticatable implements JWTSubject
 
     public function getAvatarUrl()
     {
-        return "https://www.gravatar.com/avatar/{{ md5($this->email) }}?d=mm&s=40";
+        if ( $this->avatar != '' )
+            return $this->avatar;
+        else
+            return "https://www.gravatar.com/avatar/{{ md5($this->email) }}?d=mm&s=40"; 
     }
 
     public function statuses()
