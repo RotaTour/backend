@@ -13,8 +13,8 @@ $FACEBOOK_CLIENT_ID = '300532157119733';
 $FACEBOOK_CLIENT_SECRET = '0f88e502ac1e9080a0bbb3e8d2a40010';
 $FACEBOOK_REDIRECT = 'https://rotatourapi.herokuapp.com/social/callback/facebook';
 
-$GOOGLE_CLIENT_ID = '15706513628-6kgpr5bg98f6c9qks356ac1j8c3b2bqk.apps.googleusercontent.com';
-$GOOGLE_CLIENT_SECRET = 'w3r5KwZO3redtwqlcOD7conO';
+$GOOGLE_CLIENT_ID = '15706513628-sem056crk0nodlbl5kh5csmsb3m1e3ib.apps.googleusercontent.com';
+$GOOGLE_CLIENT_SECRET = 'mNwE77-PbWkntFKUlgJgR_aa';
 $GOOGLE_REDIRECT = 'https://rotatourapi.herokuapp.com/social/callback/google';
 
 return [
