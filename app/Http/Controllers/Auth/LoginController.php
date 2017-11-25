@@ -69,8 +69,8 @@ class LoginController extends Controller
             'provider' => $provider
         ];
 
-        dd($user);
-        //dd($data);
+        //dd($user);
+        dd($data);
 
         Auth::login( User::firstOrCreate($data) );
 
