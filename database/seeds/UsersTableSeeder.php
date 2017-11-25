@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
         $users = [
             ['name'=>'Admin','email'=>'admin@dev.br','password'=>$senha,'created_at'=> $now,'updated_at' => $now],
             ['name'=>'Saulo Gomes','email'=>'saulobr88@gmail.com','password'=>$senha,'created_at'=> $now,'updated_at' => $now],
-            ['name'=>'Ikaro Alef','email'=>'ikaroalef@gmail.com','password'=>$senha,'created_at'=> $now,'updated_at' => $now],
+            //['name'=>'Ikaro Alef','email'=>'ikaroalef@gmail.com','password'=>$senha,'created_at'=> $now,'updated_at' => $now],
             ['name'=>'Fulano da silva','email'=>'fulano@gmail.com','password'=>$senha,'created_at'=> $now,'updated_at' => $now],
             ['name'=>'Beltrano Rodrigues','email'=>'beltrano@gmail.com','password'=>$senha,'created_at'=> $now,'updated_at' => $now],
             ['name'=>'Sicrano Moura','email'=>'sicrano@gmail.com','password'=>$senha,'created_at'=> $now,'updated_at' => $now],
