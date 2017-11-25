@@ -51,8 +51,9 @@
                     </ul>
                 </li>
                 @else
-                <li><a href="{{ route('register') }}">Registar</a></li>
-                <li><a href="{{ route('login') }}">Entrar</a></li>
+                <li>
+                    @include('auth.partials.loginFormInline')
+                </li>
                 @endif
             </ul>
         </div>
