@@ -9,9 +9,9 @@ $GITHUB_CLIENT_ID = '322c2a748a35f040f124';
 $GITHUB_CLIENT_SECRET = '4b888d7176b4749c2cbb67296176ce2ba5392bac';
 $GITHUB_REDIRECT = 'https://rotatourapi.herokuapp.com/social/callback/github';
 
-$FACEBOOK_CLIENT_ID = '';
-$FACEBOOK_CLIENT_SECRET = '';
-$FACEBOOK_REDIRECT = '';
+$FACEBOOK_CLIENT_ID = '300532157119733';
+$FACEBOOK_CLIENT_SECRET = '0f88e502ac1e9080a0bbb3e8d2a40010';
+$FACEBOOK_REDIRECT = 'https://rotatourapi.herokuapp.com/social/callback/facebook';
 
 $GOOGLE_CLIENT_ID = '';
 $GOOGLE_CLIENT_SECRET = '';
@@ -61,7 +61,7 @@ return [
     'facebook' => [
         'client_id' => env('FACEBOOK_CLIENT_ID', $FACEBOOK_CLIENT_ID),         // Your GitHub Client ID
         'client_secret' => env('FACEBOOK_CLIENT_SECRET', $FACEBOOK_CLIENT_SECRET), // Your GitHub Client Secret
-        'redirect' => 'http://your-callback-url',
+        'redirect' => $FACEBOOK_REDIRECT,
     ],
 
     'google' => [
