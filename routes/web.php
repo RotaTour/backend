@@ -30,3 +30,7 @@ Route::post('/friends/leavefriendship/{email}', 'FriendController@leaveFriendshi
 Route::post('/status', 'StatusController@postStatus')->name('status.store');
 Route::post('/status/{statusId}/reply', 'StatusController@postReply')->name('status.reply');
 Route::get('/status/{statusId}/like', 'StatusController@getLike')->name('status.like');
+
+/* Socialite */
+Route::get('social/redirect/{provider}', ['uses' => 'Auth\LoginController@redirectToProvider', 'as' => 'social.login']);
+Route::get('social/callback/{provider}', 'Auth\LoginController@handleProviderCallback');

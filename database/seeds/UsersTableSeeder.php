@@ -16,6 +16,7 @@ class UsersTableSeeder extends Seeder
         $now = Carbon::now()->format('Y-m-d H:i:s');
         $senha = Hash::make('123456');
         $users = [
+            ['name'=>'Admin','email'=>'admin@dev.br','password'=>$senha,'created_at'=> $now,'updated_at' => $now],
             ['name'=>'Saulo Gomes','email'=>'saulobr88@gmail.com','password'=>$senha,'created_at'=> $now,'updated_at' => $now],
             ['name'=>'Ikaro Alef','email'=>'ikaroalef@gmail.com','password'=>$senha,'created_at'=> $now,'updated_at' => $now],
             ['name'=>'Fulano da silva','email'=>'fulano@gmail.com','password'=>$senha,'created_at'=> $now,'updated_at' => $now],
