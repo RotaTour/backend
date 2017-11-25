@@ -34,3 +34,17 @@ Route::get('/status/{statusId}/like', 'StatusController@getLike')->name('status.
 /* Socialite */
 Route::get('social/redirect/{provider}', ['uses' => 'Auth\LoginController@redirectToProvider', 'as' => 'social.login']);
 Route::get('social/callback/{provider}', 'Auth\LoginController@handleProviderCallback');
+
+Route::group(['middleware' => ['role:superuser'], 'prefix'=>'admin'], function () {
+    Route::get('/', function(){
+        return "Admin Index";
+    })->name('admin.index');
+
+    Route::get('/users', function(){
+        return "Admin Users";
+    })->name('admin.users');
+
+    Route::get('/posts', function(){
+        return "Admin Posts";
+    })->name('admin.posts');
+});
