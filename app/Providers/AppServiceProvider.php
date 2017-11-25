@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Routing\UrlGenerator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -11,9 +12,12 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(UrlGenerator $url)
     {
-        //
+        // https://blog.petehouston.com/2017/08/31/force-http-or-https-scheme-on-laravel-automatically/
+        if(env('REDIRECT_HTTPS')) {
+            $url->forceScheme('https');
+        }
     }
 
     /**
