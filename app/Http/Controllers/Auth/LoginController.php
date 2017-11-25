@@ -70,7 +70,7 @@ class LoginController extends Controller
         ];
 
         //dd($user);
-        dd($data);
+        //dd($data);
 
         Auth::login( User::firstOrCreate($data) );
 
