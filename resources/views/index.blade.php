@@ -9,8 +9,15 @@
     </div>
   </div>
   <div class="col-sm-6">
-    <h3>Criar uma nova conta</h3>
-    @include('auth.partials.registerform')
+    <div class="row">
+      @include('auth.partials.social')
+    </div>
+    <hr>
+    <div class="row">
+      <h3>Criar uma nova conta</h3>
+      @include('auth.partials.registerform')
+    </div>
+    
   </div>
 
 @endsection
