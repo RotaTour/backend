@@ -253,6 +253,6 @@ function createMarker(obj) {
 //google.maps.event.addDomListener(window, 'load', initialize);
 resetLatLng();
 </script>
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAa42oli-edAepQHbkhPmgjx6Cdtw-DMe0&callback=initialize"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAa42oli-edAepQHbkhPmgjx6Cdtw-DMe0&callback=initialize"></script>
 @endsection
 
