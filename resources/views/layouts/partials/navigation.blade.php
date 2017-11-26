@@ -16,6 +16,8 @@
             <ul class="nav navbar-nav navbar-left">
                 <li><a href="{{ route('index') }}">Timeline</a></li>
                 <li><a href="{{ route('friend.index') }}">Amigos</a></li>
+                <li><a href="{{ route('place.index') }}">Locais</a></li>
+                <li><a href="{{ route('route.index') }}">Rotas</a></li>
             </ul>
             <form action="{{ route('search.results')}}" role="search" class="navbar-form navbar-left">
                 <div class="form-group">
