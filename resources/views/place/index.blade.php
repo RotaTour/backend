@@ -148,6 +148,11 @@ function initialize() {
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);
+    var marker = new google.maps.Marker({
+        position: myLatlng,
+        icon: "{{ asset('img/armadillo-48x.png') }}"
+    });
+    marker.setMap(map);
 }
 // clear overlays function
 function clearOverlays() {
@@ -186,7 +191,7 @@ function findAddress() {
                 position: addrLocation,
                 map: map,
                 title: results[0].formatted_address,
-                icon: 'marker.png'
+                icon: "{{ asset('img/armadillo-48x.png') }}"
             });
         } else {
             alert('Geocode was not successful for the following reason: ' + status);
