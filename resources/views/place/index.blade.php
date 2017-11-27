@@ -167,6 +167,7 @@ function getCurrentGeo()
             //map.setCenter(pos);
             console.log('vai retornar a posição: ', latDefault, lngDefault);
             resetLatLngParam(latDefault, lngDefault);
+            initialize();
         }, function() {
             //handleLocationError(true, infoWindow, map.getCenter());
             console.log('getCurrentPosition error');
@@ -207,9 +208,8 @@ function initialize() {
         icon: "{{ asset('img/armadillo-48x.png') }}"
     });
     marker.setMap(map);
-
-
 }
+
 // clear overlays function
 function clearOverlays() {
     if (markers) {
