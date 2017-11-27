@@ -86,6 +86,10 @@
 <div id="gmap_canvas"></div>
 <div class="actions">
     <div class="button">
+        <div id="button2" class="button" onclick="resetCeagri(); return false;">Ceagri II</div>
+        <div id="button2" class="button" onclick="getCurrentGeo(); return false;">resetar</div>
+    </div>
+    <div class="button">
         <label for="gmap_where">Onde:</label>
         <input id="gmap_where" type="text" name="gmap_where" /></div>
     <div id="button2" class="button" onclick="findAddress(); return false;">Pesquisar endereço</div>
@@ -142,6 +146,15 @@ function resetLatLngParam(lat, lgn)
 {
     document.getElementById('lat').value = lat;
     document.getElementById('lng').value = lgn;
+}
+
+function resetCeagri()
+{
+    latDefault = -8.0176527;
+    lngDefault = -34.9443739;
+    document.getElementById('lat').value = latDefault;
+    document.getElementById('lng').value = lngDefault;
+    initialize();
 }
 
 /*
