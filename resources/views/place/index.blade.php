@@ -134,9 +134,14 @@ var lngDefault = -34.9443739;
 
 function resetLatLng()
 {
-    getCurrentGeo();
     document.getElementById('lat').value = latDefault;
     document.getElementById('lng').value = lngDefault;
+}
+
+function resetLatLngParam(lat, lgn)
+{
+    document.getElementById('lat').value = lat;
+    document.getElementById('lng').value = lgn;
 }
 
 /*
@@ -161,6 +166,7 @@ function getCurrentGeo()
             //infoWindow.setContent('Você está aqui.');
             //map.setCenter(pos);
             console.log('vai retornar a posição: ', latDefault, lngDefault);
+            resetLatLngParam(latDefault, lngDefault);
         }, function() {
             //handleLocationError(true, infoWindow, map.getCenter());
             console.log('getCurrentPosition error');
@@ -304,7 +310,8 @@ function createMarker(obj) {
 }
 // initialization
 //google.maps.event.addDomListener(window, 'load', initialize);
-resetLatLng();
+//resetLatLng();
+getCurrentGeo();
 </script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAa42oli-edAepQHbkhPmgjx6Cdtw-DMe0&callback=initialize"></script>
 @endsection
