@@ -189,10 +189,9 @@ function initialize() {
     // prepare Geocoder
     geocoder = new google.maps.Geocoder();
     // set initial position (New York)
-    var pos = getCurrentGeo();
-    console.log('initialize pos: ', pos);
-    
-    var myLatlng = new google.maps.LatLng(pos.lat,pos.lng);
+    console.log('initialize posGlobal: ', posGlobal);
+
+    var myLatlng = new google.maps.LatLng(posGlobal.lat,posGlobal.lng);
 
     var myOptions = { // default map options
         zoom: 17,
@@ -309,8 +308,9 @@ function createMarker(obj) {
 }
 // initialization
 //google.maps.event.addDomListener(window, 'load', initialize);
-
 //resetLatLng();
+var posGlobal = getCurrentGeo();
+
 </script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAa42oli-edAepQHbkhPmgjx6Cdtw-DMe0&callback=initialize"></script>
 @endsection
