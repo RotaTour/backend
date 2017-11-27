@@ -154,6 +154,7 @@ function getCurrentGeo()
             //infoWindow.setPosition(pos);
             //infoWindow.setContent('Você está aqui.');
             //map.setCenter(pos);
+            console.log('vai retornar a posição: ', pos);
             return pos;
         }, function() {
             //handleLocationError(true, infoWindow, map.getCenter());
@@ -170,6 +171,7 @@ function getCurrentGeo()
             lat: latDefault,
             lng: lngDefault
         };
+    console.log('retorno default: ', pos);
     return pos;
 }
 
