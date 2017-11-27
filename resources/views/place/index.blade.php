@@ -143,6 +143,10 @@ function resetLatLng()
  */
 function getCurrentGeo()
 {
+    var defaultPos = {
+            lat: latDefault,
+            lng: lngDefault
+        };
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -159,20 +163,19 @@ function getCurrentGeo()
         }, function() {
             //handleLocationError(true, infoWindow, map.getCenter());
             console.log('getCurrentPosition error');
+            console.log('retorno default: ', defaultPos);
+            return defaultPos;
         });
     } else {
         // Browser doesn't support Geolocation
         //handleLocationError(false, infoWindow, map.getCenter());
         console.log('navigation.geolocation error');
+        // retorno defuault
+        console.log('retorno default: ', defaultPos);
+        return defaultPos;
     }
     
-    // retorno defuault
-    var pos = {
-            lat: latDefault,
-            lng: lngDefault
-        };
-    console.log('retorno default: ', pos);
-    return pos;
+    
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
