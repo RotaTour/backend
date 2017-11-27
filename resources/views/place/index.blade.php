@@ -190,6 +190,8 @@ function initialize() {
     geocoder = new google.maps.Geocoder();
     // set initial position (New York)
     var pos = getCurrentGeo();
+    console.log('initialize pos: ', pos);
+    
     var myLatlng = new google.maps.LatLng(pos.lat,pos.lng);
 
     var myOptions = { // default map options
