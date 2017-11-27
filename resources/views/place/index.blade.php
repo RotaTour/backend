@@ -193,6 +193,7 @@ function initialize() {
     // prepare Geocoder
     geocoder = new google.maps.Geocoder();
     // set initial position (New York)
+    console.log('pos padrão: ', latDefault, lngDefault);
     var myLatlng = new google.maps.LatLng(latDefault,lngDefault);
 
     var myOptions = { // default map options
@@ -206,6 +207,8 @@ function initialize() {
         icon: "{{ asset('img/armadillo-48x.png') }}"
     });
     marker.setMap(map);
+
+
 }
 // clear overlays function
 function clearOverlays() {
