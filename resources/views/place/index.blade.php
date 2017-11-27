@@ -134,6 +134,7 @@ var lngDefault = -34.9443739;
 
 function resetLatLng()
 {
+    getCurrentGeo();
     document.getElementById('lat').value = latDefault;
     document.getElementById('lng').value = lngDefault;
 }
@@ -143,36 +144,33 @@ function resetLatLng()
  */
 function getCurrentGeo()
 {
-    var defaultPos = {
-            lat: latDefault,
-            lng: lngDefault
-        };
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
+            /*
             var pos = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
+            */
+
+            latDefault = position.coords.latitude;
+            lngDefault = position.coords.longitude
 
             //infoWindow.setPosition(pos);
             //infoWindow.setContent('Você está aqui.');
             //map.setCenter(pos);
-            console.log('vai retornar a posição: ', pos);
-            return pos;
+            console.log('vai retornar a posição: ', latDefault, lngDefault);
         }, function() {
             //handleLocationError(true, infoWindow, map.getCenter());
             console.log('getCurrentPosition error');
-            console.log('retorno default: ', defaultPos);
-            return defaultPos;
         });
     } else {
         // Browser doesn't support Geolocation
         //handleLocationError(false, infoWindow, map.getCenter());
         console.log('navigation.geolocation error');
         // retorno defuault
-        console.log('retorno default: ', defaultPos);
-        return defaultPos;
+        console.log('retorno default: ', latDefault, lngDefault);
     }
     
     
@@ -189,9 +187,7 @@ function initialize() {
     // prepare Geocoder
     geocoder = new google.maps.Geocoder();
     // set initial position (New York)
-    console.log('initialize posGlobal: ', posGlobal);
-
-    var myLatlng = new google.maps.LatLng(posGlobal.lat,posGlobal.lng);
+    var myLatlng = new google.maps.LatLng(latDefault,lngDefault);
 
     var myOptions = { // default map options
         zoom: 17,
@@ -308,9 +304,7 @@ function createMarker(obj) {
 }
 // initialization
 //google.maps.event.addDomListener(window, 'load', initialize);
-//resetLatLng();
-var posGlobal = getCurrentGeo();
-
+resetLatLng();
 </script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAa42oli-edAepQHbkhPmgjx6Cdtw-DMe0&callback=initialize"></script>
 @endsection
