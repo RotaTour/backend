@@ -4,9 +4,9 @@
 <h3>Locais</h3>
 <style>
 #gmap_canvas {
-    height: 700px;
+    height: 400px;
     position: relative;
-    width: 900px;
+    width: 100%;
 }
 .actions {
     background-color: #FFFFFF;
@@ -128,6 +128,7 @@ var geocoder;
 var map;
 var markers = Array();
 var infos = Array();
+// Default location
 var latDefault = -8.0176527;
 var lngDefault = -34.9443739;
 
@@ -137,11 +138,55 @@ function resetLatLng()
     document.getElementById('lng').value = lngDefault;
 }
 
+/*
+ * getCurrentGeo() = return pos {lat, lng}
+ */
+function getCurrentGeo()
+{
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+
+            //infoWindow.setPosition(pos);
+            //infoWindow.setContent('Você está aqui.');
+            //map.setCenter(pos);
+            return pos;
+        }, function() {
+            //handleLocationError(true, infoWindow, map.getCenter());
+            console.log('getCurrentPosition error');
+        });
+    } else {
+        // Browser doesn't support Geolocation
+        //handleLocationError(false, infoWindow, map.getCenter());
+        console.log('navigation.geolocation error');
+    }
+    
+    // retorno defuault
+    var pos = {
+            lat: latDefault,
+            lng: lngDefault
+        };
+    return pos;
+}
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(browserHasGeolocation ?
+        'Error: The Geolocation service failed.' :
+        'Error: Your browser doesn\'t support geolocation.');
+}
+
 function initialize() {
     // prepare Geocoder
     geocoder = new google.maps.Geocoder();
     // set initial position (New York)
-    var myLatlng = new google.maps.LatLng(latDefault,lngDefault);
+    //var myLatlng = new google.maps.LatLng(latDefault,lngDefault);
+    var myLatlng = getCurrentGeo();
+
     var myOptions = { // default map options
         zoom: 17,
         center: myLatlng,
@@ -193,6 +238,7 @@ function findAddress() {
                 title: results[0].formatted_address,
                 icon: "{{ asset('img/armadillo-48x.png') }}"
             });
+            console.log('Result: ', results[0]);
         } else {
             alert('Geocode was not successful for the following reason: ' + status);
         }
@@ -256,7 +302,8 @@ function createMarker(obj) {
 }
 // initialization
 //google.maps.event.addDomListener(window, 'load', initialize);
-resetLatLng();
+
+//resetLatLng();
 </script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAa42oli-edAepQHbkhPmgjx6Cdtw-DMe0&callback=initialize"></script>
 @endsection
