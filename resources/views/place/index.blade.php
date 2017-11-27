@@ -189,8 +189,8 @@ function initialize() {
     // prepare Geocoder
     geocoder = new google.maps.Geocoder();
     // set initial position (New York)
-    //var myLatlng = new google.maps.LatLng(latDefault,lngDefault);
-    var myLatlng = getCurrentGeo();
+    var pos = getCurrentGeo();
+    var myLatlng = new google.maps.LatLng(pos.lat,pos.lng);
 
     var myOptions = { // default map options
         zoom: 17,
