@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Route;
+use App\Models\Place;
+use App\Models\Item;
+use Auth;
 
 class RouteController extends Controller
 {
@@ -23,7 +27,8 @@ class RouteController extends Controller
      */
     public function index()
     {
-        return view('route.index');
+        $routes = Auth::user()->routes()->get();
+        return view('route.index', compact('routes'));
     }
 
     /**
@@ -33,7 +38,7 @@ class RouteController extends Controller
      */
     public function create()
     {
-        //
+        return view('route.create');
     }
 
     /**
@@ -44,7 +49,15 @@ class RouteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+        ]);
+
+        $route = new Route($request->input());
+        $route->user_id = Auth::user()->id;
+        $route->save();
+
+        return redirect()->route('route.index');
     }
 
     /**
@@ -55,7 +68,14 @@ class RouteController extends Controller
      */
     public function show($id)
     {
-        //
+        $route = Route::where('id', $id)->with(['itens.place'])->first();
+        if(!$route) {
+            return redirect()
+            ->route('index')
+            ->with('info', 'A rota selecionada não foi encontrada');
+        }
+
+        return view('route.show', compact('route'));
     }
 
     /**
@@ -90,5 +110,43 @@ class RouteController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function addToRoute(Request $request)
+    {
+        $this->validate($request, [
+            'routeId' => 'required',
+            'google_place_id' =>'required',
+        ]);
+
+        $input = $request->input();
+        
+        $place = Place::where('google_place_id',$input['google_place_id'])->first();
+        if (!$place){
+            $place = Place::create($input);
+        }
+
+        $route = Route::where('id', $input['routeId'])->first();
+        if (!$route ){
+            // error
+            $retorno = ['status'=>404, 'body'=>'Rota '.$input['routeId'].' não existe'];
+            return response()->json($retorno);
+        }
+
+        $item = new Item();
+        $item->route_id = $route->id;
+        $item->place_id = $place->id;
+        $item->order = 1;
+        $item->save();
+
+        $retorno = ['status'=>200, 'body'=>'Adicionado na Rota '.$input['routeId']];
+        return response()->json($retorno);
+        
     }
 }

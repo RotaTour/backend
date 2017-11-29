@@ -96,6 +96,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany('App\Models\Like', 'user_id');
     }
 
+    public function routes()
+    {
+        return $this->hasMany('App\Models\Route', 'user_id');
+    }
+
     public function friendsOfMine()
     {
         return $this->belongsToMany('App\Models\User', 'friends', 'user_id', 'friend_id');

@@ -132,6 +132,8 @@ var geocoder;
 var map;
 var markers = Array();
 var infos = Array();
+var showInfoPage = "{{ route("place.show") }}";
+
 // Default location
 var latDefault = -8.0176527;
 var lngDefault = -34.9443739;
@@ -255,6 +257,10 @@ function findAddress() {
             // store current coordinates into hidden variables
             document.getElementById('lat').value = results[0].geometry.location.lat();
             document.getElementById('lng').value = results[0].geometry.location.lng();
+
+            // if we have found something - clear map (overlays)
+            clearOverlays();
+
             // and then - add new custom marker
             var addrMarker = new google.maps.Marker({
                 position: addrLocation,
@@ -315,7 +321,8 @@ function createMarker(obj) {
     // prepare info window
     var infowindow = new google.maps.InfoWindow({
         content: '<img src="' + obj.icon + '" /><font style="color:#000;">' + obj.name +
-        '<br />Rating: ' + obj.rating + '<br />Vicinity: ' + obj.vicinity + '</font>'
+        '<br />Rating: ' + obj.rating + '<br />Vicinity: ' + obj.vicinity + 
+        '<br /><a href="'+ showInfoPage + "?place_id="+obj.place_id +'">Ver detalhes</a> </font>'
     });
     // add event handler to current marker
     google.maps.event.addListener(mark, 'click', function() {
@@ -323,6 +330,7 @@ function createMarker(obj) {
         infowindow.open(map,mark);
     });
     infos.push(infowindow);
+    console.log('Objeto: ', obj);
 }
 // initialization
 //google.maps.event.addDomListener(window, 'load', initialize);

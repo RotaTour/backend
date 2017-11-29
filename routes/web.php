@@ -32,8 +32,13 @@ Route::post('/status/{statusId}/reply', 'StatusController@postReply')->name('sta
 Route::get('/status/{statusId}/like', 'StatusController@getLike')->name('status.like');
 
 Route::get('/places', 'PlaceController@index')->name('place.index');
+Route::get('/places/show', 'PlaceController@show')->name('place.show');
 
 Route::get('/routes', 'RouteController@index')->name('route.index');
+Route::get('/routes/create', 'RouteController@create')->name('route.create');
+Route::post('/routes/store', 'RouteController@store')->name('route.store');
+Route::get('/routes/addToRoute', 'RouteController@addToRoute')->name('route.addToRoute');
+Route::get('/routes/show/{id}', 'RouteController@show')->name('route.show');
 
 /* Socialite */
 Route::get('social/redirect/{provider}', ['uses' => 'Auth\LoginController@redirectToProvider', 'as' => 'social.login']);
