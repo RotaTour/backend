@@ -109,7 +109,24 @@ class RouteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $route = Route::find($id);
+        if (!$route){
+            return redirect()
+            ->back()
+            ->with('info', 'A rota selecionada não foi encontrada');
+        }
+
+        if (Auth::user()->id == $route->user()->first()->id){
+            $name = $route->name;
+            $route->delete();
+            return redirect()
+            ->back()
+            ->with('info', 'A rota '.$name.' foi removida');
+        } else {
+            return redirect()
+            ->back()
+            ->with('info', 'A rota selecionada não pode ser removida');
+        }
     }
 
     /**

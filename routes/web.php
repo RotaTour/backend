@@ -39,6 +39,9 @@ Route::get('/routes/create', 'RouteController@create')->name('route.create');
 Route::post('/routes/store', 'RouteController@store')->name('route.store');
 Route::get('/routes/addToRoute', 'RouteController@addToRoute')->name('route.addToRoute');
 Route::get('/routes/show/{id}', 'RouteController@show')->name('route.show');
+Route::get('/routes/delete/{id}', 'RouteController@destroy')->name('route.delete');
+
+Route::get('/itens/delete/{id}', 'ItemController@destroy')->name('item.delete');
 
 /* Socialite */
 Route::get('social/redirect/{provider}', ['uses' => 'Auth\LoginController@redirectToProvider', 'as' => 'social.login']);

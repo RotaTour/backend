@@ -18,7 +18,7 @@
             <p>Criada em: {{ $route->created_at->diffForHumans() }}</p>
             <p>
                 <a href="{{route('route.show', ['id'=>$route->id])}}">Ver detalhes</a>  | 
-                <a href="#">Excluir</a>
+                <a href="{{route('route.delete', ['id'=>$route->id])}}">Excluir</a>
             </p>
         </div>
     </div>

@@ -15,8 +15,12 @@
             <p>{{ $item->place->address }}</p>
             <p>Adicionado em: {{ $item->created_at->diffForHumans() }}</p>
             <p>
-                <a href="{{route('place.show', ['place_id'=>$item->place->google_place_id])}}">Ver detalhes do lugar</a>  |
-                <a href="#">Excluir</a>
+                <a href="{{route('place.show', ['place_id'=>$item->place->google_place_id])}}">
+                    Ver detalhes do lugar
+                </a>  |
+                <a href="{{ route('item.delete', ['id'=>$item->id]) }}">
+                    Excluir
+                </a>
             </p>
         </div>
     </div>
