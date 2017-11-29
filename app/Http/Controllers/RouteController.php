@@ -145,7 +145,7 @@ class RouteController extends Controller
         $item->order = 1;
         $item->save();
 
-        $retorno = ['status'=>200, 'body'=>'Adicionado na Rota '.$input['routeId']];
+        $retorno = ['status'=>200, 'body'=>'Adicionado à Rota', 'name'=>$route->name];
         return response()->json($retorno);
         
     }
