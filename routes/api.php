@@ -22,6 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['middleware'=>'cors'], function(){
     Route::post('login', 'Api\AuthenticateController@authenticate')->name('api.auth');
     Route::get('getuser', 'Api\AuthenticateController@getUser')->name('api.getuser');
+    Route::post('register', 'Api\AuthenticateController@register')->name('api.register');
 
     /* Socialite */
     Route::get('social/redirect/{provider}', ['uses' => 'Api\AuthenticateController@redirectToProvider', 'as' => 'api.social.login']);
