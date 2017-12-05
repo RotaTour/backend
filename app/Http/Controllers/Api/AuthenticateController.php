@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Socialite;
+use App\Models\User;
 
 class AuthenticateController extends Controller
 {
@@ -40,4 +42,44 @@ class AuthenticateController extends Controller
         $user = JWTAuth::toUser();
         return response()->json($user);
     }
+
+    ////// Stateless Social login
+    // ref.: https://isaacearl.com/blog/stateless-socialite
+    /**
+     * Redirect the user to the GitHub authentication page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function redirectToProvider($provider)
+    {
+        return Socialite::driver($provider)->stateless()->redirect();
+    }
+
+    /**
+     * Obtain the user information from GitHub.
+     *
+     * @return JsonResponse
+     */
+    public function handleProviderCallback($provider)
+    {
+        $providerUser = Socialite::driver($provider)->stateless()->user();
+
+        $user = User::query()->firstOrNew(['email' => $providerUser->getEmail()]);
+
+        // Se não existir, cria o user
+        if (!$user->exists) {
+            $user->name = $providerUser->getName();
+            $user->email = $providerUser->getEmail();
+            $user->avatar = $providerUser->getAvatar();
+            $user->provider_id = $providerUser->getId();
+            $user->provider = $provider;
+            $user->save(); 
+        }
+        
+        $token = JWTAuth::fromUser($user);
+
+        // all good so return the token
+        return response()->json(compact('token'));
+    }
+
 }

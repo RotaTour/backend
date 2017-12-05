@@ -23,6 +23,10 @@ Route::group(['middleware'=>'cors'], function(){
     Route::post('login', 'Api\AuthenticateController@authenticate')->name('api.auth');
     Route::get('getuser', 'Api\AuthenticateController@getUser')->name('api.getuser');
 
+    /* Socialite */
+    Route::get('social/redirect/{provider}', ['uses' => 'Api\AuthenticateController@redirectToProvider', 'as' => 'api.social.login']);
+    Route::get('social/callback/{provider}', 'Api\AuthenticateController@handleProviderCallback');
+
     Route::group(['middleware'=>'jwt.auth'], function(){
         Route::resource('users', 'Api\UserController');
         Route::get('users/{email}/status', 'Api\UserController@getStatus')->name('users.getstatus');
