@@ -28,11 +28,17 @@ Route::group(['middleware'=>'cors'], function(){
     Route::get('social/redirect/{provider}', ['uses' => 'Api\AuthenticateController@redirectToProvider', 'as' => 'api.social.login']);
     Route::get('social/callback/{provider}', 'Api\AuthenticateController@handleProviderCallback');
 
+    /* Rotas protegidas JWT */
     Route::group(['middleware'=>'jwt.auth'], function(){
+        Route::get('/search', 'Api\SearchController@results')->name('search.results');
+
         Route::resource('users', 'Api\UserController');
         Route::get('users/{email}/status', 'Api\UserController@getStatus')->name('users.getstatus');
+
+
+        Route::get('places', 'Api\PlaceController@index')->name('api.places.index');
+        Route::get('/places/show', 'Api\PlaceController@show')->name('api.place.show');
     });
 
-    Route::get('places', 'Api\PlaceController@index')->name('api.places.index');
 });
 
