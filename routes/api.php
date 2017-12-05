@@ -32,5 +32,7 @@ Route::group(['middleware'=>'cors'], function(){
         Route::resource('users', 'Api\UserController');
         Route::get('users/{email}/status', 'Api\UserController@getStatus')->name('users.getstatus');
     });
+
+    Route::get('places', 'Api\PlaceController@index')->name('api.places.index');
 });
 
