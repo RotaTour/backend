@@ -15,8 +15,8 @@ class PlaceController extends Controller
         //$response = GooglePlaces::placeAutocomplete('Recife');
         //$response = GooglePlaces::textSearch('Recife, Pernambuco, Brazil');
         //$response = GooglePlaces::placeDetails('ChIJ5UbEiG8ZqwcR1H9EIin1njw');
-        $response = GooglePlaces::placeDetails('ChIJVyuijGQZqwcREEzZ32LILvA');
-        dd($response);
+        $recife = GooglePlaces::placeDetails('ChIJVyuijGQZqwcREEzZ32LILvA');
+        return response()->json(compact('recife'));
     }
 
     /**

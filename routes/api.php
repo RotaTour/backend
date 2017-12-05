@@ -30,14 +30,16 @@ Route::group(['middleware'=>'cors'], function(){
 
     /* Rotas protegidas JWT */
     Route::group(['middleware'=>'jwt.auth'], function(){
-        Route::get('/search', 'Api\SearchController@results')->name('search.results');
+        Route::get('/search', 'Api\SearchController@results')->name('api.search.results');
 
         Route::resource('users', 'Api\UserController');
-        Route::get('users/{email}/status', 'Api\UserController@getStatus')->name('users.getstatus');
-
+        Route::get('users/{email}/status', 'Api\UserController@getStatus')->name('api.users.getstatus');
 
         Route::get('places', 'Api\PlaceController@index')->name('api.places.index');
         Route::get('/places/show', 'Api\PlaceController@show')->name('api.place.show');
+
+        Route::get('routes', 'Api\RouteController@index')->name('api.routes.index');
+        Route::get('/routes/show/{id}', 'Api\RouteController@show')->name('api.route.show');
     });
 
 });
