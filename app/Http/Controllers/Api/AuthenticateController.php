@@ -141,22 +141,23 @@ class AuthenticateController extends Controller
      *
      * @return JsonResponse
      */
-    public function directProviderCallback(Request $request)
+    public function registerProviderCallback(Request $request)
     {
-        dd($request->input());
+        $input = $request->input();
 
-        /*
-        $providerUser = Socialite::driver($provider)->stateless()->user();
-
-        $user = User::query()->firstOrNew(['email' => $providerUser->getEmail()]);
+        $user = User::query()->firstOrNew([
+            'email' => $input['email'], 
+            'provider_id'=>$input['provider_id'], 
+            'provider'=>$input['provider'] 
+            ]);
 
         // Se não existir, cria o user
         if (!$user->exists) {
-            $user->name = $providerUser->getName();
-            $user->email = $providerUser->getEmail();
-            $user->avatar = $providerUser->getAvatar();
-            $user->provider_id = $providerUser->getId();
-            $user->provider = $provider;
+            $user->name = $input['name'];
+            $user->email = $input['email'];
+            $user->avatar = $input['avatar'];
+            $user->provider_id = $input['provider_id'];
+            $user->provider = $input['provider'];
             $user->save(); 
         }
         
@@ -164,7 +165,7 @@ class AuthenticateController extends Controller
 
         // all good so return the token
         return response()->json(compact('token'));
-        */
+        
     }
 
 
