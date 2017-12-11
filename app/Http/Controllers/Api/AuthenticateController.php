@@ -136,5 +136,36 @@ class AuthenticateController extends Controller
         return response()->json(compact('token'));
     }
 
+    /**
+     * Obtain the user information from GitHub.
+     *
+     * @return JsonResponse
+     */
+    public function directProviderCallback(Request $request)
+    {
+        dd($request->input());
+
+        /*
+        $providerUser = Socialite::driver($provider)->stateless()->user();
+
+        $user = User::query()->firstOrNew(['email' => $providerUser->getEmail()]);
+
+        // Se não existir, cria o user
+        if (!$user->exists) {
+            $user->name = $providerUser->getName();
+            $user->email = $providerUser->getEmail();
+            $user->avatar = $providerUser->getAvatar();
+            $user->provider_id = $providerUser->getId();
+            $user->provider = $provider;
+            $user->save(); 
+        }
+        
+        $token = JWTAuth::fromUser($user);
+
+        // all good so return the token
+        return response()->json(compact('token'));
+        */
+    }
+
 
 }

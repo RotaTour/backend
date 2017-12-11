@@ -27,6 +27,7 @@ Route::group(['middleware'=>'cors'], function(){
     /* Socialite */
     Route::get('social/redirect/{provider}', ['uses' => 'Api\AuthenticateController@redirectToProvider', 'as' => 'api.social.login']);
     Route::get('social/callback/{provider}', 'Api\AuthenticateController@handleProviderCallback');
+    Route::post('social/direct', 'Api\AuthenticateController@directProviderCallback');
 
     /* Rotas protegidas JWT */
     Route::group(['middleware'=>'jwt.auth'], function(){
