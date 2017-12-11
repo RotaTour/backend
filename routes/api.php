@@ -30,6 +30,8 @@ Route::group(['middleware'=>'cors'], function(){
 
     /* Rotas protegidas JWT */
     Route::group(['middleware'=>'jwt.auth'], function(){
+        Route::resource('myself', 'Api\UserController@myself');
+        
         Route::get('/search', 'Api\SearchController@results')->name('api.search.results');
 
         Route::resource('users', 'Api\UserController');

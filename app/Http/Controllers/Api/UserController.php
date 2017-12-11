@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use JWTAuth;
 use App\Models\User;
 
 class UserController extends Controller
@@ -105,5 +106,18 @@ class UserController extends Controller
             ->with('replies')
             ->orderBy('created_at', 'desc')
             ->paginate(10);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  string  $JWTtoken
+     * @return \Illuminate\Http\Response
+     */
+    public function myself()
+    {
+        $userJWT = JWTAuth::parseToken()->authenticate();
+        $user = User::find($userJWT->id);
+        return response()->json(compact('user'));
     }
 }
