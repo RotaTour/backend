@@ -19,7 +19,7 @@ class SearchController extends Controller
      *     description="Returns results of a search query.",
      *     operationId="api.search.results",
      *     produces={"application/json"},
-     *     tags={"search","users"},
+     *     tags={"search"},
      *     @SWG\Parameter(
      *          name="query",
      *          in="body",

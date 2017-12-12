@@ -41,10 +41,33 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified user.
      *
      * @param  string  $email
      * @return \Illuminate\Http\Response
+     * 
+     * @SWG\Get(
+     *     path="/api/users/{email}",
+     *     description="Returns the user details.",
+     *     operationId="api.users.show",
+     *     produces={"application/json"},
+     *     tags={"users"},
+     *     @SWG\Parameter(
+     *          name="email",
+     *          in="path",
+     *          required=true,
+     *          type="string",
+     *          description="Email used by user",
+     * 	   ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Success - User found."
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="User not found.",
+     *     )
+     * )
      */
     public function show($email)
     {
@@ -54,10 +77,7 @@ class UserController extends Controller
          * @todo implementar o ModelNotFound Exception Handler
          */
         if (!$user){
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Record not found',
-            ], 400);
+            return response()->json(['error' => 'User not found'], 404);
         } else {
             return response()->json($user, 200);
         }
@@ -98,26 +118,80 @@ class UserController extends Controller
         //
     }
 
+    /**
+     * Display the statuses of a specified user.
+     *
+     * @param  string  $email
+     * @return \Illuminate\Http\Response
+     * 
+     * @SWG\Get(
+     *     path="/api/users/{email}/status",
+     *     description="Returns the statuses of a specified user.",
+     *     operationId="api.users.getstatus",
+     *     produces={"application/json"},
+     *     tags={"users"},
+     *     @SWG\Parameter(
+     *          name="email",
+     *          in="path",
+     *          required=true,
+     *          type="string",
+     *          description="Email used by user",
+     * 	   ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Success - User found."
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="User not found.",
+     *     )
+     * )
+     */
     public function getStatus($email)
     {
         $user = User::where('email', $email)->first();
-        return $user->statuses()
+        if (!$user){
+            return response()->json(['error' => 'User not found'], 404);
+        } else {
+            return $user->statuses()
             ->notReply()
             ->with('replies')
             ->orderBy('created_at', 'desc')
             ->paginate(10);
+        }
+        
     }
 
     /**
-     * Display the specified resource.
+     * Display the user from JWT Token.
      *
      * @param  string  $JWTtoken
      * @return \Illuminate\Http\Response
+     * 
+     * @SWG\Get(
+     *     path="/api/myself",
+     *     description="Returns the user from JWT Token.",
+     *     operationId="api.myself",
+     *     produces={"application/json"},
+     *     tags={"users"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Success - User found."
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="User not found.",
+     *     )
+     * )
      */
     public function myself()
     {
         $userJWT = JWTAuth::parseToken()->authenticate();
         $user = User::find($userJWT->id);
-        return response()->json(compact('user'));
+        if (!$user){
+            return response()->json(['error' => 'User not found'], 404);
+        } else {
+            return response()->json(compact('user'));
+        }
     }
 }

@@ -31,7 +31,7 @@ Route::group(['middleware'=>'cors'], function(){
 
     /* Rotas protegidas JWT */
     Route::group(['middleware'=>'jwt.auth'], function(){
-        Route::get('myself', 'Api\UserController@myself');
+        
 
         /* Search */
         Route::get('/search', 'Api\SearchController@results')->name('api.search.results');
@@ -39,6 +39,7 @@ Route::group(['middleware'=>'cors'], function(){
         /* Users */
         Route::resource('users', 'Api\UserController');
         Route::get('users/{email}/status', 'Api\UserController@getStatus')->name('api.users.getstatus');
+        Route::get('myself', 'Api\UserController@myself')->name('api.myself');
         
         /* Friends */
         Route::get('friends', 'Api\FriendController@index')->name('api.friends.index');
@@ -52,6 +53,7 @@ Route::group(['middleware'=>'cors'], function(){
 
         /* Routes */
         Route::get('routes', 'Api\RouteController@index')->name('api.routes.index');
+        Route::post('routes', 'Api\RouteController@store')->name('api.routes.store');
         Route::get('/routes/show/{id}', 'Api\RouteController@show')->name('api.route.show');
 
     });
