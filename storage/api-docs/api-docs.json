@@ -36,6 +36,150 @@
                     }
                 }
             }
+        },
+        "/api/friends/add/{email}": {
+            "get": {
+                "tags": [
+                    "friends"
+                ],
+                "summary": "Send a friendship request.",
+                "description": "Send a friendship request.",
+                "operationId": "api.friends.add",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "Email used by user",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - Friend request sent"
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "400": {
+                        "description": "That user could not be found."
+                    },
+                    "403": {
+                        "description": "You are already friends."
+                    },
+                    "406": {
+                        "description": "Friend request already pending."
+                    },
+                    "409": {
+                        "description": "Yourself can't be in your friends list."
+                    }
+                }
+            }
+        },
+        "/api/friends/accept/{email}": {
+            "get": {
+                "tags": [
+                    "friends"
+                ],
+                "summary": "Accept a friendship request.",
+                "description": "Accept a friendship request.",
+                "operationId": "api.friends.accept",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "Email used by user",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - Friend request accepted"
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "400": {
+                        "description": "That user could not be found."
+                    },
+                    "406": {
+                        "description": "There is no Request Received."
+                    }
+                }
+            }
+        },
+        "/api/friends/leavefriendship/{email}": {
+            "post": {
+                "tags": [
+                    "friends"
+                ],
+                "summary": "Accept a friendship request.",
+                "description": "Leave a friendship.",
+                "operationId": "api.friends.leave",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "Email used by user",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - Leave a Friendship"
+                    },
+                    "400": {
+                        "description": "That user could not be found."
+                    },
+                    "406": {
+                        "description": "You aren't friend of ..."
+                    }
+                }
+            }
+        },
+        "/api/places/show": {
+            "get": {
+                "tags": [
+                    "places"
+                ],
+                "summary": "Display the specified resource.",
+                "description": "Returns place details.",
+                "operationId": "api.places.show",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "google_place_id",
+                        "in": "body",
+                        "description": "UUID From Google Places API",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NewPlace"
+                        },
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Place detail based on Google-place-id."
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -71,6 +215,39 @@
                     "example": "2017-03-01 00:00:00"
                 }
             }
+        },
+        "NewPlace": {
+            "required": [
+                "google_place_id",
+                "name"
+            ],
+            "properties": {
+                "google_place_id": {
+                    "description": "UUID Google Place Id",
+                    "type": "string",
+                    "example": "ChIJVyuijGQZqwcREEzZ32LILvA"
+                },
+                "name": {
+                    "description": "Place name",
+                    "type": "string",
+                    "example": "Hospital das Cl\u00ednicas - HC - UFPE"
+                }
+            }
+        },
+        "Place": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/NewPlace"
+                },
+                {
+                    "$ref": "#/definitions/Timestamps"
+                },
+                {
+                    "required": [
+                        "id"
+                    ]
+                }
+            ]
         },
         "NewUser": {
             "required": [

@@ -4,6 +4,37 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Place
+ *
+ * @package App\Models
+ *
+ * @SWG\Definition(
+ *     definition="NewPlace",
+ *     required={"google_place_id", "name"},
+ *     @SWG\Property(
+ *          property="google_place_id",
+ *          type="string",
+ *          description="UUID Google Place Id",
+ *          example="ChIJVyuijGQZqwcREEzZ32LILvA"
+ *    ),
+ *     @SWG\Property(
+ *          property="name",
+ *          type="string",
+ *          description="Place name",
+ *          example="Hospital das Clínicas - HC - UFPE"
+ *    )
+ * )
+ * @SWG\Definition(
+ *     definition="Place",
+ *     allOf = {
+ *          { "$ref": "#/definitions/NewPlace" },
+ *          { "$ref": "#/definitions/Timestamps" },
+ *          { "required": {"id"} }
+ *     }
+ * )
+ *
+ */
 class Place extends Model
 {
     /**

@@ -96,7 +96,7 @@ class FriendController extends Controller
             ->with('info', "You leave the friendship with {$user->getFirstNameOrUsername()}.");
         } else {
             return redirect()->back()
-            ->with('info', "You aren't friend of {$user->getFirstNameOrUsername()}.");;
+            ->with('info', "You aren't friend of {$user->getFirstNameOrUsername()}.");
         }
     }
 }

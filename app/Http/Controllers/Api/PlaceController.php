@@ -29,6 +29,30 @@ class PlaceController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     * 
+     * @SWG\Get(
+     *     path="/api/places/show",
+     *     description="Returns place details.",
+     *     operationId="api.places.show",
+     *     produces={"application/json"},
+     *     tags={"places"},
+     *     @SWG\Parameter(
+     *          name="google_place_id",
+     *          in="body",
+     *          schema={"$ref": "#/definitions/NewPlace"},
+     *          required=true,
+     *          type="string",
+     *          description="UUID From Google Places API",
+     * 	   ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Place detail based on Google-place-id."
+     *     ),
+     *     @SWG\Response(
+     *         response=401,
+     *         description="Unauthorized action.",
+     *     )
+     * )
      */
     public function show(Request $request)
     {
@@ -37,7 +61,7 @@ class PlaceController extends Controller
 
         $user = User::find($userJWT->id);
         $routes = $user->routes()->get();
-        $place = GooglePlaces::placeDetails( $request->input('place_id') );
+        $place = GooglePlaces::placeDetails( $request->input('google_place_id') );
         return response()->json(compact('routes', 'place'));
         
     }
