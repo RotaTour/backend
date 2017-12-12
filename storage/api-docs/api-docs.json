@@ -180,6 +180,40 @@
                     }
                 }
             }
+        },
+        "/api/search": {
+            "get": {
+                "tags": [
+                    "search",
+                    "users"
+                ],
+                "summary": "Display results of a search query",
+                "description": "Returns results of a search query.",
+                "operationId": "api.search.results",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "body",
+                        "description": "Name (or partial name) used by user",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NewUser"
+                        },
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Result overview."
+                    },
+                    "400": {
+                        "description": "no input query."
+                    }
+                }
+            }
         }
     },
     "definitions": {

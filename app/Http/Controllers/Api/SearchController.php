@@ -9,11 +9,40 @@ use DB;
 
 class SearchController extends Controller
 {
+    /**
+     * Display results of a search query
+     *
+     * @return \Illuminate\Http\Response
+     * 
+     * @SWG\Get(
+     *     path="/api/search",
+     *     description="Returns results of a search query.",
+     *     operationId="api.search.results",
+     *     produces={"application/json"},
+     *     tags={"search","users"},
+     *     @SWG\Parameter(
+     *          name="query",
+     *          in="body",
+     *          schema={"$ref": "#/definitions/NewUser"},
+     *          required=true,
+     *          type="string",
+     *          description="Name (or partial name) used by user",
+     * 	   ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Result overview."
+     *     ),
+     *     @SWG\Response(
+     *         response=400,
+     *         description="no input query.",
+     *     )
+     * )
+     */
     public function results(Request $request)
     {
         $query = $request->input('query');
         if (!$query){
-            return response()->json(['error' => 'no input query'], 409);
+            return response()->json(['error' => 'no input query'], 400);
         }
 
         // Tive que usar o ILIKE, fazer o LOWER('name') retorna erro
