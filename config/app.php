@@ -184,6 +184,7 @@ return [
         Laravel\Socialite\SocialiteServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         SKAgarwal\GoogleApi\ServiceProvider::class,
+        \L5Swagger\L5SwaggerServiceProvider::class,
 
     ],
 

@@ -8,6 +8,43 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 use Spatie\Permission\Traits\HasRoles;
 use App\Models\Status;
 
+/**
+ * Class User
+ *
+ * @package App\Models
+ *
+ * @SWG\Definition(
+ *     definition="NewUser",
+ *     required={"name", "email", "provider"},
+ *     @SWG\Property(
+ *          property="name",
+ *          type="string",
+ *          description="User's full name",
+ *          example="Beltrano da Silva"
+ *    ),
+ *     @SWG\Property(
+ *          property="email",
+ *          type="string",
+ *          description="User's email",
+ *          example="beltrano@gmail.com"
+ *    ),
+ *     @SWG\Property(
+ *          property="provider",
+ *          type="string",
+ *          description="User's account provider",
+ *          example={"local", "facebook", "google"}
+ *    )
+ * )
+ * @SWG\Definition(
+ *     definition="User",
+ *     allOf = {
+ *          { "$ref": "#/definitions/NewUser" },
+ *          { "$ref": "#/definitions/Timestamps" },
+ *          { "required": {"id"} }
+ *     }
+ * )
+ *
+ */
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;

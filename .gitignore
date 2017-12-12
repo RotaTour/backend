@@ -5,6 +5,9 @@
 /vendor
 /.idea
 /.vagrant
+/public/vendor/l5-swagger
+/resources/views/vendor/l5-swagger
+/storage/api-docs
 Homestead.json
 Homestead.yaml
 npm-debug.log
