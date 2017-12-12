@@ -13,7 +13,7 @@ use App\Models\Item;
 class RouteController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the routes.
      *
      * @return \Illuminate\Http\Response
      * 
@@ -46,7 +46,7 @@ class RouteController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created route in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -91,7 +91,7 @@ class RouteController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified route.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -131,7 +131,7 @@ class RouteController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified route from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -179,7 +179,7 @@ class RouteController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Add a item into a route.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -245,6 +245,5 @@ class RouteController extends Controller
         $item->save();
 
         return response()->json(['info' => 'Item added to Route '.$route->name]);
-        
     }
 }

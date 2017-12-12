@@ -12,6 +12,47 @@ use App\Models\User;
 
 class AuthenticateController extends Controller
 {
+    /**
+     * get a JWT token for a user.
+     *
+     * @return \Illuminate\Http\Response
+     * 
+     * @SWG\Post(
+     *     path="/api/login",
+     *     description="get a JWT token for a user.",
+     *     operationId="api.auth",
+     *     produces={"application/json"},
+     *     tags={"login"},
+     *     @SWG\Parameter(
+     *          name="email",
+     *          in="body",
+     *          schema={"$ref": "#/definitions/NewUser"},
+     *          required=true,
+     *          type="string",
+     *          description="Email used by user",
+     * 	   ),
+     *     @SWG\Parameter(
+     *          name="password",
+     *          in="body",
+     *          schema={"$ref": "#/definitions/NewUser"},
+     *          required=true,
+     *          type="string",
+     *          description="Password used by user",
+     * 	   ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Success - respond with a JWT Token"
+     *     ),
+     *     @SWG\Response(
+     *         response=401,
+     *         description="Invalid Credentials.",
+     *     ),
+     *     @SWG\Response(
+     *         response=500,
+     *         description="Could not create token",
+     *     )
+     * )
+     */
     public function authenticate(Request $request)
     {
         // grab credentials from the request
@@ -32,16 +73,44 @@ class AuthenticateController extends Controller
     }
 
     /**
-     * Get the user by token.
+     * Get the user by token - For Tests only.
      *
      * @param  Request  $request
      * @return \Illuminate\Http\JsonResponse
+     * 
+     * @SWG\Get(
+     *     path="/api/getuser",
+     *     description="get a user by JWT Token - for tests only.",
+     *     operationId="api.getuser",
+     *     produces={"application/json"},
+     *     tags={"login"},
+     *     @SWG\Parameter(
+     *          name="token",
+     *          in="query",
+     *          required=true,
+     *          type="string",
+     *          description="Email used by user",
+     * 	   ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Success - respond with a JWT Token"
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="User not found.",
+     *     )
+     * )
      */
     public function getUser(Request $request)
     {
         JWTAuth::setToken($request->input('token'));
         $user = JWTAuth::toUser();
-        return response()->json($user);
+        if (!$user){
+            return response()->json(['error' => 'User not found.'], 404);
+        } else {
+            return response()->json($user);
+        }
+        
     }
 
     /**
@@ -50,6 +119,46 @@ class AuthenticateController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     * * 
+     * @SWG\Post(
+     *     path="/api/register",
+     *     description="Handle a registration request for the application",
+     *     operationId="api.register",
+     *     produces={"application/json"},
+     *     tags={"login"},
+     *     @SWG\Parameter(
+     *          name="name",
+     *          in="body",
+     *          schema={"$ref": "#/definitions/NewUser"},
+     *          required=true,
+     *          type="string",
+     *          description="Fullname used by user",
+     * 	   ),
+     *     @SWG\Parameter(
+     *          name="email",
+     *          in="body",
+     *          schema={"$ref": "#/definitions/NewUser"},
+     *          required=true,
+     *          type="string",
+     *          description="Email used by user",
+     * 	   ),
+     *     @SWG\Parameter(
+     *          name="password",
+     *          in="body",
+     *          schema={"$ref": "#/definitions/NewUser"},
+     *          required=true,
+     *          type="string",
+     *          description="Password used by user",
+     * 	   ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Success - respond with a JWT Token"
+     *     ),
+     *     @SWG\Response(
+     *         response=409,
+     *         description="User already exists.",
+     *     )
+     * )
      */
     public function register(Request $request)
     {
@@ -75,11 +184,11 @@ class AuthenticateController extends Controller
 
         // criar o token JWT
         $token = JWTAuth::fromUser($user);
-        $msg = "Cadastrado com sucesso";
+        $info = "User successful registered";
         
         // resposta
         // all good so return the token
-        return response()->json(compact('token', 'msg'));
+        return response()->json(compact('token', 'info'));
     }
 
     /**
@@ -92,7 +201,7 @@ class AuthenticateController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255',
             'password' => 'required|string|min:6',
         ]);
     }

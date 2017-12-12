@@ -25,7 +25,7 @@ class PlaceController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified place.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

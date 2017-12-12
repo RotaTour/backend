@@ -10,7 +10,7 @@ use App\Models\User;
 class FriendController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of friends.
      *
      * @return \Illuminate\Http\Response
      * 
@@ -164,7 +164,7 @@ class FriendController extends Controller
     }
 
     /**
-     * Accept a friendship request.
+     * Leave a Friendship.
      *
      * @return \Illuminate\Http\Response
      * 
