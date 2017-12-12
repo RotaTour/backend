@@ -1,0 +1,119 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "RotaTour API",
+        "description": "Documentation created using Swagger.",
+        "contact": {
+            "name": "Saulo Gomes",
+            "url": "https://github.com/saulobr88"
+        },
+        "version": "1.0"
+    },
+    "host": "rotatourapi.herokuapp.com",
+    "basePath": "",
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "paths": {
+        "/api/friends": {
+            "get": {
+                "tags": [
+                    "friends"
+                ],
+                "summary": "Display a listing of the resource.",
+                "description": "Returns friends.",
+                "operationId": "api.friends.index",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Friends overview."
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Error": {
+            "required": [
+                "code",
+                "message"
+            ],
+            "properties": {
+                "code": {
+                    "description": "Class ApiController",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "description": "Class ApiController",
+                    "type": "string"
+                }
+            }
+        },
+        "Timestamps": {
+            "properties": {
+                "created_at": {
+                    "description": "Creation date",
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2017-03-01 00:00:00"
+                },
+                "updated_at": {
+                    "description": "Last updated",
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2017-03-01 00:00:00"
+                }
+            }
+        },
+        "NewUser": {
+            "required": [
+                "name",
+                "email",
+                "provider"
+            ],
+            "properties": {
+                "name": {
+                    "description": "User's full name",
+                    "type": "string",
+                    "example": "Beltrano da Silva"
+                },
+                "email": {
+                    "description": "User's email",
+                    "type": "string",
+                    "example": "beltrano@gmail.com"
+                },
+                "provider": {
+                    "description": "User's account provider",
+                    "type": "string",
+                    "example": [
+                        "local",
+                        "facebook",
+                        "google"
+                    ]
+                }
+            }
+        },
+        "User": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/NewUser"
+                },
+                {
+                    "$ref": "#/definitions/Timestamps"
+                },
+                {
+                    "required": [
+                        "id"
+                    ]
+                }
+            ]
+        }
+    }
+}
