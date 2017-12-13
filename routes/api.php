@@ -59,6 +59,9 @@ Route::group(['middleware'=>'cors'], function(){
         Route::delete('/routes/delete/{id}', 'Api\RouteController@destroy')->name('api.route.delete');
         Route::get('/routes/addToRoute', 'Api\RouteController@addToRoute')->name('api.route.addToRoute');
 
+        /* Itens */
+        Route::delete('/itens/delete/{id}', 'ItemController@destroy')->name('api.item.delete');
+
     });
 
 });

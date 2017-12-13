@@ -277,6 +277,39 @@
                 }
             }
         },
+        "/api/itens/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "itens"
+                ],
+                "summary": "Remove the specified Item from storage.",
+                "description": "Delete the specified item.",
+                "operationId": "api.item.delete",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Item id in database",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - Item deleted."
+                    },
+                    "404": {
+                        "description": "Item not found."
+                    },
+                    "403": {
+                        "description": "Item can't be deleted."
+                    }
+                }
+            }
+        },
         "/api/places/show": {
             "get": {
                 "tags": [
