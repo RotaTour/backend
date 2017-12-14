@@ -267,7 +267,7 @@ class AuthenticateController extends Controller
             $user->avatar = $input['avatar'];
             $user->provider_id = $input['provider_id'];
             $user->provider = $input['provider'];
-            $user->save(); 
+            $user->save();
         }
         
         $token = JWTAuth::fromUser($user);

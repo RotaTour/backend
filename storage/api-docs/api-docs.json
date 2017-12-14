@@ -12,7 +12,6 @@
     "host": "rotatourapi.herokuapp.com",
     "basePath": "",
     "schemes": [
-        "http",
         "https"
     ],
     "paths": {
@@ -567,6 +566,37 @@
                     },
                     "404": {
                         "description": "User not found."
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Remove the specified user from storage.",
+                "description": "Delete yourself from database",
+                "operationId": "api.users.delete",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "Email used by user",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - User deleted."
+                    },
+                    "404": {
+                        "description": "User not found."
+                    },
+                    "403": {
+                        "description": "User could not be deleted."
                     }
                 }
             }

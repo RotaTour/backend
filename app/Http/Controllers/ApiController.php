@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
  * @SWG\Swagger(
  *     basePath="",
  *     host="rotatourapi.herokuapp.com",
- *     schemes={"http", "https"},
+ *     schemes={"https"},
  *     @SWG\Info(
  *         version="1.0",
  *         title="RotaTour API",

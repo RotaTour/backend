@@ -108,14 +108,50 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified user from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     * 
+     * @SWG\Delete(
+     *     path="/api/users/{email}",
+     *     description="Delete yourself from database",
+     *     operationId="api.users.delete",
+     *     produces={"application/json"},
+     *     tags={"users"},
+     *     @SWG\Parameter(
+     *          name="email",
+     *          in="path",
+     *          required=true,
+     *          type="string",
+     *          description="Email used by user",
+     * 	   ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Success - User deleted."
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="User not found.",
+     *     ),
+     *     @SWG\Response(
+     *         response=403,
+     *         description="User could not be deleted.",
+     *     )
+     * )
      */
-    public function destroy($id)
+    public function destroy($email)
     {
-        //
+        $userJWT = JWTAuth::parseToken()->authenticate();
+        $user = User::find($userJWT->id);
+        if (!$user){
+            return response()->json(['error' => 'User not found'], 404);
+        }
+        if ($user->email != $email){
+            return response()->json(['error' => "User could not be deleted."], 403);
+        }
+        $user->delete();
+        return response()->json(['info' => 'User deleted.'], 200);
     }
 
     /**
