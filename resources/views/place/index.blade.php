@@ -1,6 +1,7 @@
 @extends('layouts.default')
 
 @section('content')
+@include('place.submenu')
 <h3>Locais</h3>
 <style>
 #gmap_canvas {
@@ -99,15 +100,10 @@
     <div class="button">
         <label for="gmap_type">Tipo:</label>
         <select id="gmap_type">
-            <option value="art_gallery">Galeria de Arte</option>
-            <option value="atm">Autoatendimento</option>
-            <option value="bank">Banco</option>
-            <option value="bar">bar</option>
-            <option value="cafe">café</option>
-            <option value="food">Comida</option>
-            <option value="hospital">Hospital</option>
-            <option value="police">Polícia</option>
-            <option value="store">Loja</option>
+            <!-- https://developers.google.com/places/web-service/supported_types -->
+            @foreach($categories as $category)
+            <option value="{{$category->google_name}}">{{$category->display_name}}</option>    
+            @endforeach
         </select>
     </div>
     <div class="button">

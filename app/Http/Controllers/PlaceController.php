@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Place;
 use App\Models\Route;
+use App\Models\Category;
 use Auth;
 
 class PlaceController extends Controller
@@ -26,7 +27,8 @@ class PlaceController extends Controller
      */
     public function index()
     {
-        return view('place.index');
+        $categories = Category::all();
+        return view('place.index', compact('categories'));
     }
 
     /**
@@ -96,4 +98,26 @@ class PlaceController extends Controller
     {
         //
     }
+
+    /**
+     * show all categories
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function categories()
+    {
+        $categories = Category::all();
+        return view('place.categories', compact('categories'));
+    }
+
+    /**
+     * show all points of interest
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function pointsOfInterest()
+    {
+        return "points of intererest";
+    }
+
 }

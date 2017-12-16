@@ -32,6 +32,8 @@ Route::post('/status/{statusId}/reply', 'StatusController@postReply')->name('sta
 Route::get('/status/{statusId}/like', 'StatusController@getLike')->name('status.like');
 
 Route::get('/places', 'PlaceController@index')->name('place.index');
+Route::get('/places/categories', 'PlaceController@categories')->name('place.categories');
+Route::get('/places/pointsofinterest', 'PlaceController@pointsOfInterest')->name('place.points');
 Route::get('/places/show', 'PlaceController@show')->name('place.show');
 
 Route::get('/routes', 'RouteController@index')->name('route.index');
