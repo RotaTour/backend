@@ -16,12 +16,7 @@ class CreatePlacesTable extends Migration
         Schema::create('places', function (Blueprint $table) {
             $table->increments('id');
             $table->string('google_place_id')->unique();
-            $table->string('name');
-            $table->string('address')->nullable();
-            $table->string('lat')->nullable();
-            $table->string('lng')->nullable();
-            $table->string('scope')->nullable();
-            $table->string('icon')->nullable();
+            $table->jsonb('google_json');
             $table->timestamps();
         });
     }

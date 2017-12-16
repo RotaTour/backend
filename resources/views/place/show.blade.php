@@ -16,9 +16,25 @@
 </div>
 
 @if( isset($place_id))
-<p>Place_id: {{ $place_id }}</p>
-<div id="preloader"></div>
-<div id="resultado">Aqui é o ID resultado</div>
+    @if( isset($place))
+        @include('place.details')
+    @endif
+
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#comentarios">Comentários</a></li>
+        <li><a data-toggle="tab" href="#fotos">Fotos</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="comentarios" class="tab-pane fade in active">
+            <h3>Comentários</h3>
+            <p>Lorem Ipsum ...</p>
+        </div>
+        <div id="fotos" class="tab-pane fade">
+            <h3>Fotos</h3>
+            <div id="preloader"></div>
+            <div id="resultado">Aqui é o ID resultado</div>
+        </div>
+    </div>
 @else
 <p>place_id não definido</p>
 @endif
@@ -67,6 +83,7 @@ function makeHtml(obj)
     localPlace.scope = obj.scope;
 
     var html = "";
+    /*
     html = html.concat("Name: "+obj.name+"<br>\n");
     html = html.concat("formatted_address: "+obj.formatted_address+"<br>\n");
     html = html.concat('Icon: <img src="'+obj.icon+'" alt='+obj.place_id+' /><br>\n');
@@ -84,11 +101,18 @@ function makeHtml(obj)
         html = html.concat('<strong>'+author_name+'</strong><br>\n');
         html = html.concat('<p>'+text+'</p><br>\n');
     }
-    html = html.concat('<h3>Fotos</h3>\n');
+    */
+    var contagem = 0;
     for(var photo in obj.photos)
     {
+        if(contagem > 2){
+            contagem = 0;
+            html = html.concat('<br>');
+        }
         var imgUrl = obj.photos[photo].getUrl({ 'maxWidth': 400 , 'maxHeight': 400 });
-        html = html.concat('<img src="'+imgUrl+'" alt='+obj.place_id+' /><br>\n');
+        html = html.concat('<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">');
+        html = html.concat('<img src="'+imgUrl+'" alt='+obj.place_id+' class="img-responsive img-rounded" />\n');
+        html = html.concat('</div>\n');
     }
     
     html = html.concat('<br>\n');
@@ -109,7 +133,7 @@ function showDetails()
     function callback(place, status) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             //console.log(JSON.stringify(place));
-            console.log(place);
+            //console.log(place);
             makeHtml(place);
         } else {
             console.log('error: ', status);
@@ -118,5 +142,7 @@ function showDetails()
 }
 
 </script>
+<!-- apenas para buscar as fotos -->
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAa42oli-edAepQHbkhPmgjx6Cdtw-DMe0&callback=showDetails"></script>
+
 @endsection
