@@ -70,11 +70,10 @@ class PlaceController extends Controller
             $place->google_place_id = $place_id;
             $place->google_json = GooglePlaces::placeDetails($place_id, ['language'=>'pt-BR']);
             $place->save();
-        } else {
-            $place->google_json =  json_decode($place->google_json);
         }
+        $place->google_json =  json_decode($place->google_json);
         
-        //dd($place);
+        //dd($place->google_json->result);
         return view('place.show', compact('place', 'place_id', 'routes'));
     }
 

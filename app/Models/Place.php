@@ -57,5 +57,19 @@ class Place extends Model
     {
         return $this->hasMany('App\Models\Item');
     }
+
+    public function comments()
+    {
+        return $this->morphMany('App\Models\Comment', 'commentable');
+    }
     
+    /**
+     * json_decode google json
+     *
+     * @return json_decode
+     */
+    public function json()
+    {
+        return json_decode($this->google_json);
+    }
 }

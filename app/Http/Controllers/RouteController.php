@@ -68,13 +68,14 @@ class RouteController extends Controller
      */
     public function show($id)
     {
-        $route = Route::where('id', $id)->with(['itens.place'])->first();
+        $route = Route::where('id', $id)->with('itens.place')->first();
         if(!$route) {
             return redirect()
             ->route('index')
             ->with('info', 'A rota selecionada não foi encontrada');
         }
 
+        //dd($route->itens->first()->place()->first()->json()->result->icon);
         return view('route.show', compact('route'));
     }
 

@@ -27,7 +27,15 @@
     <div class="tab-content">
         <div id="comentarios" class="tab-pane fade in active">
             <h3>Comentários</h3>
-            <p>Lorem Ipsum ...</p>
+            <div class="col-xs-12 col-sm-6 col-lg-8">
+            <?php $localClass="place"; $localId=$place->id; ?>
+            @include('comment.partials.form')
+            </div>
+            <div class="col-xs-12 col-sm-6 col-lg-8">
+            @foreach ($place->comments as $comment)
+                @include('comment.partials.comment')
+            @endforeach
+            </div>
         </div>
         <div id="fotos" class="tab-pane fade">
             <h3>Fotos</h3>

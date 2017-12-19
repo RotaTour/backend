@@ -8,11 +8,11 @@
     @foreach($route->itens()->get() as $item)
     <div class="media">
         <div class="media-left">
-            <img src="{{ $item->place->icon }}" class="media-object" style="width:60px">
+            <img src="{{ $item->place->json()->result->icon }}" class="media-object" style="width:60px">
         </div>
         <div class="media-body">
-            <h4 class="media-heading">{{ $item->place->name }}</h4>
-            <p>{{ $item->place->address }}</p>
+            <h4 class="media-heading">{{ $item->place->json()->result->name }}</h4>
+            <p>{{ $item->place->json()->result->formatted_address }}</p>
             <p>Adicionado em: {{ $item->created_at->diffForHumans() }}</p>
             <p>
                 <a href="{{route('place.show', ['place_id'=>$item->place->google_place_id])}}">
