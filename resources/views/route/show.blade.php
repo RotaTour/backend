@@ -26,6 +26,11 @@
     </div>
     @endforeach
 
+    <div id="compartilhar">
+        <h3>Compartilhar</h3>
+        <div class="addthis_inline_share_toolbox"></div>
+    </div>
+    
     <div id="comentarios" class="tab-pane fade in active">
         <h3>Comentários</h3>
         <div class="col-xs-12 col-sm-6 col-lg-8">

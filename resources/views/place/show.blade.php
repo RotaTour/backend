@@ -20,6 +20,11 @@
         @include('place.details')
     @endif
 
+    <div id="compartilhar">
+        <h3>Compartilhar</h3>
+        <div class="addthis_inline_share_toolbox"></div>
+    </div>
+
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#comentarios">Comentários</a></li>
         <li><a data-toggle="tab" href="#fotos">Fotos</a></li>
