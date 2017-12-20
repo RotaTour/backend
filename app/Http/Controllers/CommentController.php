@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Comment;
 use App\Models\Place;
+use App\Models\Route;
 use Auth;
 
 class CommentController extends Controller
@@ -29,7 +30,7 @@ class CommentController extends Controller
                 $resposta = $this->addPlaceComment($input);
                 break;
             case 'route':
-                $respostas = false;
+                $resposta = $this->addRouteComment($input);
                 break;
             case 'anything':
                 $resposta = false;
@@ -57,6 +58,19 @@ class CommentController extends Controller
         $c->body = $input['body'];
         $c->user_id = Auth::user()->id;
         if ($place->comments()->save($c)) return true;
+        else return false;
+    }
+
+    protected function addRouteComment($input)
+    {
+        $route = Route::find($input['localId']);
+        if(!$route){
+            return false;
+        }
+        $c = new Comment();
+        $c->body = $input['body'];
+        $c->user_id = Auth::user()->id;
+        if ($route->comments()->save($c)) return true;
         else return false;
     }
     
