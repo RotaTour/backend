@@ -480,26 +480,29 @@
                         "name": "google_place_id",
                         "in": "body",
                         "description": "Google place - id",
-                        "required": true,
+                        "required": false,
                         "schema": {
                             "$ref": "#/definitions/NewPlace"
                         },
                         "type": "string"
                     },
                     {
-                        "name": "name",
+                        "name": "google_places",
                         "in": "body",
-                        "description": "Google place - name",
-                        "required": true,
+                        "description": "List (Array) of Google Places Ids to include in the Especified Route",
+                        "required": false,
                         "schema": {
                             "$ref": "#/definitions/NewPlace"
                         },
-                        "type": "string"
+                        "type": "array"
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "Success - Add to Route."
+                    },
+                    "401": {
+                        "description": "Param google_place_id OR google_places not provided"
                     },
                     "404": {
                         "description": "Route not found."
@@ -687,6 +690,49 @@
                 }
             }
         },
+        "NewComment": {
+            "required": [
+                "body",
+                "user_id",
+                "commentable_id",
+                "commentable_type"
+            ],
+            "properties": {
+                "body": {
+                    "description": "User's Comment",
+                    "type": "string",
+                    "example": "lorem ipsum dollor..."
+                },
+                "user_id": {
+                    "description": "User's id in database",
+                    "type": "integer"
+                },
+                "commentable_id": {
+                    "description": "id in database of resource that will receive the comment",
+                    "type": "integer"
+                },
+                "commentable_type": {
+                    "description": "The Model Class Path of resource that will receive the commnet",
+                    "type": "string",
+                    "example": "App\\Models\\Route"
+                }
+            }
+        },
+        "Comment": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/NewComment"
+                },
+                {
+                    "$ref": "#/definitions/Timestamps"
+                },
+                {
+                    "required": [
+                        "id"
+                    ]
+                }
+            ]
+        },
         "NewItem": {
             "required": [
                 "place_id",
@@ -721,7 +767,7 @@
         "NewPlace": {
             "required": [
                 "google_place_id",
-                "name"
+                "google_json"
             ],
             "properties": {
                 "google_place_id": {
@@ -729,10 +775,9 @@
                     "type": "string",
                     "example": "ChIJVyuijGQZqwcREEzZ32LILvA"
                 },
-                "name": {
-                    "description": "Place name",
-                    "type": "string",
-                    "example": "Hospital das Cl\u00ednicas - HC - UFPE"
+                "google_json": {
+                    "description": "Google Json content for google_place_id",
+                    "type": "string"
                 }
             }
         },

@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @SWG\Definition(
  *     definition="NewPlace",
- *     required={"google_place_id", "name"},
+ *     required={"google_place_id", "google_json"},
  *     @SWG\Property(
  *          property="google_place_id",
  *          type="string",
@@ -19,10 +19,9 @@ use Illuminate\Database\Eloquent\Model;
  *          example="ChIJVyuijGQZqwcREEzZ32LILvA"
  *    ),
  *     @SWG\Property(
- *          property="name",
+ *          property="google_json",
  *          type="string",
- *          description="Place name",
- *          example="Hospital das Clínicas - HC - UFPE"
+ *          description="Google Json content for google_place_id"
  *    )
  * )
  * @SWG\Definition(

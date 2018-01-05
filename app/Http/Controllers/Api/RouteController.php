@@ -212,9 +212,8 @@ class RouteController extends Controller
      *          in="body",
      *          schema={"$ref": "#/definitions/NewPlace"},
      *          required=false,
-     *          type="string",
-     *          description="List (Array) of Google Places Ids to include in the Especified Route",
-     *          example = "google_places = ['ChIJVyuijGQZqwcREEzZ32LILvA','ChIJ5UbEiG8ZqwcR1H9EIin1njw']",
+     *          type="array",
+     *          description="List (Array) of Google Places Ids to include in the Especified Route"
      * 	   ),
      *     @SWG\Response(
      *         response=200,
@@ -223,7 +222,7 @@ class RouteController extends Controller
      *     @SWG\Response(
      *         response=401,
      *         description="Param google_place_id OR google_places not provided",
-     *     )
+     *     ),
      *     @SWG\Response(
      *         response=404,
      *         description="Route not found.",
