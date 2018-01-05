@@ -185,7 +185,7 @@ class RouteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      * 
-     * @SWG\Get(
+     * @SWG\Post(
      *     path="/api/routes/addToRoute",
      *     description="Adds an Item to specified route.",
      *     operationId="api.routes.addToRoute",
@@ -216,7 +216,7 @@ class RouteController extends Controller
      *          description="List (Array) of Google Places Ids to include in the Especified Route"
      * 	   ),
      *     @SWG\Response(
-     *         response=200,
+     *         response=201,
      *         description="Success - Add to Route."
      *     ),
      *     @SWG\Response(
@@ -276,6 +276,6 @@ class RouteController extends Controller
             return response()->json(['error' => 'Param google_place_id OR google_places not provided'], 400);
         }
 
-        return response()->json(['info' => 'Item(s) added to Route '.$route->name]);
+        return response()->json(['info' => 'Item(s) added to Route '.$route->name], 201);
     }
 }
