@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Route;
 use App\Models\Place;
 use App\Models\Item;
+use GooglePlaces;
 
 class RouteController extends Controller
 {
@@ -202,22 +203,27 @@ class RouteController extends Controller
      *          name="google_place_id",
      *          in="body",
      *          schema={"$ref": "#/definitions/NewPlace"},
-     *          required=true,
+     *          required=false,
      *          type="string",
      *          description="Google place - id",
      * 	   ),
      *     @SWG\Parameter(
-     *          name="google_json",
+     *          name="google_places",
      *          in="body",
      *          schema={"$ref": "#/definitions/NewPlace"},
-     *          required=true,
+     *          required=false,
      *          type="string",
-     *          description="The Json from Google Places API",
+     *          description="List (Array) of Google Places Ids to include in the Especified Route",
+     *          example = "google_places = ['ChIJVyuijGQZqwcREEzZ32LILvA','ChIJ5UbEiG8ZqwcR1H9EIin1njw']",
      * 	   ),
      *     @SWG\Response(
      *         response=200,
      *         description="Success - Add to Route."
      *     ),
+     *     @SWG\Response(
+     *         response=401,
+     *         description="Param google_place_id OR google_places not provided",
+     *     )
      *     @SWG\Response(
      *         response=404,
      *         description="Route not found.",
@@ -227,23 +233,50 @@ class RouteController extends Controller
     public function addToRoute(Request $request)
     {
         $input = $request->input();
-        
-        $place = Place::where('google_place_id',$input['google_place_id'])->first();
-        if (!$place){
-            $place = Place::create($input);
-        }
 
         $route = Route::where('id', $input['routeId'])->first();
         if (!$route ){
             return response()->json(['error' => 'Route not found.'], 404);
         }
 
-        $item = new Item();
-        $item->route_id = $route->id;
-        $item->place_id = $place->id;
-        $item->order = 1;
-        $item->save();
+        if(isset($input['google_places'])){
+            if( is_array($input['google_places']) ){
+                $google_places = $input['google_places'];
+                foreach($google_places as $google_place)
+                {
+                    $place = Place::where('google_place_id',$google_place)->first();
+                    if (!$place){
+                        $place = new Place();
+                        $place->google_place_id = $input['google_place_id'];
+                        $place->google_json = GooglePlaces::placeDetails($input['google_place_id'], ['language'=>'pt-BR']);
+                        $place->save();
+                    }
 
-        return response()->json(['info' => 'Item added to Route '.$route->name]);
+                    $item = new Item();
+                    $item->route_id = $route->id;
+                    $item->place_id = $place->id;
+                    $item->order = 1;
+                    $item->save();
+                }
+            }
+
+        } else if(isset($input['google_place_id'])) {
+            $place = Place::where('google_place_id',$input['google_place_id'])->first();
+            if (!$place){
+                $place = new Place();
+                $place->google_place_id = $input['google_place_id'];
+                $place->google_json = GooglePlaces::placeDetails($input['google_place_id'], ['language'=>'pt-BR']);
+                $place->save();
+            }
+            $item = new Item();
+                    $item->route_id = $route->id;
+                    $item->place_id = $place->id;
+                    $item->order = 1;
+                    $item->save();
+        } else {
+            return response()->json(['error' => 'Param google_place_id OR google_places not provided'], 400);
+        }
+
+        return response()->json(['info' => 'Item(s) added to Route '.$route->name]);
     }
 }
