@@ -66,6 +66,14 @@ class RouteController extends Controller
      *          type="string",
      *          description="Name of the new Route",
      * 	   ),
+     *     @SWG\Parameter(
+     *          name="body",
+     *          in="body",
+     *          schema={"$ref": "#/definitions/NewRoute"},
+     *          required=false,
+     *          type="string",
+     *          description="The route description",
+     * 	   ),
      *     @SWG\Response(
      *         response=200,
      *         description="Success - User found and will save the Route."

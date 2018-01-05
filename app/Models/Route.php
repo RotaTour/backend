@@ -15,13 +15,18 @@ use Illuminate\Database\Eloquent\Model;
  *     @SWG\Property(
  *          property="name",
  *          type="string",
- *          description="Route's full name",
+ *          description="Route full name",
  *          example="Rota de teste"
  *    ),
  *     @SWG\Property(
  *          property="user_id",
  *          type="integer",
- *          description="User's id in database"
+ *          description="Owner of the Route, User id in database"
+ *    ),
+ *     @SWG\Property(
+ *          property="body",
+ *          type="string",
+ *          description="The route description"
  *    )
  * )
  * @SWG\Definition(

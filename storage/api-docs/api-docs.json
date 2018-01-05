@@ -382,6 +382,16 @@
                             "$ref": "#/definitions/NewRoute"
                         },
                         "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "The route description",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/NewRoute"
+                        },
+                        "type": "string"
                     }
                 ],
                 "responses": {
@@ -803,13 +813,17 @@
             ],
             "properties": {
                 "name": {
-                    "description": "Route's full name",
+                    "description": "Route full name",
                     "type": "string",
                     "example": "Rota de teste"
                 },
                 "user_id": {
-                    "description": "User's id in database",
+                    "description": "Owner of the Route, User id in database",
                     "type": "integer"
+                },
+                "body": {
+                    "description": "The route description",
+                    "type": "string"
                 }
             }
         },
