@@ -87,7 +87,7 @@ class RouteController extends Controller
             $route->user_id = $user->id;
             $route->save();
             $info = "Route created!";
-            return response()->json(compact('route', 'info'));
+            return response()->json(compact('route', 'info'), 201);
         }
     }
 
