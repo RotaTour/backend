@@ -35,6 +35,7 @@ Route::get('/places', 'PlaceController@index')->name('place.index');
 Route::get('/places/categories', 'PlaceController@categories')->name('place.categories');
 Route::get('/places/pointsofinterest', 'PlaceController@pointsOfInterest')->name('place.points');
 Route::get('/places/show', 'PlaceController@show')->name('place.show');
+Route::get('/places/getdetails', 'PlaceController@getdetails')->name('place.getdetails');
 
 Route::get('/routes', 'RouteController@index')->name('route.index');
 Route::get('/routes/create', 'RouteController@create')->name('route.create');

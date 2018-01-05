@@ -207,12 +207,12 @@ class RouteController extends Controller
      *          description="Google place - id",
      * 	   ),
      *     @SWG\Parameter(
-     *          name="name",
+     *          name="google_json",
      *          in="body",
      *          schema={"$ref": "#/definitions/NewPlace"},
      *          required=true,
      *          type="string",
-     *          description="Google place - name",
+     *          description="The Json from Google Places API",
      * 	   ),
      *     @SWG\Response(
      *         response=200,

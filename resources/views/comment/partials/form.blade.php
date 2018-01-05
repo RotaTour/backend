@@ -18,7 +18,7 @@
 </div>
 <script type="text/javascript">
 var localId = {{$localId}};
-var localClass = {{$localClass}};
+var localClass = "{{$localClass}}";
 var comment = "";
 
 function getComment()

@@ -5,9 +5,13 @@
 <h3>Locais</h3>
 <style>
 #gmap_canvas {
-    height: 400px;
+    height: 600px;
     position: relative;
     width: 100%;
+}
+#detail {
+    margin: 20px;
+    margin-right: 120px;
 }
 .actions {
     background-color: #FFFFFF;
@@ -84,41 +88,46 @@
     box-shadow: inset 0 0 4px 2px #abbccf, 0 0 1px 0 #eeeeee;
 }
 </style>
-<div id="gmap_canvas"></div>
-<div class="actions">
-    <div class="button">
-        <div id="button2" class="button" onclick="resetCeagri(); return false;">Ceagri II</div>
-        <div id="button2" class="button" onclick="getCurrentGeo(); return false;">resetar</div>
+<div id="detail"></div>
+<hr>
+<div id="general_canvas">
+    <div id="gmap_canvas"></div>
+    <div class="actions">
+        <div class="button">
+            <div id="button2" class="button" onclick="resetCeagri(); return false;">Ceagri II</div>
+            <div id="button2" class="button" onclick="getCurrentGeo(); return false;">resetar</div>
+        </div>
+        <div class="button">
+            <label for="gmap_where">Onde:</label>
+            <input id="gmap_where" type="text" name="gmap_where" /></div>
+        <div id="button2" class="button" onclick="findAddress(); return false;">Pesquisar endereço</div>
+        <div class="button">
+            <label for="gmap_keyword">Palavras chave (opcional):</label>
+            <input id="gmap_keyword" type="text" name="gmap_keyword" /></div>
+        <div class="button">
+            <label for="gmap_type">Tipo:</label>
+            <select id="gmap_type">
+                <!-- https://developers.google.com/places/web-service/supported_types -->
+                @foreach($categories as $category)
+                <option value="{{$category->google_name}}">{{$category->display_name}}</option>    
+                @endforeach
+            </select>
+        </div>
+        <div class="button">
+            <label for="gmap_radius">Raio:</label>
+            <select id="gmap_radius">
+                <option value="500">500</option>
+                <option value="1000">1000</option>
+                <option value="1500">1500</option>
+                <option value="5000">5000</option>
+            </select>
+        </div>
+        <input type="hidden" id="lat" name="lat" />
+        <input type="hidden" id="lng" name="lng" />
+        <div id="button1" class="button" onclick="findPlaces(); return false;">Pesquisar locais</div>
     </div>
-    <div class="button">
-        <label for="gmap_where">Onde:</label>
-        <input id="gmap_where" type="text" name="gmap_where" /></div>
-    <div id="button2" class="button" onclick="findAddress(); return false;">Pesquisar endereço</div>
-    <div class="button">
-        <label for="gmap_keyword">Palavras chave (opcional):</label>
-        <input id="gmap_keyword" type="text" name="gmap_keyword" /></div>
-    <div class="button">
-        <label for="gmap_type">Tipo:</label>
-        <select id="gmap_type">
-            <!-- https://developers.google.com/places/web-service/supported_types -->
-            @foreach($categories as $category)
-            <option value="{{$category->google_name}}">{{$category->display_name}}</option>    
-            @endforeach
-        </select>
-    </div>
-    <div class="button">
-        <label for="gmap_radius">Raio:</label>
-        <select id="gmap_radius">
-            <option value="500">500</option>
-            <option value="1000">1000</option>
-            <option value="1500">1500</option>
-            <option value="5000">5000</option>
-        </select>
-    </div>
-    <input type="hidden" id="lat" name="lat" />
-    <input type="hidden" id="lng" name="lng" />
-    <div id="button1" class="button" onclick="findPlaces(); return false;">Pesquisar locais</div>
 </div>
+
 @endsection
 
 @section('scripts')
@@ -128,7 +137,12 @@ var geocoder;
 var map;
 var markers = Array();
 var infos = Array();
-var showInfoPage = "{{ route("place.show") }}";
+var showInfoPage = "{{ route('place.show') }}";
+var CurrentPlaceId = "";
+var routeUrl = "{{ route('route.index') }}";
+var getdetailsUrl = "{{ route('place.getdetails') }}";
+var localPlace = {google_place_id: "", name: "", address:"", lat:"", lng:"", icon:"", scope:"", routeId: ""};
+var showMap = true;
 
 // Default location
 var latDefault = -8.0176527;
@@ -194,14 +208,16 @@ function getCurrentGeo()
     
 }
 
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+function handleLocationError(browserHasGeolocation, infoWindow, pos)
+{
     infoWindow.setPosition(pos);
     infoWindow.setContent(browserHasGeolocation ?
         'Error: The Geolocation service failed.' :
         'Error: Your browser doesn\'t support geolocation.');
 }
 
-function initialize() {
+function initialize()
+{
     // prepare Geocoder
     geocoder = new google.maps.Geocoder();
     // set initial position (New York)
@@ -222,7 +238,8 @@ function initialize() {
 }
 
 // clear overlays function
-function clearOverlays() {
+function clearOverlays()
+{
     if (markers) {
         for (i in markers) {
             markers[i].setMap(null);
@@ -232,7 +249,8 @@ function clearOverlays() {
     }
 }
 // clear infos function
-function clearInfos() {
+function clearInfos()
+{
     if (infos) {
         for (i in infos) {
             if (infos[i].getMap()) {
@@ -242,7 +260,8 @@ function clearInfos() {
     }
 }
 // find address function
-function findAddress() {
+function findAddress()
+{
     var address = document.getElementById("gmap_where").value;
     // script uses our 'geocoder' in order to find location by address name
     geocoder.geocode( { 'address': address}, function(results, status) {
@@ -271,7 +290,8 @@ function findAddress() {
     });
 }
 // find custom places function
-function findPlaces() {
+function findPlaces()
+{
     // prepare variables (filter)
     var type = document.getElementById('gmap_type').value;
     var radius = document.getElementById('gmap_radius').value;
@@ -293,7 +313,8 @@ function findPlaces() {
     service.search(request, createMarkers);
 }
 // create markers (from 'findPlaces' function)
-function createMarkers(results, status) {
+function createMarkers(results, status)
+{
     if (status == google.maps.places.PlacesServiceStatus.OK) {
         // if we have found something - clear map (overlays)
         clearOverlays();
@@ -306,7 +327,8 @@ function createMarkers(results, status) {
     }
 }
 // creare single marker function
-function createMarker(obj) {
+function createMarker(obj)
+{
     // prepare new Marker object
     var mark = new google.maps.Marker({
         position: obj.geometry.location,
@@ -318,7 +340,7 @@ function createMarker(obj) {
     var infowindow = new google.maps.InfoWindow({
         content: '<img src="' + obj.icon + '" /><font style="color:#000;">' + obj.name +
         '<br />Rating: ' + obj.rating + '<br />Vicinity: ' + obj.vicinity + 
-        '<br /><a href="'+ showInfoPage + "?place_id="+obj.place_id +'">Ver detalhes</a> </font>'
+        '<br /><a href="#detail"?place_id="'+obj.place_id +'" onclick="getPlaceDetail(\''+obj.place_id+'\')">Ver detalhes</a> </font>'
     });
     // add event handler to current marker
     google.maps.event.addListener(mark, 'click', function() {
@@ -326,8 +348,70 @@ function createMarker(obj) {
         infowindow.open(map,mark);
     });
     infos.push(infowindow);
-    console.log('Objeto: ', obj);
+    //console.log('Objeto: ', obj); // não precisa mais
 }
+
+/*
+ * Para testes apenas
+ */
+ /*
+function generalCanvasToogle()
+{
+    if (showMap){
+        $('#general_canvas').hide();
+        $('#toogleButton').html('Voltar ao Mapa');
+        showMap = false;
+    } else {
+        $('#general_canvas').show();
+        $('#toogleButton').html('Esconder o Mapa');
+        showMap = true;
+    }
+}
+*/
+
+function getPlaceDetail(google_place_id)
+{
+    $('#detail').hide();
+    $.ajax({
+        url: getdetailsUrl + "?place_id=" +google_place_id,
+        type: "GET",
+        dataType: 'html',
+        success: function (result) {
+            localPlace.google_place_id = google_place_id;
+            //var mapToogle = "\n<br><button onclick=\"generalCanvasToogle()\" id=\"toogleButton\">Voltar ao Mapa</button>";
+            //var html = result.concat(mapToogle);
+            //generalCanvasToogle();
+            $('#detail').html(result);
+            $('#detail').show();
+        }
+    });
+
+    return false;
+}
+
+function addToRoute()
+{
+    localPlace.routeId = $('#addToRouteSelect').val();
+    var preloader = '<img src="https://i0.wp.com/cdnjs.cloudflare.com/ajax/libs/galleriffic/2.0.1/css/loader.gif?resize=48%2C48" alt="Loading..." />';
+    $('#resultForm').html(preloader);
+    $('#addToRouteForm').hide();
+    $.ajax({
+        url: "{{ route('route.addToRoute') }}",
+        type: "GET",
+        data: localPlace,
+        dataType: 'json',
+        success: function (result) {
+            console.log('result: ', result);
+            var html = 'Sucesso: '+result.body
+                +' <a href="'+routeUrl+'/show/'+localPlace.routeId+'">'+
+                result.name+'</a>';
+            $('#resultForm').html(html);
+            $('#addToRouteForm').show();
+        }
+    });
+}
+
+
 // initialization
 //google.maps.event.addDomListener(window, 'load', initialize);
 //resetLatLng();

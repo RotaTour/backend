@@ -3,18 +3,6 @@
 @section('content')
 <h3>Detalhes do Local</h3>
 
-<div class="pull-right form-group">
-    <div id="addForm">
-        <select name="addToRouteSelect" id="addToRouteSelect">
-            @foreach($routes as $route)
-            <option value="{{$route->id}}">{{$route->name}}</option>
-            @endforeach
-        </select>
-        <button id="addToRouteButton" class="btn btn-success btn-sm" onclick="addToRoute(); return false;">Adicionar na Rota</button>
-    </div>
-    <div id="resultForm"></div>
-</div>
-
 @if( isset($place_id))
     @if( isset($place))
         @include('place.details')
@@ -59,15 +47,15 @@
 <script type="text/javascript">
 var CurrentPlaceId = "{{$place_id}}";
 var Key = "AIzaSyAa42oli-edAepQHbkhPmgjx6Cdtw-DMe0";
-var localPlace = {google_place_id: "", name: "", address:"", lat:"", lng:"", icon:"", scope:"", routeId: ""};
 var preloader = '<img src="https://i0.wp.com/cdnjs.cloudflare.com/ajax/libs/galleriffic/2.0.1/css/loader.gif?resize=48%2C48" alt="Loading..." />';
 var routeUrl = "{{ route('route.index') }}";
+var localPlace = {google_place_id: "", name: "", address:"", lat:"", lng:"", icon:"", scope:"", routeId: ""};
 
 function addToRoute()
 {
     localPlace.routeId = $('#addToRouteSelect').val();
     $('#resultForm').html(preloader);
-    $('#addForm').hide();
+    $('#addToRouteForm').hide();
     $.ajax({
         url: "{{ route('route.addToRoute') }}",
         type: "GET",
@@ -79,7 +67,7 @@ function addToRoute()
                 +' <a href="'+routeUrl+'/show/'+localPlace.routeId+'">'+
                 result.name+'</a>';
             $('#resultForm').html(html);
-            $('#addForm').show();
+            $('#addToRouteForm').show();
         }
         //complete: logResultado,
     });
