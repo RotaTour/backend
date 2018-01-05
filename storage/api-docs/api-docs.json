@@ -455,7 +455,7 @@
             }
         },
         "/api/routes/addToRoute": {
-            "get": {
+            "post": {
                 "tags": [
                     "routes"
                 ],
@@ -498,7 +498,7 @@
                     }
                 ],
                 "responses": {
-                    "200": {
+                    "201": {
                         "description": "Success - Add to Route."
                     },
                     "401": {
