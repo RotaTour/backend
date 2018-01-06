@@ -514,6 +514,9 @@
                     "401": {
                         "description": "Param google_place_id OR google_places not provided"
                     },
+                    "403": {
+                        "description": "Forbbiden - You are not the owner"
+                    },
                     "404": {
                         "description": "Route not found."
                     }
