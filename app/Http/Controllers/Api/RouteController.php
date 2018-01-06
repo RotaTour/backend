@@ -232,6 +232,10 @@ class RouteController extends Controller
      *         description="Param google_place_id OR google_places not provided",
      *     ),
      *     @SWG\Response(
+     *         response=403,
+     *         description="Forbbiden - You are not the owner",
+     *     ),
+     *     @SWG\Response(
      *         response=404,
      *         description="Route not found.",
      *     )
@@ -244,6 +248,12 @@ class RouteController extends Controller
         $route = Route::where('id', $input['routeId'])->first();
         if (!$route ){
             return response()->json(['error' => 'Route not found.'], 404);
+        }
+
+        $userJWT = JWTAuth::parseToken()->authenticate();
+        $user = User::find($userJWT->id);
+        if ($user->id != $route->user()->first()->id){
+            return response()->json(['error' => 'Forbbiden - You are not the owner'], 403);
         }
 
         if( isset($input['google_places']) ){
