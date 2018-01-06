@@ -246,7 +246,8 @@ class RouteController extends Controller
             return response()->json(['error' => 'Route not found.'], 404);
         }
 
-        if(isset($input['google_places'])){
+        if( isset($input['google_places']) ){
+
             if( is_array($input['google_places']) ){
                 $google_places = $input['google_places'];
                 foreach($google_places as $google_place)
@@ -254,8 +255,8 @@ class RouteController extends Controller
                     $place = Place::where('google_place_id',$google_place)->first();
                     if (!$place){
                         $place = new Place();
-                        $place->google_place_id = $input['google_place_id'];
-                        $place->google_json = GooglePlaces::placeDetails($input['google_place_id'], ['language'=>'pt-BR']);
+                        $place->google_place_id = $google_place;
+                        $place->google_json = GooglePlaces::placeDetails($google_place, ['language'=>'pt-BR']);
                         $place->save();
                     }
 
@@ -267,7 +268,7 @@ class RouteController extends Controller
                 }
             }
 
-        } else if(isset($input['google_place_id'])) {
+        } else if( isset($input['google_place_id']) ) {
             $place = Place::where('google_place_id',$input['google_place_id'])->first();
             if (!$place){
                 $place = new Place();
