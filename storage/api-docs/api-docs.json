@@ -144,6 +144,79 @@
                 }
             }
         },
+        "/api/social/register": {
+            "post": {
+                "tags": [
+                    "login"
+                ],
+                "summary": "Register the user information from Social Provider and return a JWT Token.",
+                "description": "Register the user information from Social Provider and return a JWT Token.",
+                "operationId": "api.social.register",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "body",
+                        "description": "Fullname used by user",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NewUser"
+                        },
+                        "type": "string"
+                    },
+                    {
+                        "name": "email",
+                        "in": "body",
+                        "description": "Email used by user",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NewUser"
+                        },
+                        "type": "string"
+                    },
+                    {
+                        "name": "avatar",
+                        "in": "body",
+                        "description": "Avatar image Url",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/NewUser"
+                        },
+                        "type": "string"
+                    },
+                    {
+                        "name": "provider",
+                        "in": "body",
+                        "description": "Provider Name Social Provider, all lowercase",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NewUser"
+                        },
+                        "type": "string"
+                    },
+                    {
+                        "name": "provider_id",
+                        "in": "body",
+                        "description": "Provider Id From Social Provider",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NewUser"
+                        },
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - respond with a JWT Token"
+                    },
+                    "400": {
+                        "description": "Email not provided"
+                    }
+                }
+            }
+        },
         "/api/friends": {
             "get": {
                 "tags": [
