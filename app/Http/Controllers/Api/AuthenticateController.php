@@ -209,7 +209,7 @@ class AuthenticateController extends Controller
     ////// Stateless Social login
     // ref.: https://isaacearl.com/blog/stateless-socialite
     /**
-     * Redirect the user to the GitHub authentication page.
+     * Redirect the user to the $provider authentication page.
      *
      * @return \Illuminate\Http\Response
      */
@@ -219,9 +219,10 @@ class AuthenticateController extends Controller
     }
 
     /**
-     * Obtain the user information from GitHub.
+     * Obtain the user information from $provider.
      *
      * @return JsonResponse
+     * 
      */
     public function handleProviderCallback($provider)
     {
@@ -246,26 +247,80 @@ class AuthenticateController extends Controller
     }
 
     /**
-     * Obtain the user information from GitHub.
+     * Register the user information from Social Provider and return a JWT Token.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return JsonResponse
+     * @SWG\Post(
+     *     path="/api/social/register",
+     *     description="Register the user information from Social Provider and return a JWT Token.",
+     *     operationId="api.social.register",
+     *     produces={"application/json"},
+     *     tags={"login"},
+     *     @SWG\Parameter(
+     *          name="name",
+     *          in="body",
+     *          schema={"$ref": "#/definitions/NewUser"},
+     *          required=true,
+     *          type="string",
+     *          description="Fullname used by user",
+     * 	   ),
+     *     @SWG\Parameter(
+     *          name="email",
+     *          in="body",
+     *          schema={"$ref": "#/definitions/NewUser"},
+     *          required=true,
+     *          type="string",
+     *          description="Email used by user",
+     * 	   ),
+     *     @SWG\Parameter(
+     *          name="avatar",
+     *          in="body",
+     *          schema={"$ref": "#/definitions/NewUser"},
+     *          required=false,
+     *          type="string",
+     *          description="Avatar image Url",
+     * 	   ),
+     *     @SWG\Parameter(
+     *          name="provider",
+     *          in="body",
+     *          schema={"$ref": "#/definitions/NewUser"},
+     *          required=true,
+     *          type="string",
+     *          description="Provider Name Social Provider, all lowercase",
+     * 	   ),
+     *     @SWG\Parameter(
+     *          name="provider_id",
+     *          in="body",
+     *          schema={"$ref": "#/definitions/NewUser"},
+     *          required=true,
+     *          type="string",
+     *          description="Provider Id From Social Provider",
+     * 	   ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Success - respond with a JWT Token"
+     *     ),
+     *     @SWG\Response(
+     *         response=400,
+     *         description="Email not provided",
+     *     )
+     * )
      */
     public function registerProviderCallback(Request $request)
     {
         $input = $request->input();
 
-        $user = User::query()->firstOrNew([
-            'email' => $input['email'], 
-            'provider_id'=>$input['provider_id'], 
-            'provider'=>$input['provider'] 
-            ]);
+        // Only use E-mail
+        if(!isset($input['email'])) return response()->json(['error'=>'Email not provided'], 400);
+        $user = User::query()->firstOrNew([ 'email' => $input['email'] ]);
 
         // Se não existir, cria o user
         if (!$user->exists) {
             $user->name = $input['name'];
             $user->email = $input['email'];
             $user->avatar = $input['avatar'];
-            $user->provider_id = $input['provider_id'];
+            $user->provider_id_mobile = $input['provider_id'];
             $user->provider = $input['provider'];
             $user->save();
         }

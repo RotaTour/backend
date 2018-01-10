@@ -69,10 +69,13 @@ class LoginController extends Controller
             'provider' => $provider
         ];
 
-        //dd($user);
-        //dd($data);
+        $userLocal = User::query()->firstOrNew([ 'email' => $user->getEmail() ]);
+        // Se não existir, cria o user
+        if (!$userLocal->exists) {
+            $userLocal = User::create($data);
+        }
 
-        Auth::login( User::firstOrCreate($data) );
+        Auth::login( $userLocal );
 
         //after login redirecting to home page
         return redirect($this->redirectPath());
