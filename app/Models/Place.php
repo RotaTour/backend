@@ -61,6 +61,14 @@ class Place extends Model
     {
         return $this->morphMany('App\Models\Comment', 'commentable');
     }
+
+    /**
+     * Get all of the tags for the post.
+     */
+    public function tags()
+    {
+        return $this->morphToMany('App\Models\Tag', 'taggable');
+    }
     
     /**
      * json_decode google json
@@ -71,4 +79,6 @@ class Place extends Model
     {
         return json_decode($this->google_json);
     }
+
+
 }

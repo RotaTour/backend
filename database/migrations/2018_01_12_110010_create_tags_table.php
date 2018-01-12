@@ -19,6 +19,12 @@ class CreateTagsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->timestamps();
         });
+
+        Schema::create('taggables', function (Blueprint $table) {
+            $table->integer('tag_id')->unsigned();
+            $table->integer('taggable_id')->unsigned();
+            $table->string('taggable_type');
+        });
     }
 
     /**
@@ -28,6 +34,7 @@ class CreateTagsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('taggables');
         Schema::dropIfExists('tags');
     }
 }

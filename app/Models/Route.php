@@ -72,5 +72,13 @@ class Route extends Model
     {
         return $this->morphMany('App\Models\Comment', 'commentable');
     }
+    
+    /**
+     * Get all of the tags for the post.
+     */
+    public function tags()
+    {
+        return $this->morphToMany('App\Models\Tag', 'taggable');
+    }
 
 }

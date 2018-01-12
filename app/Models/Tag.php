@@ -23,4 +23,21 @@ class Tag extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+
+    /**
+     * Get all of the places that are assigned this tag.
+     */
+    public function places()
+    {
+        return $this->morphedByMany('App\Models\Places', 'taggable');
+    }
+
+    /**
+     * Get all of the routes that are assigned this tag.
+     */
+    public function routes()
+    {
+        return $this->morphedByMany('App\Models\Route', 'taggable');
+    }
+
 }
