@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Route;
 use App\Models\Place;
 use App\Models\Item;
+use App\Models\Tag;
 use GooglePlaces;
 
 class RouteController extends Controller
@@ -130,7 +131,7 @@ class RouteController extends Controller
      */
     public function show($id)
     {
-        $route = Route::where('id', $id)->with(['itens.place'])->first();
+        $route = Route::where('id', $id)->with(['itens.place', 'tags'])->first();
         if(!$route) {
             return response()->json(['error' => 'Route not found.'], 404);
         } else {

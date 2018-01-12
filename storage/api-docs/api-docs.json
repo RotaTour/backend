@@ -629,6 +629,88 @@
                 }
             }
         },
+        "/api/tags": {
+            "get": {
+                "tags": [
+                    "tags"
+                ],
+                "summary": "Display a listing of the tags.",
+                "description": "Returns all tags",
+                "operationId": "api.tags.index",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - return all tags."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "tags"
+                ],
+                "summary": "Store a newly created route in storage.",
+                "description": "Store a new tag.",
+                "operationId": "api.tags.store",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "body",
+                        "description": "Name of the new Tag",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NewTag"
+                        },
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success - Tag created."
+                    },
+                    "404": {
+                        "description": "User not found."
+                    },
+                    "400": {
+                        "description": "name not provided."
+                    }
+                }
+            }
+        },
+        "/api/tags/show/{id}": {
+            "get": {
+                "tags": [
+                    "tags"
+                ],
+                "summary": "Display the specified tag.",
+                "description": "Returns the tag details.",
+                "operationId": "api.tags.show",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Tag id in database",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - Tag found."
+                    },
+                    "404": {
+                        "description": "Tag not found."
+                    }
+                }
+            }
+        },
         "/api/users/{email}": {
             "get": {
                 "tags": [
@@ -907,6 +989,38 @@
             "allOf": [
                 {
                     "$ref": "#/definitions/NewRoute"
+                },
+                {
+                    "$ref": "#/definitions/Timestamps"
+                },
+                {
+                    "required": [
+                        "id"
+                    ]
+                }
+            ]
+        },
+        "NewTag": {
+            "required": [
+                "name",
+                "user_id"
+            ],
+            "properties": {
+                "name": {
+                    "description": "Tag name",
+                    "type": "string",
+                    "example": "{litoral, r\u00e1pido, baixo custo}"
+                },
+                "user_id": {
+                    "description": "The id of the Owner, user_id in database",
+                    "type": "integer"
+                }
+            }
+        },
+        "Tag": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/NewTag"
                 },
                 {
                     "$ref": "#/definitions/Timestamps"
