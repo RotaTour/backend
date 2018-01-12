@@ -19,9 +19,13 @@
             @endif
             
             Origem dos dados: {{ $place->google_json->result->scope }} <br>
+            
+            @if(isset($place->google_json->result->website))
             Website: <a href="{{ $place->google_json->result->website }}" target="_blank">
             {{ $place->google_json->result->website }}
             </a><br>
+            @endif
+            
             @if( !isset($place_id))
             Mais detalhes: <a href="{{ route('place.show') }}?place_id={{ $place->google_place_id}}">
                 {{ $place->google_json->result->name }}
