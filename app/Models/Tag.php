@@ -4,6 +4,36 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Tag
+ *
+ * @package App\Models
+ *
+ * @SWG\Definition(
+ *     definition="NewTag",
+ *     required={"name", "user_id"},
+ *     @SWG\Property(
+ *          property="name",
+ *          type="string",
+ *          description="Tag name",
+ *          example="{litoral, rápido, baixo custo}"
+ *    ),
+ *     @SWG\Property(
+ *          property="user_id",
+ *          type="integer",
+ *          description="The id of the Owner, user_id in database"
+ *    )
+ * )
+ * @SWG\Definition(
+ *     definition="Tag",
+ *     allOf = {
+ *          { "$ref": "#/definitions/NewTag" },
+ *          { "$ref": "#/definitions/Timestamps" },
+ *          { "required": {"id"} }
+ *     }
+ * )
+ *
+ */
 class Tag extends Model
 {
     /**
