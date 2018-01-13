@@ -65,7 +65,8 @@ Route::group(['middleware'=>'cors'], function(){
         /* Tags */
         Route::get('tags', 'Api\TagController@index')->name('api.tags');
         Route::post('/tags', 'Api\TagController@store')->name('api.tags.store');
-        Route::get('/tags/show/{id}', 'Api\TagController@show')->name('api.tags.show');
+        Route::get('/tags/show/{tag_name}', 'Api\TagController@show')->name('api.tags.show');
+        Route::delete('/tags/delete/{id}', 'Api\TagController@destroy')->name('api.tags.delete');
 
     });
 

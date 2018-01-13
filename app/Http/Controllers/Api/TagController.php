@@ -104,17 +104,17 @@ class TagController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @SWG\Get(
-     *     path="/api/tags/show/{id}",
+     *     path="/api/tags/show/{tag_name}",
      *     description="Returns the tag details.",
      *     operationId="api.tags.show",
      *     produces={"application/json"},
      *     tags={"tags"},
      *     @SWG\Parameter(
-     *          name="id",
+     *          name="tag_name",
      *          in="path",
      *          required=true,
      *          type="string",
-     *          description="Tag id in database",
+     *          description="Tag name in database",
      * 	   ),
      *     @SWG\Response(
      *         response=200,
@@ -126,9 +126,9 @@ class TagController extends Controller
      *     )
      * )
      */
-    public function show($id)
+    public function show($tag_name)
     {
-        $tag = Tag::where('id', $id)->with(['routes'])->first();
+        $tag = Tag::where('name', $tag_name)->with(['routes'])->first();
         if(!$tag){
             return response()->json(['error'=>'Tag not found'], 404);
         }
@@ -163,9 +163,46 @@ class TagController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     * 
+     * @SWG\Delete(
+     *     path="/api/tags/delete/{id}",
+     *     description="Delete the tag especified",
+     *     operationId="api.tags.delete",
+     *     produces={"application/json"},
+     *     tags={"tags"},
+     *     @SWG\Parameter(
+     *          name="id",
+     *          in="path",
+     *          required=true,
+     *          type="string",
+     *          description="Tag id in database",
+     * 	   ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Success - Tag found."
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Tag not found.",
+     *     )
+     * )
      */
     public function destroy($id)
     {
-        //
+        $tag = Tag::find($id);
+        if (!$tag){
+            return response()->json(['error' => 'Tag not found.'], 404);
+        }
+
+        $userJWT = JWTAuth::parseToken()->authenticate();
+        $user = User::find($userJWT->id);
+
+        if ($user->id == $tag->user()->first()->id){
+            $name = $tag->name;
+            $tag->delete();
+            return response()->json(['info' => 'The Tag '.$name.' was deleted.']);
+        } else {
+            return response()->json(['error' => "The Tag could not deleted."], 403);
+        }
     }
 }

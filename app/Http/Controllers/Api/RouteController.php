@@ -182,7 +182,7 @@ class RouteController extends Controller
         if ($user->id == $route->user()->first()->id){
             $name = $route->name;
             $route->delete();
-            return response()->json(['info' => 'The Route '.$name.' has deleted.']);
+            return response()->json(['info' => 'The Route '.$name.' was deleted.']);
         } else {
             return response()->json(['error' => "The Route could not deleted."], 403);
         }
