@@ -75,6 +75,14 @@ class RouteController extends Controller
      *          type="string",
      *          description="The route description",
      * 	   ),
+     *     @SWG\Parameter(
+     *          name="tags",
+     *          in="body",
+     *          schema={"$ref": "#/definitions/NewRoute"},
+     *          required=false,
+     *          type="array",
+     *          description="A tag list for the route",
+     * 	   ),
      *     @SWG\Response(
      *         response=200,
      *         description="Success - User found and will save the Route."
@@ -82,22 +90,40 @@ class RouteController extends Controller
      *     @SWG\Response(
      *         response=404,
      *         description="User not found.",
+     *     ),
+     *     @SWG\Response(
+     *         response=500,
+     *         description="Route could not be saved.",
      *     )
      * )
      */
     public function store(Request $request)
     {
-        $route = new Route($request->input());
+        $input = $request->input();
+        $route = new Route($input);
+
         $userJWT = JWTAuth::parseToken()->authenticate();
         $user = User::find($userJWT->id);
         if (!$user){
             return response()->json(['error' => 'User not found'], 404);
-        } else {
-            $route->user_id = $user->id;
-            $route->save();
+        } 
+        
+        $route->user_id = $user->id;
+        $info = "";
+        if( $route->save() ){
             $info = "Route created!";
-            return response()->json(compact('route', 'info'), 201);
+        } else {
+            return response()->json(['error'=>'Route could not be saved'], 500);
         }
+        
+        if( isset($input['tags']) ){
+            if( is_array($input['tags']) ){
+                $this->syncTags($route, $input['tags']);
+            }
+        }
+
+        return response()->json(compact('route', 'info'), 201);
+        
     }
 
     /**
@@ -297,5 +323,26 @@ class RouteController extends Controller
         }
 
         return response()->json(['info' => 'Item(s) added to Route '.$route->name], 201);
+    }
+
+    /*
+     * Function to Synchronize Tags in Route
+     */
+    protected function syncTag(Route $route, $tags)
+    {
+        if(is_array($tags)){
+            // Collection to Synchronize
+            $collection = collection();
+
+            foreach($tags as $tagName){
+                $tag = Tag::where('name', $tagName)->first();
+                if(!$tag){
+                    $tag = Tag::create(['name'=>$tagName, 'user_id'=>$route->user_id]);
+                }
+                $collection->push($tag);
+            }
+            $route->tags()->sync($collection);
+        }
+        
     }
 }
