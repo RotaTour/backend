@@ -55,6 +55,7 @@ Route::group(['middleware'=>'cors'], function(){
         /* Routes */
         Route::get('routes', 'Api\RouteController@index')->name('api.routes.index');
         Route::post('routes', 'Api\RouteController@store')->name('api.routes.store');
+        Route::put('routes/update/{id}', 'Api\RouteController@update')->name('api.routes.update');
         Route::get('/routes/show/{id}', 'Api\RouteController@show')->name('api.route.show');
         Route::delete('/routes/delete/{id}', 'Api\RouteController@destroy')->name('api.route.delete');
         Route::post('/routes/addToRoute', 'Api\RouteController@addToRoute')->name('api.route.addToRoute');

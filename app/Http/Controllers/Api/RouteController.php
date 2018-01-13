@@ -166,6 +166,101 @@ class RouteController extends Controller
 
     }
 
+
+    /**
+     * Update the specified route in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     *
+     * @SWG\Put(
+     *     path="/api/routes/update/{id}",
+     *     description="Update a user's route.",
+     *     operationId="api.routes.update",
+     *     produces={"application/json"},
+     *     tags={"routes"},
+     *     @SWG\Parameter(
+     *          name="name",
+     *          in="body",
+     *          schema={"$ref": "#/definitions/NewRoute"},
+     *          required=true,
+     *          type="string",
+     *          description="Name of the new Route",
+     * 	   ),
+     *     @SWG\Parameter(
+     *          name="body",
+     *          in="body",
+     *          schema={"$ref": "#/definitions/NewRoute"},
+     *          required=false,
+     *          type="string",
+     *          description="The route description",
+     * 	   ),
+     *     @SWG\Parameter(
+     *          name="tags",
+     *          in="body",
+     *          schema={"$ref": "#/definitions/NewRoute"},
+     *          required=false,
+     *          type="array",
+     *          description="A tag list for the route",
+     * 	   ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Success - User found and will update the Route."
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="User not found.",
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Route not found.",
+     *     ),
+     *     @SWG\Response(
+     *         response=403,
+     *         description="Forbbiden - You could not update the Route.",
+     *     ),
+     *     @SWG\Response(
+     *         response=500,
+     *         description="Route could not be updated.",
+     *     )
+     * )
+     */
+    public function update(Request $request, $id)
+    {
+        $input = $request->input();
+
+        $userJWT = JWTAuth::parseToken()->authenticate();
+        $user = User::find($userJWT->id);
+        if (!$user){
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        $route = Route::find($id);
+        if (!$route){
+            return response()->json(['error' => 'Route not found'], 404);
+        }
+        
+        if ($user->id != $route->user()->first()->id){
+            return response()->json(['error' => "Forbbiden - You could not update the Route."], 403);
+        }
+
+        $info = "";
+        if( $route->update($input) ){
+            $info = "Route updated!";
+        } else {
+            return response()->json(['error'=>'Route could not be updated'], 500);
+        }
+        
+        if( isset($input['tags']) ){
+            if( is_array($input['tags']) ){
+                $this->syncTags($route, $input['tags']);
+            }
+        }
+
+        return response()->json(compact('route', 'info'), 200);
+    }
+
     /**
      * Remove the specified route from storage.
      *
