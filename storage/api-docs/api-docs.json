@@ -465,6 +465,16 @@
                             "$ref": "#/definitions/NewRoute"
                         },
                         "type": "string"
+                    },
+                    {
+                        "name": "tags",
+                        "in": "body",
+                        "description": "A tag list for the route",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/NewRoute"
+                        },
+                        "type": "array"
                     }
                 ],
                 "responses": {
@@ -473,6 +483,9 @@
                     },
                     "404": {
                         "description": "User not found."
+                    },
+                    "500": {
+                        "description": "Route could not be saved."
                     }
                 }
             }
@@ -503,6 +516,65 @@
                     },
                     "404": {
                         "description": "Route not found."
+                    }
+                }
+            }
+        },
+        "/api/routes/update/{id}": {
+            "put": {
+                "tags": [
+                    "routes"
+                ],
+                "summary": "Update the specified route in storage.",
+                "description": "Update a user's route.",
+                "operationId": "api.routes.update",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "body",
+                        "description": "Name of the new Route",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NewRoute"
+                        },
+                        "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "The route description",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/NewRoute"
+                        },
+                        "type": "string"
+                    },
+                    {
+                        "name": "tags",
+                        "in": "body",
+                        "description": "A tag list for the route",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/NewRoute"
+                        },
+                        "type": "array"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - User found and will update the Route."
+                    },
+                    "404": {
+                        "description": "User not found Or Route not found."
+                    },
+                    "403": {
+                        "description": "Forbbiden - You could not update the Route."
+                    },
+                    "500": {
+                        "description": "Route could not be updated."
                     }
                 }
             }
@@ -681,7 +753,7 @@
                 }
             }
         },
-        "/api/tags/show/{id}": {
+        "/api/tags/show/{tag_name}": {
             "get": {
                 "tags": [
                     "tags"
@@ -689,6 +761,36 @@
                 "summary": "Display the specified tag.",
                 "description": "Returns the tag details.",
                 "operationId": "api.tags.show",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "tag_name",
+                        "in": "path",
+                        "description": "Tag name in database",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - Tag found."
+                    },
+                    "404": {
+                        "description": "Tag not found."
+                    }
+                }
+            }
+        },
+        "/api/tags/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "tags"
+                ],
+                "summary": "Remove the specified resource from storage.",
+                "description": "Delete the tag especified",
+                "operationId": "api.tags.delete",
                 "produces": [
                     "application/json"
                 ],

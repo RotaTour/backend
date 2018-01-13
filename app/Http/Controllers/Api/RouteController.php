@@ -210,11 +210,7 @@ class RouteController extends Controller
      *     ),
      *     @SWG\Response(
      *         response=404,
-     *         description="User not found.",
-     *     ),
-     *     @SWG\Response(
-     *         response=404,
-     *         description="Route not found.",
+     *         description="User not found Or Route not found.",
      *     ),
      *     @SWG\Response(
      *         response=403,
