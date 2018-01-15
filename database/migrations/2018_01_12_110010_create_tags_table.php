@@ -24,7 +24,7 @@ class CreateTagsTable extends Migration
             $table->integer('tag_id')->unsigned();
             $table->integer('taggable_id')->unsigned();
             $table->string('taggable_type');
-
+            
             $table->foreign('tag_id')->references('id')->on('tags')
                 ->onDelete('cascade');
         });

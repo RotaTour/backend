@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+//use Illuminate\Support\Collection;
 use JWTAuth;
 use App\Models\User;
 use App\Models\Route;
@@ -419,18 +420,18 @@ class RouteController extends Controller
     /*
      * Function to Synchronize Tags in Route
      */
-    protected function syncTag(Route $route, $tags)
+    protected function syncTags(Route $route, $tags)
     {
         if(is_array($tags)){
             // Collection to Synchronize
-            $collection = collection();
+            $collection = collect();
 
             foreach($tags as $tagName){
                 $tag = Tag::where('name', $tagName)->first();
                 if(!$tag){
                     $tag = Tag::create(['name'=>$tagName, 'user_id'=>$route->user_id]);
                 }
-                $collection->push($tag);
+                $collection->push($tag->id);
             }
             $route->tags()->sync($collection);
         }
