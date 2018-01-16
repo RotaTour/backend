@@ -1,35 +1,28 @@
-@extends('layouts.default')
+@extends('layouts.app')
 
 @section('content')
-<div class="row">
-    <div class="col-lg-6">
-        <form action="{{ route('status.store') }}" method="post" role="form">
-            {{ csrf_field() }}
-            <div class="form-group {{ $errors->has('status') ? 'has-error': '' }}">
-                <textarea name="status" rows="2" class="form-control" placeholder="Quer compartilhar algo {{Auth::user()->getFirstNameOrUsername()}}?"></textarea>
-                @if ($errors->has('status'))
-                <span class="help-block">
-                    <strong>{{ $errors->first('status') }}</strong>
-                </span>
-                @endif
+<div class="h-20"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                @include('widgets.sidebar')
             </div>
-            <button type="submit" class="btn btn-default">Publicar status</button>
-        </form>
+            <div class="col-xs-12 col-md-3 pull-right">
+                <div class="hidden-sm hidden-xs">
+                    @include('widgets.suggested_people')
+                </div>
+            </div>
+            <div class="col-md-6">
+                @include('widgets.wall')
+            </div>
+        </div>
     </div>
-</div>
-<hr>
-<div class="row">
-    <div class="col-lg-5">
-        <!--Timeline statuses and replies -->
-        @if(!$statuses->count())
-        <p>Não há o que mostrar na sua linha do tempo, ainda.</p>
-        @else
-            @foreach($statuses as $status)
-                @include('timeline.status')
-            @endforeach
+@endsection
 
-            {!! $statuses->render() !!}
-        @endif
-    </div>
-</div>
+@section('script')
+    <script type="text/javascript">
+        WALL_ACTIVE = true;
+        //fetchPost(0,0,0,10,-1,-1,'initialize');
+        console.log("Wall Active: ", WALL_ACTIVE);
+    </script>
 @endsection

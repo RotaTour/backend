@@ -32,10 +32,13 @@ class HomeController extends Controller
             })
             ->orderBy('created_at', 'desc')
             ->paginate(10);
-
-            return view('timeline.index', compact('statuses'));
+            $user = Auth::user();
+            $wall = [
+                'new_post_group_id' => 0
+            ];
+            return view('timeline.index', compact('user','wall','statuses'));
         }
-        return view('index');
+        return view('layouts.guest');
     }
 
     /**

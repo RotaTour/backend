@@ -1,4 +1,4 @@
-<h3>Entrar usando</h3>
+<h4>Entrar usando</h4>
 <div class="col-md-8">
     <a href="{{ route('social.login', ['provider'=>'facebook']) }}" 
     class="btn btn-social-icon btn-facebook">
