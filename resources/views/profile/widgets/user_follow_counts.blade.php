@@ -1,22 +1,22 @@
 <div class="count_widget">
     <div class="row">
         <div class="col-xs-4">
-            <a class="blue" href="{{ url('/'.$user->username) }}">
-                0
+            <a class="blue" href="{{ route('profile.show', ['username'=>$user->username]) }}">
+            {{ $user->statuses()->notReply()->count() }}
             </a>
-            POSTS
+            Postagens
         </div>
         <div class="col-xs-4">
-            <a class="green" href="{{ url('/'.$user->username.'/following') }}">
-                0
+            <a class="orange" href="{{ route('profile.friends', ['username'=>$user->username]) }}">
+            {{ $user->friends()->count() }}
             </a>
-            FOLLOWING
+            Amigos
         </div>
         <div class="col-xs-4">
-            <a class="purple" href="{{ url('/'.$user->username.'/followers') }}">
-                0
+            <a class="dark-green" href="{{ route('profile.routes', ['username'=>$user->username]) }}">
+            {{ $user->routes()->count() }}
             </a>
-            FOLLOWERS
+            Rotas
         </div>
     </div>
 </div>

@@ -19,7 +19,7 @@
     </div>
 @endsection
 
-@section('script')
+@section('scripts')
     <script type="text/javascript">
         WALL_ACTIVE = true;
         //fetchPost(0,0,0,10,-1,-1,'initialize');

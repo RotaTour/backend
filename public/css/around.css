@@ -449,6 +449,14 @@ a, a:hover, a:active, a:visited, a:focus {
     box-sizing: border-box;
 }
 
+.count_widget a.orange {
+    background: #df7e49;
+}
+
+.count_widget a.orange:hover {
+    background: #e06d2f;
+}
+
 .count_widget a.purple {
     background: #b074cc;
 }
@@ -463,6 +471,14 @@ a, a:hover, a:active, a:visited, a:focus {
 
 .count_widget a.green:hover {
     background: #45cac6;
+}
+
+.count_widget a.dark-green {
+    background: #506314;
+}
+
+.count_widget a.dark-green:hover {
+    background: #abd12d;
 }
 
 .count_widget a.blue {
@@ -992,6 +1008,10 @@ a, a:hover, a:active, a:visited, a:focus {
 
 .menu a.menu-nearby i {
     color: #abc35c
+}
+
+.menu a.menu-routes i {
+    color: #506314
 }
 
 .menu a.menu-groups i {

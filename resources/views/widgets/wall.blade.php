@@ -5,17 +5,10 @@
         <form id="form-new-post">
             <input type="hidden" name="group_id" value="{{ $wall['new_post_group_id'] }}">
             <textarea name="content" placeholder="Compartilhe o que você está pensando"></textarea>
-            <div class="image-area">
-                <a href="javascript:;" class="image-remove-button" onclick="removePostImage()"><i class="fa fa-times-circle"></i></a>
-                <img src="" />
-            </div>
             <hr />
             <div class="row">
                 <div class="col-xs-4">
-                    <button type="button" class="btn btn-default btn-add-image btn-sm" onclick="uploadPostImage()">
-                        <i class="fa fa-image"></i> Add Image
-                    </button>
-                    <input type="file" accept="image/*" class="image-input" name="photo" onchange="previewPostImage(this)">
+                    &nbsp;
                 </div>
                 <div class="col-xs-4">
                     <div class="loading-post">
@@ -24,7 +17,7 @@
                 </div>
                 <div class="col-xs-4">
                     <button type="button" class="btn btn-primary btn-submit pull-right" onclick="newPost()">
-                        Post!
+                        Postar!
                     </button>
                 </div>
             </div>

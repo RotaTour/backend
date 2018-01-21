@@ -11,8 +11,6 @@
 |
 */
 
-Route::get('/', 'HomeController@index')->name('index');
-
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -61,3 +59,6 @@ Route::group(['middleware' => ['role:superuser'], 'prefix'=>'admin'], function (
 
 /* User Profile */
 Route::get('/{username}', 'ProfileController@show')->name('profile.show');
+Route::get('/{username}/friends', 'ProfileController@show')->name('profile.friends');
+Route::get('/{username}/routes', 'ProfileController@show')->name('profile.routes');
+Route::get('/', 'HomeController@index')->name('index');
