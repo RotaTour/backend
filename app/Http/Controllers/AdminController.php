@@ -114,7 +114,7 @@ class AdminController extends Controller
         }
 
         $faker = Faker::create();
-
+        
         if($fulano) array_push($users, $fulano);
         if($beltrano) array_push($users, $beltrano);
         if($cicrano) array_push($users, $cicrano);
