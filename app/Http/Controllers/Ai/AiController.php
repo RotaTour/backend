@@ -11,7 +11,19 @@ class AiController extends Controller
     /**
      * Return sample data for test.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response 
+     * @SWG\Get(
+     *     path="/ai/",
+     *     description="Return sample data for test.",
+     *     operationId="ai.index",
+     *     produces={"application/json"},
+     *     tags={"AI"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Success - Info data returned."
+     *     )
+     * )
+     * 
      */
     public function index()
     {
@@ -25,6 +37,18 @@ class AiController extends Controller
      * Return all models collections
      *
      * @return \Illuminate\Http\Response
+     * @SWG\Get(
+     *     path="/ai/all",
+     *     description="Return all data from Database.",
+     *     operationId="ai.all",
+     *     produces={"application/json"},
+     *     tags={"AI"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Success - All data returned."
+     *     )
+     * )
+     * 
      */
     public function all()
     {
@@ -55,8 +79,19 @@ class AiController extends Controller
 
     /**
      * Return all categories from database.
-     *
+     * 
      * @return \Illuminate\Http\Response
+     * @SWG\Get(
+     *     path="/ai/categories",
+     *     description="Return all categories data from Database.",
+     *     operationId="ai.categories",
+     *     produces={"application/json"},
+     *     tags={"AI"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Success - All categories data returned."
+     *     )
+     * )
      */
     public function categories()
     {
@@ -68,6 +103,17 @@ class AiController extends Controller
      * Return all categories from database.
      *
      * @return \Illuminate\Http\Response
+     * @SWG\Get(
+     *     path="/ai/comments",
+     *     description="Return all comments data from Database.",
+     *     operationId="ai.comments",
+     *     produces={"application/json"},
+     *     tags={"AI"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Success - All comments data returned."
+     *     )
+     * )
      */
     public function comments()
     {
@@ -79,6 +125,17 @@ class AiController extends Controller
      * Return all itens from database.
      *
      * @return \Illuminate\Http\Response
+     * @SWG\Get(
+     *     path="/ai/itens",
+     *     description="Return all itens data from Database.",
+     *     operationId="ai.itens",
+     *     produces={"application/json"},
+     *     tags={"AI"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Success - All itens data returned."
+     *     )
+     * )
      */
     public function itens()
     {
@@ -90,6 +147,17 @@ class AiController extends Controller
      * Return all likes from database.
      *
      * @return \Illuminate\Http\Response
+     * @SWG\Get(
+     *     path="/ai/likes",
+     *     description="Return all likes data from Database.",
+     *     operationId="ai.likes",
+     *     produces={"application/json"},
+     *     tags={"AI"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Success - All likes data returned."
+     *     )
+     * )
      */
     public function likes()
     {
@@ -101,6 +169,17 @@ class AiController extends Controller
      * Return all places from database.
      *
      * @return \Illuminate\Http\Response
+     * @SWG\Get(
+     *     path="/ai/places",
+     *     description="Return all places data from Database.",
+     *     operationId="ai.places",
+     *     produces={"application/json"},
+     *     tags={"AI"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Success - All places data returned."
+     *     )
+     * )
      */
     public function places()
     {
@@ -113,6 +192,17 @@ class AiController extends Controller
      * Return all routes from database.
      *
      * @return \Illuminate\Http\Response
+     * @SWG\Get(
+     *     path="/ai/routes",
+     *     description="Return all routes data from Database.",
+     *     operationId="ai.routes",
+     *     produces={"application/json"},
+     *     tags={"AI"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Success - All routes data returned."
+     *     )
+     * )
      */
     public function routes()
     {
@@ -124,6 +214,17 @@ class AiController extends Controller
      * Return all statuses from database.
      *
      * @return \Illuminate\Http\Response
+     * @SWG\Get(
+     *     path="/ai/statuses",
+     *     description="Return all statuses data from Database.",
+     *     operationId="ai.statuses",
+     *     produces={"application/json"},
+     *     tags={"AI"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Success - All statuses data returned."
+     *     )
+     * )
      */
     public function statuses()
     {
@@ -135,6 +236,17 @@ class AiController extends Controller
      * Return all routes from database.
      *
      * @return \Illuminate\Http\Response
+     * @SWG\Get(
+     *     path="/ai/tags",
+     *     description="Return all tags data from Database.",
+     *     operationId="ai.tags",
+     *     produces={"application/json"},
+     *     tags={"AI"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Success - All tags data returned."
+     *     )
+     * )
      */
     public function tags()
     {
@@ -146,6 +258,17 @@ class AiController extends Controller
      * Return all users from database.
      *
      * @return \Illuminate\Http\Response
+     * @SWG\Get(
+     *     path="/ai/users",
+     *     description="Return all users data from Database.",
+     *     operationId="ai.users",
+     *     produces={"application/json"},
+     *     tags={"AI"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Success - All users data returned."
+     *     )
+     * )
      */
     public function users()
     {

@@ -15,6 +15,204 @@
         "https"
     ],
     "paths": {
+        "/ai/": {
+            "get": {
+                "tags": [
+                    "AI"
+                ],
+                "summary": "Return sample data for test.",
+                "description": "Return sample data for test.",
+                "operationId": "ai.index",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - Info data returned."
+                    }
+                }
+            }
+        },
+        "/ai/all": {
+            "get": {
+                "tags": [
+                    "AI"
+                ],
+                "summary": "Return all models collections",
+                "description": "Return all data from Database.",
+                "operationId": "ai.all",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - All data returned."
+                    }
+                }
+            }
+        },
+        "/ai/categories": {
+            "get": {
+                "tags": [
+                    "AI"
+                ],
+                "summary": "Return all categories from database.",
+                "description": "Return all categories data from Database.",
+                "operationId": "ai.categories",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - All categories data returned."
+                    }
+                }
+            }
+        },
+        "/ai/comments": {
+            "get": {
+                "tags": [
+                    "AI"
+                ],
+                "summary": "Return all categories from database.",
+                "description": "Return all comments data from Database.",
+                "operationId": "ai.comments",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - All comments data returned."
+                    }
+                }
+            }
+        },
+        "/ai/itens": {
+            "get": {
+                "tags": [
+                    "AI"
+                ],
+                "summary": "Return all itens from database.",
+                "description": "Return all itens data from Database.",
+                "operationId": "ai.itens",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - All itens data returned."
+                    }
+                }
+            }
+        },
+        "/ai/likes": {
+            "get": {
+                "tags": [
+                    "AI"
+                ],
+                "summary": "Return all likes from database.",
+                "description": "Return all likes data from Database.",
+                "operationId": "ai.likes",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - All likes data returned."
+                    }
+                }
+            }
+        },
+        "/ai/places": {
+            "get": {
+                "tags": [
+                    "AI"
+                ],
+                "summary": "Return all places from database.",
+                "description": "Return all places data from Database.",
+                "operationId": "ai.places",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - All places data returned."
+                    }
+                }
+            }
+        },
+        "/ai/routes": {
+            "get": {
+                "tags": [
+                    "AI"
+                ],
+                "summary": "Return all routes from database.",
+                "description": "Return all routes data from Database.",
+                "operationId": "ai.routes",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - All routes data returned."
+                    }
+                }
+            }
+        },
+        "/ai/statuses": {
+            "get": {
+                "tags": [
+                    "AI"
+                ],
+                "summary": "Return all statuses from database.",
+                "description": "Return all statuses data from Database.",
+                "operationId": "ai.statuses",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - All statuses data returned."
+                    }
+                }
+            }
+        },
+        "/ai/tags": {
+            "get": {
+                "tags": [
+                    "AI"
+                ],
+                "summary": "Return all routes from database.",
+                "description": "Return all tags data from Database.",
+                "operationId": "ai.tags",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - All tags data returned."
+                    }
+                }
+            }
+        },
+        "/ai/users": {
+            "get": {
+                "tags": [
+                    "AI"
+                ],
+                "summary": "Return all users from database.",
+                "description": "Return all users data from Database.",
+                "operationId": "ai.users",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - All users data returned."
+                    }
+                }
+            }
+        },
         "/api/login": {
             "post": {
                 "tags": [
