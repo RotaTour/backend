@@ -276,6 +276,43 @@ class AiController extends Controller
         return response()->json(compact('users'));
     }
 
+    /**
+     * Return all user's friends.
+     *
+     * @return \Illuminate\Http\Response
+     * @SWG\Get(
+     *     path="/ai/users/{username}/friends",
+     *     description="Return all user's friends",
+     *     operationId="ai.users.friends",
+     *     produces={"application/json"},
+     *     tags={"AI"},
+     *     @SWG\Parameter(
+     *          name="username",
+     *          in="path",
+     *          required=true,
+     *          type="string",
+     *          description="Username to get the friends list",
+     * 	   ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Success - All friends data returned."
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Error - User not found."
+     *     )
+     * )
+     */
+    public function friends($username)
+    {
+        $user = User::getUser($username);
+        if(!$user){
+            return response()->json(['error'=>'User not found'], 404);
+        }
+        $friends = $user->friends();
+        return response()->json(compact('friends'));
+    }
+
     
 
 }

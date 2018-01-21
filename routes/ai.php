@@ -26,7 +26,7 @@ Route::group(['middleware'=>'cors'], function(){
     Route::get('statuses', 'Ai\AiController@statuses')->name('ai.statuses');
     Route::get('tags', 'Ai\AiController@tags')->name('ai.tags');
     Route::get('users', 'Ai\AiController@users')->name('ai.users');
-    
+    Route::get('users/{username}/friends', 'Ai\AiController@friends')->name('ai.users.friends');
 
     Route::get('/', 'Ai\AiController@index')->name('ai.index');
 });

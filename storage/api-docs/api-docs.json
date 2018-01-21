@@ -213,6 +213,36 @@
                 }
             }
         },
+        "/ai/users/{username}/friends": {
+            "get": {
+                "tags": [
+                    "AI"
+                ],
+                "summary": "Return all user's friends.",
+                "description": "Return all user's friends",
+                "operationId": "ai.users.friends",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "description": "Username to get the friends list",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - All friends data returned."
+                    },
+                    "404": {
+                        "description": "Error - User not found."
+                    }
+                }
+            }
+        },
         "/api/login": {
             "post": {
                 "tags": [
