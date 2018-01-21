@@ -33,7 +33,7 @@
                         <div class="profile-follow">
                             <!-- Friends, friends requests -->
                             @if(Auth::user()->hasFriendRequestPending($user))
-                                <p>Esperando por {{ $user->getNameOrUsername() }} aceitar a sua solicitação de amizade</p>
+                            <p>Esperando por {{ $user->getNameOrUsername() }} aceitar a sua solicitação de amizade</p>
                             @elseif(Auth::user()->hasFriendRequestReceived($user))
                                 <a href="{{route('friend.accept', ['email'=>$user->email])}}" class="btn btn-primary">Aceitar a requisição de amizade</a>
                             @elseif (Auth::user()->isFriendsWith($user))
