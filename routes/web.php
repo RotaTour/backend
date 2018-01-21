@@ -18,9 +18,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/search', 'SearchController@results')->name('search.results');
 
-Route::get('/user/edit', 'ProfileController@edit')->name('profile.edit');
-Route::post('/user/store', 'ProfileController@store')->name('profile.store');
-Route::get('/user/{email}', 'ProfileController@show')->name('profile.show');
+Route::get('/settings', 'ProfileController@edit')->name('profile.edit');
+Route::post('/settings', 'ProfileController@store')->name('profile.store');
 
 Route::get('/friends', 'FriendController@index')->name('friend.index');
 Route::get('/friends/add/{email}', 'FriendController@getAdd')->name('friend.add');
@@ -58,3 +57,6 @@ Route::group(['middleware' => ['role:superuser'], 'prefix'=>'admin'], function (
     Route::get('/posts', 'AdminController@posts')->name('admin.posts');
     Route::get('/checkusernames', 'AdminController@checkUsernames')->name('admin.checkusernames');
 });
+
+/* User Profile */
+Route::get('/{username}', 'ProfileController@show')->name('profile.show');

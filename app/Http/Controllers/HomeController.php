@@ -38,7 +38,7 @@ class HomeController extends Controller
             ];
             return view('timeline.index', compact('user','wall','statuses'));
         }
-        return view('layouts.guest');
+        return view('guest');
     }
 
     /**

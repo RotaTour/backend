@@ -7,8 +7,8 @@
             </a>
         </div>
         <div class="info">
-            <a href="{{ url('/'.Auth::user()->getNameOrUsername()) }}" class="name">{{ Auth::user()->getNameOrUsername() }}</a>
-            <a href="{{ url('/'.Auth::user()->email) }}" class="username">{{ '@'.Auth::user()->email }}</a>
+            <a href="{{ url('/'.Auth::user()->getNameOrUsername()) }}" class="name">{{ Auth::user()->name }}</a>
+            <a href="{{ route('profile.show', ['username'=>Auth::user()->getUsernameOrEmail()]) }}" class="username">{{ '@'.Auth::user()->getUsernameOrEmail() }}</a>
         </div>
         <div class="clearfix"></div>
     </div>

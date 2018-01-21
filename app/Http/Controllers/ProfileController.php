@@ -20,15 +20,27 @@ class ProfileController extends Controller
         $this->middleware('auth');
     }
 
-    public function show($email)
+    public function show($username)
     {
-        $user = User::whereEmail($email)->first();
+        $user = User::getUser($username);
         if(!$user) abort(404);
 
         $statuses = $user->statuses()->notReply()->orderBy('created_at', 'desc')->paginate(10);
         $authUserIsFriend = Auth::user()->isFriendsWith($user);
+        $wall = [
+            'new_post_group_id' => 0
+        ];
+        $can_see = true;
 
-        return view('profile.index', compact('user', 'statuses', 'authUserIsFriend') );
+        return view('profile.index', 
+            compact(
+                'user', 
+                'statuses', 
+                'authUserIsFriend',
+                'wall',
+                'can_see'
+                ) 
+        );
     }
 
     public function edit()

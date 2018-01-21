@@ -56,7 +56,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 
+        'name', 'email', 'password', 'username',
         'avatar', 'provider', 'provider_id', 'provider_id_mobile',
         'first_name', 'last_name', 'location'
     ];
@@ -94,6 +94,23 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    /*
+     * get user by username or e-mail
+     * 
+     * Show the form for editing the specified resource.
+     *
+     * @param  string  $username
+     * @return App\Models\User
+     */
+    static public function getUser($username)
+    {
+        $user = User::where('username', $username)->first();
+        if(!$user){
+            $user = User::where('email', $username)->first();
+        }
+        return $user;
+    }
+
     public function getName()
     {
         if ($this->first_name && $this->last_name){
@@ -107,13 +124,19 @@ class User extends Authenticatable implements JWTSubject
 
     public function getNameOrUsername()
     {
-        return $this->getName() ?: $this->name;
+        return $this->getName() ?: $this->username;
     }
 
     public function getFirstNameOrUsername()
     {
-        return $this->first_name ?: $this->name;
+        return $this->first_name ?: $this->username;
     }
+
+    public function getUsernameOrEmail()
+    {
+        return $this->username ?: $this->email;
+    }
+
 
     public function getAvatarUrl()
     {
