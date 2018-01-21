@@ -54,15 +54,60 @@ class AiController extends Controller
     }
 
     /**
-     * Return all users from database.
+     * Return all categories from database.
      *
      * @return \Illuminate\Http\Response
      */
-    public function users()
+    public function categories()
     {
-        $users = User::all();
-        return response()->json(compact('users'));
+        $categories = Category::all();
+        return response()->json(compact('categories'));
     }
+
+    /**
+     * Return all categories from database.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function comments()
+    {
+        $comments = Comment::all();
+        return response()->json(compact('comments'));
+    }
+
+    /**
+     * Return all itens from database.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function itens()
+    {
+        $itens = Item::all();
+        return response()->json(compact('itens'));
+    }
+
+    /**
+     * Return all likes from database.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function likes()
+    {
+        $likes = Like::all();
+        return response()->json(compact('likes'));
+    }
+
+    /**
+     * Return all places from database.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function places()
+    {
+        $places = Place::all();
+        return response()->json(compact('places'));
+    }
+
 
     /**
      * Return all routes from database.
@@ -74,5 +119,40 @@ class AiController extends Controller
         $routes = Route::all();
         return response()->json(compact('routes'));
     }
+
+    /**
+     * Return all statuses from database.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function statuses()
+    {
+        $statuses = Status::all();
+        return response()->json(compact('statuses'));
+    }
+
+    /**
+     * Return all routes from database.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function tags()
+    {
+        $tags = Tag::all();
+        return response()->json(compact('tags'));
+    }
+
+    /**
+     * Return all users from database.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function users()
+    {
+        $users = User::all();
+        return response()->json(compact('users'));
+    }
+
+    
 
 }
