@@ -53,15 +53,8 @@ Route::get('social/redirect/{provider}', ['uses' => 'Auth\LoginController@redire
 Route::get('social/callback/{provider}', 'Auth\LoginController@handleProviderCallback');
 
 Route::group(['middleware' => ['role:superuser'], 'prefix'=>'admin'], function () {
-    Route::get('/', function(){
-        return "Admin Index";
-    })->name('admin.index');
-
-    Route::get('/users', function(){
-        return "Admin Users";
-    })->name('admin.users');
-
-    Route::get('/posts', function(){
-        return "Admin Posts";
-    })->name('admin.posts');
+    Route::get('/', 'AdminController@index')->name('admin.index');
+    Route::get('/users', 'AdminController@users')->name('admin.users');
+    Route::get('/posts', 'AdminController@posts')->name('admin.posts');
+    Route::get('/checkusernames', 'AdminController@checkUsernames')->name('admin.checkusernames');
 });
