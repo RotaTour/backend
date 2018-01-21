@@ -16,9 +16,6 @@ $(function() {
             }
         });
 
-
-
-
         setInterval(function(){
 
             fetchForNewPosts();
@@ -143,7 +140,8 @@ function fetchPost(wall_type, list_type, optional_id, limit, post_min_id, post_m
             error: function () {
                 /*
                 $('#errorMessageModal').modal('show');
-                $('#errorMessageModal #errors').html('Something went wrong when loading your wall!');*/
+                $('#errorMessageModal #errors').html('Something went wrong when loading your wall!');
+                */
                 $('.post-list-top-loading').hide();
                 $('.post-list-bottom-loading').hide();
                 fetch_end = false;
