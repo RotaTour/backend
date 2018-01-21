@@ -38,11 +38,11 @@
 
 @endsection
 
-@section('footer')
+@section('scripts')
     <script type="text/javascript">
         @if ($can_see)
             WALL_ACTIVE = true;
-            //fetchPost(1,0,{{ $user->id }},5,-1,-1,'initialize');
+            fetchPost(1,0,{{ $user->id }},5,-1,-1,'initialize');
         @endif
     </script>
     <script src="{{ asset('js/profile.js') }}"></script>

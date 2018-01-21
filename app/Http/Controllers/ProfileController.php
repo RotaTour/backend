@@ -25,7 +25,7 @@ class ProfileController extends Controller
         $user = User::getUser($username);
         if(!$user) abort(404);
 
-        $statuses = $user->statuses()->notReply()->orderBy('created_at', 'desc')->paginate(10);
+        //$statuses = $user->statuses()->notReply()->orderBy('created_at', 'desc')->paginate(10);
         $authUserIsFriend = Auth::user()->isFriendsWith($user);
         $wall = [
             'new_post_group_id' => 0
@@ -35,11 +35,10 @@ class ProfileController extends Controller
         return view('profile.index', 
             compact(
                 'user', 
-                'statuses', 
                 'authUserIsFriend',
                 'wall',
                 'can_see'
-                ) 
+                )
         );
     }
 

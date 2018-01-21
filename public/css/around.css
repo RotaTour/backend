@@ -272,6 +272,13 @@ a, a:hover, a:active, a:visited, a:focus {
     position: absolute;
     right: 0;
     bottom: 10px;
+    color: #fff;
+    text-shadow: 1px 1px #000;
+    background: rgba(0,0,0,0.4);
+    padding: 10px 20px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
 }
 
 

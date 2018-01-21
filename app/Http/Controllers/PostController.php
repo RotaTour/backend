@@ -31,7 +31,7 @@ class PostController extends Controller
         $div_location = $request->input('div_location');
 
         $user = Auth::user();
-        $posts = Status::with('user');
+        $posts = Status::notReply()->with('user');
 
         if ($wall_type == 1){
             $posts = $posts->where('user_id', $optional_id);
