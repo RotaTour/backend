@@ -6,7 +6,7 @@
             <div class="col-xs-12">
 
                 <ul class="nav nav-pills">
-                    <li class="active"><a data-toggle="pill" href="#users">Users ({{ $users->count() }})</a></li>
+                    <li class="active"><a data-toggle="pill" href="#users">Pessoas ({{ $users->count() }})</a></li>
                 </ul>
 
                 <div class="tab-content">
