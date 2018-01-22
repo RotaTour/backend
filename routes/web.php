@@ -18,8 +18,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/search', 'SearchController@results')->name('search.results');
 
 /* Settings */
-Route::get('/settings', 'ProfileController@edit')->name('profile.edit');
-Route::post('/settings', 'ProfileController@store')->name('profile.store');
+Route::get('/settings', 'SettingsController@index')->name('settings.index');
+Route::post('/settings', 'SettingsController@update')->name('settings.update');
 
 /* Friends */
 Route::get('/friends', 'FriendController@index')->name('friend.index');

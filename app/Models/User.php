@@ -137,14 +137,18 @@ class User extends Authenticatable implements JWTSubject
         return $this->username ?: $this->email;
     }
 
-
     public function getAvatarUrl()
     {
         if ( $this->avatar != '' )
             return $this->avatar;
         else
+            $md5 = md5($this->email);
             //return "https://www.gravatar.com/avatar/{{ md5($this->email) }}?d=mm&s=40"; 
-            return "https://www.gravatar.com/avatar/{{ md5($this->email) }}?d=mm";
+            return "https://www.gravatar.com/avatar/".$md5."?d=mm";
+    }
+
+    public function validateUsername($filter = "[^a-zA-Z0-9\-\_\.]"){
+        return preg_match("~" . $filter . "~iU", $this->username) ? false : true;
     }
 
     public function statuses()

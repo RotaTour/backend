@@ -48,20 +48,35 @@
 
                     <ul class="dropdown-menu" role="menu">
                         <li>
-                            <a href="{{ url('/'.Auth::user()->email) }}">
-                                <i class="fa fa-user"></i> My Profile
+                            <a href="{{ route('profile.show', ['username'=>Auth::user()->getUsernameOrEmail()]) }}">
+                                <i class="fa fa-user"></i> Meu Perfil
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                <i class="fa fa-cog"></i> Settings
+                            <i class="fa fa-users"></i> Amigos
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                            <i class="fa fa-map"></i> Locais
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                            <i class="fa fa-map-marker"></i> Rotas
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('settings.index') }}">
+                                <i class="fa fa-cog"></i> Configurações
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();">
-                                <i class="fa fa-sign-out"></i> Logout
+                                <i class="fa fa-sign-out"></i> Sair
                             </a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
