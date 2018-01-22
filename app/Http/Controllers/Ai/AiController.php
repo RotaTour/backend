@@ -243,21 +243,14 @@ class AiController extends Controller
         if(!$route){
             return response()->json(['error'=>'Route not found'], 404);
         }
+        
         $user = $route->user;
         $tags = $route->tags;
         $itens = $route->itens;
         $comments = $route->comments;
         $likes = $route->likes;
         
-        return response()->json(
-            compact(
-                'route',
-                'user',
-                'tags',
-                'itens',
-                'comments',
-                'likes'
-            ));
+        return response()->json(compact('route'));
     }
 
     /**
