@@ -72,10 +72,10 @@
                     </a>
                 </div>
                 <div class="media-body">
-                    <textarea class="form-control" rows="1" placeholder="Comment"></textarea>
+                    <textarea class="form-control" rows="1" placeholder="Comentário"></textarea>
                 </div>
-                <button type="button" class="btn btn-default btn-xs pull-right" onclick="submitComment({{ $post->id }})">
-                    Submit!
+                <button type="button" class="btn btn-primary btn-xs pull-right" onclick="submitComment({{ $post->id }})">
+                    Comentar!
                 </button>
             </form>
         </div>

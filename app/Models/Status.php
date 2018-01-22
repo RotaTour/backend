@@ -35,6 +35,15 @@ class Status extends Model
         return $this->hasMany('App\Models\Status', 'parent_id');
     }
 
+    public function parent()
+    {
+        if( !empty($this->parent_id) ){
+            return Status::find($this->parent_id);
+        } else {
+            return null;
+        }
+    }
+
     public function comments()
     {
         return $this->replies();

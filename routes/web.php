@@ -38,7 +38,7 @@ Route::post('/posts/like', 'PostController@like')->name('post.like');
 Route::post('/posts/comment', 'PostController@comment')->name('post.comment');
 Route::post('/posts/comments/delete', 'PostController@commentDelete')->name('post.comment.delete');
 Route::post('/posts/likes', 'PostController@likes')->name('post.likes');
-Route::get('/post/{id}', 'PostsController@single')->name('post.single');
+Route::get('/post/{id}', 'PostController@single')->name('post.single');
 
 /* Places */
 Route::get('/places', 'PlaceController@index')->name('place.index');

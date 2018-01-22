@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Status;
 use App\Models\User;
 use Auth;
+use View;
 
 class PostController extends Controller
 {
@@ -104,9 +105,16 @@ class PostController extends Controller
         return response()->json($response);
     }
 
-    public function single()
+    public function single(Request $request, $id)
     {
-        return "";
+        $post = Status::find($id);
+        if (!$post) abort(404);
+        
+        $user = Auth::user();
+        $comment_count = 2000000;
+        $can_see = true;
+
+        return view('timeline.post', compact('post', 'user', 'comment_count', 'can_see'));
     }
 
     public function destroy(Request $request)
@@ -163,19 +171,70 @@ class PostController extends Controller
         return response()->json($response);
     }
 
-    public function likes()
+    public function likes(Request $request)
     {
-        return "";
+        $user = Auth::user();
+
+        $response = array();
+        $response['code'] = 400;
+
+        $post = Status::find($request->input('id'));
+
+        if ($post){
+            $response['code'] = 200;
+            $html = View::make('widgets.post_detail.likes', compact('post'));
+            $response['likes'] = $html->render();
+        }
+
+        return response()->json($response);
     }
 
-    public function comment()
+    public function comment(Request $request)
     {
-        return "";
+        $user = Auth::user();
+
+        $response = array();
+        $response['code'] = 400;
+
+        $post = Status::find($request->input('id'));
+        $text = $request->input('comment');
+
+        if ($post && !empty($text)){
+            $comment = new Status();
+            $comment->parent_id = $post->id;
+            $comment->user_id = $user->id;
+            $comment->body = $text;
+            if ($comment->save()){
+                $response['code'] = 200;
+                $html = View::make('widgets.post_detail.single_comment', compact('post', 'comment'));
+                $response['comment'] = $html->render();
+                $html = View::make('widgets.post_detail.comments_title', compact('post', 'comment'));
+                $response['comments_title'] = $html->render();
+            }
+        }
+
+        return response()->json($response);
     }
 
-    public function commentDelete()
+    public function commentDelete(Request $request)
     {
-        return "";
+        $response = array();
+        $response['code'] = 400;
+
+        $post_comment = Status::find($request->input('id'));
+
+        if ($post_comment){
+            $post = $post_comment->parent();
+            if ($post_comment->user_id == Auth::id() || $post->user_id == Auth::id()) {
+                if ($post_comment->delete()) {
+                    $response['code'] = 200;
+                    $html = View::make('widgets.post_detail.comments_title', compact('post'));
+                    $response['comments_title'] = $html->render();
+                }
+            }
+        }
+
+        return response()->json($response);
     }
 
 }
