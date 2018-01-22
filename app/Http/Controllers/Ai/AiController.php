@@ -211,6 +211,56 @@ class AiController extends Controller
     }
 
     /**
+     * Return a route with relationships
+     *
+     * @return \Illuminate\Http\Response
+     * @SWG\Get(
+     *     path="/ai/routes/{id}",
+     *     description="Return a route with relationships",
+     *     operationId="ai.routes.detail",
+     *     produces={"application/json"},
+     *     tags={"AI"},
+     *     @SWG\Parameter(
+     *          name="id",
+     *          in="path",
+     *          required=true,
+     *          type="string",
+     *          description="Route id in database",
+     * 	   ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Success - Route and relationships returned."
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Error - Route not found."
+     *     )
+     * )
+     */
+    public function routeDetail($id)
+    {
+        $route = Route::find($id);
+        if(!$route){
+            return response()->json(['error'=>'Route not found'], 404);
+        }
+        $user = $route->user;
+        $tags = $route->tags;
+        $itens = $route->itens;
+        $comments = $route->comments;
+        $likes = $route->likes;
+        
+        return response()->json(
+            compact(
+                'route',
+                'user',
+                'tags',
+                'itens',
+                'comments',
+                'likes'
+            ));
+    }
+
+    /**
      * Return all statuses from database.
      *
      * @return \Illuminate\Http\Response

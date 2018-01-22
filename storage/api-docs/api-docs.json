@@ -159,6 +159,36 @@
                 }
             }
         },
+        "/ai/routes/{id}": {
+            "get": {
+                "tags": [
+                    "AI"
+                ],
+                "summary": "Return a route with relationships",
+                "description": "Return a route with relationships",
+                "operationId": "ai.routes.detail",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Route id in database",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - Route and relationships returned."
+                    },
+                    "404": {
+                        "description": "Error - Route not found."
+                    }
+                }
+            }
+        },
         "/ai/statuses": {
             "get": {
                 "tags": [

@@ -81,4 +81,9 @@ class Route extends Model
         return $this->morphToMany('App\Models\Tag', 'taggable');
     }
 
+    public function likes()
+    {
+        return $this->morphMany('App\Models\Like', 'likeable');
+    }
+
 }

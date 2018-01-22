@@ -23,6 +23,7 @@ Route::group(['middleware'=>'cors'], function(){
     Route::get('likes', 'Ai\AiController@likes')->name('ai.likes');
     Route::get('places', 'Ai\AiController@places')->name('ai.places');
     Route::get('routes', 'Ai\AiController@routes')->name('ai.routes');
+    Route::get('routes/{id}', 'Ai\AiController@routeDetail')->name('ai.routes.detail');
     Route::get('statuses', 'Ai\AiController@statuses')->name('ai.statuses');
     Route::get('tags', 'Ai\AiController@tags')->name('ai.tags');
     Route::get('users', 'Ai\AiController@users')->name('ai.users');
