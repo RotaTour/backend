@@ -95,12 +95,18 @@ class SettingsController extends Controller
                 'name' => $request->input("name"),
                 'email' => $request->input("email")
             ];
+            
+            if($request->has('location')){
+                $user['location'] = $request->input("location");
+            }
 
             if ($validator->fails()) {
                 $save = false;
             }else {
                 Auth::user()->name = $user['name'];
                 Auth::user()->email = $user['email'];
+                if( isset($user['location']) ) Auth::user()->location = $user['location'];
+                
                 $save = Auth::user()->save();
             }
         }

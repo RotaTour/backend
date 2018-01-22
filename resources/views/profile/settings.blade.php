@@ -54,6 +54,20 @@
                                 </div>
                             </div>
 
+                            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                                <label for="location" class="col-md-4 control-label">Localização</label>
+
+                                <div class="col-md-6">
+                                    <input id="location" type="text" class="form-control" name="location" value="{{ $user['location'] }}" required>
+
+                                    @if ($errors->has('location'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('location') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
                                     <button type="submit" class="btn btn-primary">
