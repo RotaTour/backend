@@ -58,7 +58,7 @@ function removePostImage(){
 function cleanPostForm(){
     var form_name = '#form-new-post';
     $(form_name + ' textarea').val('');
-    removePostImage();
+    //removePostImage();
 }
 
 function newPost(){
@@ -180,10 +180,10 @@ function fetchForOlderPosts(){
 function deletePost(id){
 
     BootstrapDialog.show({
-        title: 'Post Delete!',
-        message: 'Are you sure to delete post ?',
+        title: 'Deletar publicação!',
+        message: 'Tem certeza que quer deletar a publicação?',
         buttons: [{
-            label: "Yes, I'm Sure!",
+            label: "Sim, Eu estou certo!",
             cssClass: 'btn-danger',
             action: function(dialog) {
 
@@ -203,7 +203,7 @@ function deletePost(id){
                     success: function(response){
                         dialog.close();
                         if (response.code == 200){
-                            $('#panel-post-'+id).html("Post deleted!");
+                            $('#panel-post-'+id).html("Post deletado!");
                         }else{
                             $('#errorMessageModal').modal('show');
                             $('#errorMessageModal #errors').html('Something went wrong!');
@@ -217,7 +217,7 @@ function deletePost(id){
                 });
             }
         }, {
-            label: 'No!',
+            label: 'Não!',
             action: function(dialog) {
                 dialog.close();
             }

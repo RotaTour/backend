@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Status;
 use App\Models\User;
 use Auth;
@@ -67,9 +68,40 @@ class PostController extends Controller
 
     }
 
-    public function new()
+    public function new(Request $request)
     {
-        return "";
+        $data = $request->all();
+        $input = json_decode($data['data'], true);
+        unset($data['data']);
+        foreach ($input as $key => $value) $data[$key] = $value;
+
+        $response = array();
+        $response['code'] = 400;
+        
+        if ($request->hasFile('image')){
+            $validator_data['image'] = 'required|mimes:jpeg,jpg,png,gif|max:2048';
+        }else{
+            $validator_data['content'] = 'required';
+        }
+
+        $validator = Validator::make($data, $validator_data);
+        
+        if ($validator->fails()) {
+            $response['code'] = 400;
+            $response['message'] = implode(' ', $validator->errors()->all());
+        }else{
+            $post = new Status();
+            $post->body = !empty($data['content'])?$data['content']:'';
+            $post->user_id = Auth::user()->id;
+            if($post->save()){
+                $response['code'] = 200;
+            } else {
+                $response['code'] = 400;
+                $response['message'] = "Something went wrong!";
+                $post->delete();
+            }
+        }
+        return response()->json($response);
     }
 
     public function single()
@@ -77,14 +109,58 @@ class PostController extends Controller
         return "";
     }
 
-    public function destroy()
+    public function destroy(Request $request)
     {
-        return "";
+        $response = array();
+        $response['code'] = 400;
+
+        $post = Status::find($request->input('id'));
+        if ($post){
+            if ($post->user_id == Auth::id()) {
+                if ($post->delete()) {
+                    $response['code'] = 200;
+                }
+            }
+        }
+
+        return response()->json($response);
+
     }
 
-    public function like()
+    public function like(Request $request)
     {
-        return "";
+        $user = Auth::user();
+
+        $response = array();
+        $response['code'] = 400;
+
+        $post = Status::find($request->input('id'));
+        if ($post){
+            if($user->hasLikedStatus($post)) // Unlike
+            {
+                $deleted = $post->likes
+                            ->where('user_id', Auth::user()->id)
+                            ->first()
+                            ->delete();
+                if($deleted){
+                    $response['code'] = 200;
+                    $response['type'] = 'unlike';
+                }
+                
+            } else {                        // Like
+                $like = $post->likes()->create([
+                    'user_id' => $user->id,
+                ]);
+                if($like){
+                    $response['code'] = 200;
+                    $response['type'] = 'like';
+                }
+            }
+            if ($response['code'] == 200){
+                $response['like_count'] = $post->getLikeCount();
+            }
+        }
+        return response()->json($response);
     }
 
     public function likes()
