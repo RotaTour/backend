@@ -11,7 +11,7 @@
 
                 <div class="tab-content">
 
-                    <div id="users" class="tab-pane fade">
+                    <div id="users" class="tab-pane fade in active">
 
                         @if($users->count() == 0)
 
@@ -29,6 +29,11 @@
                                                 <div class="card">
                                                     <div class="front">
                                                         <div class="cover"></div>
+                                                        <div class="user">
+                                                            <a href="{{ route('profile.show', ['username'=>$user_p->getUsernameOrEmail()]) }}">
+                                                                <img class="img-circle img-responsive" src="{{ $user_p->getAvatarUrl() }}"/>
+                                                            </a>
+                                                        </div>
                                                         <div class="content" style="padding-bottom: 20px">
                                                             <div class="main">
                                                                 <a href="{{ route('profile.show', ['username'=>$user_p->getUsernameOrEmail()]) }}">
@@ -38,6 +43,7 @@
                                                                         <small>{{ $user_p->location }}</small>
                                                                     </p>
                                                                 </a>
+                                                                @include('friends.widgets.friendship', ['user' => $user_p])
                                                             </div>
                                                         </div>
                                                     </div>

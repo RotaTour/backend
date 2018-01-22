@@ -25,9 +25,10 @@
             <div class="navbar-form navbar-left">
                 <form id="custom-search-input" method="get" action="{{ url('/search') }}">
                     <div class="input-group col-md-12">
-                        <input type="text" class="form-control input-lg" name="s" placeholder="search..." />
+                        <input type="text" class="form-control input-lg" name="s" 
+                        placeholder="Pesquisar..." />
                         <span class="input-group-btn">
-                            <button class="btn btn-info btn-lg" type="button">
+                            <button class="btn btn-info btn-lg" type="submit">
                                 <i class="glyphicon glyphicon-search"></i>
                             </button>
                         </span>
