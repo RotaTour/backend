@@ -42,8 +42,8 @@
     @include('widgets.error')
     <!-- Scripts -->
     <script type="text/javascript">
-        var BASE_URL = "{{ url('/') }}";
-        var REQUEST_URL = "<?=Request::url()?>";
+        var BASE_URL = "{{ route('index') }}";
+        var REQUEST_URL = "<?=url()->current()?>";
         var CSRF = "{{ csrf_token() }}";
         var WALL_ACTIVE = false;
     </script>
