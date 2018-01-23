@@ -54,7 +54,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{ route('friend.index') }}">
                             <i class="fa fa-users"></i> Amigos
                             </a>
                         </li>

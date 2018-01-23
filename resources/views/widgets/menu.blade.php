@@ -7,7 +7,7 @@
             </a>
         </li>
         <li class="list-group-item">
-            <a href="#" class="menu-groups">
+            <a href="{{ route('friend.index') }}" class="menu-groups">
                 <i class="fa fa-users"></i>
                 Amigos
             </a>

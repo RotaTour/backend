@@ -1,26 +1,28 @@
-@extends('layouts.default')
-
+@extends('layouts.app')
 @section('content')
-    <div class="row">
-        <div class="col-lg-6">
-            <h3>Seus Amigos</h3>
-            @if( !$friends->count() )
-            <p>Você não possui amigos.</p>
-            @else
-                @foreach($friends as $user)
-                    @include('users.partials.userblock')
+    <div class="h-20"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                @include('widgets.sidebar')
+            </div>
+            <div class="col-md-9">
+
+                <div class="content-page-title">
+                    <i class="fa fa-users"></i> Amigos
+                </div>
+
+                <div class="content-page-blue-title">
+                    Você tem {{ $friends->count() }} amigos
+                </div>
+
+                <div class="row">
+                @foreach($friends as $user_p)
+                @include('profile.widgets.box')
                 @endforeach
-            @endif
-        </div>
-        <div class="col-lg-6">
-            <h4>Solicitações de Amizades</h4>
-            @if( !$requests->count() )
-            <p>Você não possui solicitações de amizades</p>
-            @else
-                @foreach($requests as $user)
-                    @include('users.partials.userblock')
-                @endforeach
-            @endif
+                </div>
+
+            </div>
         </div>
     </div>
 @endsection

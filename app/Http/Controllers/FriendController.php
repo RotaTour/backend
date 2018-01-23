@@ -20,9 +20,10 @@ class FriendController extends Controller
 
     public function index()
     {
+        $user = Auth::user();
         $friends = Auth::user()->friends();
         $requests = Auth::user()->friendRequests();
-        return view('friends.index', compact('friends', 'requests') );
+        return view('friends.index', compact('user', 'friends', 'requests') );
     }
 
     public function getAdd($email)
