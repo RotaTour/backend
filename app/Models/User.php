@@ -173,12 +173,12 @@ class User extends Authenticatable implements JWTSubject
 
     public function friendsOfMine()
     {
-        return $this->belongsToMany('App\Models\User', 'friends', 'user_id', 'friend_id');
+        return $this->belongsToMany('App\Models\User', 'friends', 'user_id', 'friend_id')->withTimestamps();
     }
 
     public function friendsOf()
     {
-        return $this->belongsToMany('App\Models\User', 'friends', 'friend_id', 'user_id');
+        return $this->belongsToMany('App\Models\User', 'friends', 'friend_id', 'user_id')->withTimestamps();
     }
 
     public function friends()

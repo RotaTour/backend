@@ -1,9 +1,9 @@
 <li class="dropdown">
     <a href="#" class="dropdown-toggle parent" data-toggle="dropdown" role="button" aria-expanded="false">
-        
+    <span class="badge badge-notify" id="friendsNotificationCount"></span>
         <i class="fa fa-bell"></i>
     </a>
-    <ul class="dropdown-menu" role="menu">
+    <ul class="dropdown-menu" role="menu" id="friendsNotification">
         
         <li style="padding: 10px"><a href="javascript:;">Não há notificações.</a></li>
         <!-- loop -->

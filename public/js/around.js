@@ -13,6 +13,11 @@ $(function() {
         allowClear: true
     });
 
+    friendsRequests();
+    setInterval(function(){
+        friendsRequests();
+    }, 40000);
+    
 });
 
 window.resetFile = function (e) {
@@ -156,7 +161,6 @@ function friends(user_id, element, action){
         processData: false,
         headers: {'X-CSRF-TOKEN': CSRF},
         success: function (response) {
-            console.log(response);
             if (response.code == 200) {
                 $(element).html(response.html);
             } else {
@@ -169,7 +173,48 @@ function friends(user_id, element, action){
             $('#errorMessageModal #errors').html('Something went wrong!');
         }
     });
+}
 
+function friendsRequests()
+{
+    var ActionUrl = BASE_URL + '/friends/requests/';
+    var Ul = $("#friendsNotification");
+    var CountSpan = $("#friendsNotificationCount");
+
+    $.ajax({
+        url: ActionUrl,
+        type: "GET",
+        timeout: 5000,
+        contentType: false,
+        cache: false,
+        processData: false,
+        headers: {'X-CSRF-TOKEN': CSRF},
+        success: function (response) {
+            if (response.code == 200) {
+                var html = "";
+                var count = response.requests.length;
+                if(count>0){
+                    response.requests.forEach( function(item, index) {
+                        var userUrl = BASE_URL +'/'+ response.requests[index].username;
+                        var name = response.requests[index].name;
+                        var elem = '<li><a href="'+userUrl+'"><i class="fa fa-user"></i>'+name+'</a><br></li>';
+                        html = html.concat(elem);
+                    });
+                    Ul.html(html);
+                    CountSpan.html(count);
+                } else {
+                    var elem = '<li style="padding: 10px"><a href="javascript:;">Não há notificações.</a></li>';
+                    Ul.html(elem);
+                    CountSpan.html('');
+                }
+            } else {
+              console.log("response code is not 200");
+            }
+        },
+        error: function () {
+            console.log("Server error response");
+        }
+    });
 }
 
 

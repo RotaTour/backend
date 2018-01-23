@@ -23,6 +23,7 @@ Route::post('/settings', 'SettingsController@update')->name('settings.update');
 
 /* Friends */
 Route::get('/friends', 'FriendController@index')->name('friend.index');
+Route::get('/friends/requests', 'FriendController@getRequests')->name('friend.requests');
 Route::get('/friends/add/{id}', 'FriendController@getAdd')->name('friend.add');
 Route::get('/friends/accept/{id}', 'FriendController@getAccept')->name('friend.accept');
 Route::get('/friends/leavefriendship/{id}', 'FriendController@leaveFriendship')->name('friend.leave');

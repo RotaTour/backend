@@ -26,6 +26,14 @@ class FriendController extends Controller
         return view('friends.index', compact('user', 'friends', 'requests') );
     }
 
+    public function getRequests()
+    {
+        $response = array();
+        $response['code'] = 200;
+        $response['requests'] = Auth::user()->friendRequests();
+        return response()->json($response);
+    }
+
     public function getAdd($id)
     {
         $response = array();
@@ -35,7 +43,7 @@ class FriendController extends Controller
 
         if (!$user) {
             $response['code'] = 404;
-            $response['message'] = "404 - Uusuário não encontrado";
+            $response['message'] = "404 - Usuário não encontrado";
             return response()->json($response);
         }
 
@@ -63,48 +71,69 @@ class FriendController extends Controller
             $response['code'] = 200;
         }
         
-        return response()->json($response); 
+        return response()->json($response);
     }
 
-    public function getAccept($email)
+    public function getAccept($id)
     {
-        $user = User::where('email', $email)->first();
+        $response = array();
+        $response['code'] = 400;
+
+        $user = User::find($id);
+        
         if (!$user) {
-            return redirect()
-            ->route('index')
-            ->with('info', 'That user could not be found');
+            $response['code'] = 404;
+            $response['message'] = "404 - Usuário não encontrado";
+            return response()->json($response);
         }
 
         if (!Auth::user()->hasFriendRequestReceived($user)){
-            return redirect()
-            ->route('index')
-            ->with('info', 'There is no Request Received.');
+            $response['code'] = 400;
+            $response['message'] = "400 - Não há requisição recebida";
+            return response()->json($response);
         }
 
         Auth::user()->acceptFriendRequest($user);
-        return redirect()
-        ->route('profile.show', ['email'=>$email])
-        ->with('info','Friend request accepted.');
+        if(Auth::user()->isFriendsWith($user) || $user->isFriendsWith(Auth::user())  ){
+            $response['message'] = "Pedido de amizade aceito!";
+            $response['html'] = "<a href=\"javascript:;\"".
+            "onclick=\"friends(".$user->id.", '#people-listed-".$user->id."', 'leavefriendship')\"".
+            "class=\"btn btn-primary\">".
+            "Deixar a amizade</a>";
+            $response['code'] = 200;
+        }
+        
+        return response()->json($response);
     }
 
-    public function leaveFriendship($email)
+    public function leaveFriendship($id)
     {
-        $user = User::where('email', $email)->first();
+        $response = array();
+        $response['code'] = 400;
+
+        $user = User::find($id);
+        
         if (!$user) {
-            return redirect()
-            ->route('index')
-            ->with('info', 'That user could not be found');
+            $response['code'] = 404;
+            $response['message'] = "404 - Usuário não encontrado";
+            return response()->json($response);
         }
 
         if (Auth::user()->isFriendsWith($user)){
-            
+
             Auth::user()->deleteFriend($user);
-            
-            return redirect()->back()
-            ->with('info', "You leave the friendship with {$user->getFirstNameOrUsername()}.");
+            if(!Auth::user()->isFriendsWith($user)){
+                $response['message'] = "Pedido de amizade aceito!";
+                $response['html'] = "<a href=\"javascript:;\"".
+                "onclick=\"friends(".$user->id.", '#people-listed-".$user->id."', 'add')\"".
+                "class=\"btn btn-primary\">".
+                "Adicionar como amigo</a>";
+                $response['code'] = 200;
+            }
         } else {
-            return redirect()->back()
-            ->with('info', "You aren't friend of {$user->getFirstNameOrUsername()}.");
+            $response['message'] = "400 - O usuário não é seu amigo(a)";
         }
+
+        return response()->json($response);
     }
 }
