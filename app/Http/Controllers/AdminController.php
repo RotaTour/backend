@@ -133,4 +133,9 @@ class AdminController extends Controller
         
         return response()->json(compact('posts_created'));
     }
+
+    public function requestFriends()
+    {
+        return "";
+    }
 }
