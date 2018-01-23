@@ -15,9 +15,11 @@ $(function() {
 
     
     friendsRequests();
+    /*
     setInterval(function(){
         friendsRequests();
     }, 40000);
+    */
     
 });
 
@@ -178,8 +180,7 @@ function friends(user_id, element, action){
 
 function friendsRequests()
 {
-    //var ActionUrl = BASE_URL + '/friends/requests/';
-    var ActionUrl = '/friends/requests/';
+    var ActionUrl = BASE_URL + '/friends/requests';
     var Ul = $("#friendsNotification");
     var CountSpan = $("#friendsNotificationCount");
 
