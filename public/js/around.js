@@ -13,12 +13,11 @@ $(function() {
         allowClear: true
     });
 
-    /*
+    
     friendsRequests();
     setInterval(function(){
         friendsRequests();
     }, 40000);
-    */
     
 });
 
