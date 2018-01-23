@@ -36,10 +36,9 @@
                 </form>
             </div>
 
-
             <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right">
-                
+                @include('widgets.notifications')
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle parent" data-toggle="dropdown" role="button" aria-expanded="false">
 

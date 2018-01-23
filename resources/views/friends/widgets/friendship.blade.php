@@ -1,18 +1,20 @@
 <!-- Friends, friends requests -->
-<div class="text-center">
+<div class="text-center" id="people-listed-{{ $user->id }}">
     @if(Auth::user()->hasFriendRequestPending($user))
-    <p>Esperando por {{ $user->getNameOrUsername() }} aceitar a sua solicitação de amizade</p>
+    <p>Esperando por {{ '@'.$user->getNameOrUsername() }} aceitar a sua solicitação de amizade</p>
     @elseif(Auth::user()->hasFriendRequestReceived($user))
-        <a href="{{route('friend.accept', ['email'=>$user->email])}}" class="btn btn-primary">Aceitar a requisição de amizade</a>
+        <a href="javascript:;" class="btn btn-primary">Aceitar a requisição de amizade</a>
+
     @elseif (Auth::user()->isFriendsWith($user))
-        <!-- <p>Você e {{ $user->getNameOrUsername() }} são amigos</p> -->
-        <form action="{{route('friend.leave', ['email'=>$user->email])}}" method="post">
-            {{ csrf_field() }}
-            <input type="submit" value="Deixar a amizade" class="btn btn-primary">
-        </form>
+        <a href="javascript:;" class="btn btn-primary">Deixar a amizade</a>
 
     @elseif (Auth::user()->id != $user->id )
-        <a href="{{route('friend.add', ['email'=>$user->email])}}" class="btn btn-primary">Adicionar como amigo</a>
+        <a 
+            href="javascript:;" 
+            onclick="friends({{$user->id}}, '#people-listed-{{ $user->id }}', 'add')" 
+            class="btn btn-primary">
+            Adicionar como amigo
+        </a>
     @endif
 </div>
 <!--/ Friends, friends requests -->

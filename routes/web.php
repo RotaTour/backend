@@ -23,9 +23,9 @@ Route::post('/settings', 'SettingsController@update')->name('settings.update');
 
 /* Friends */
 Route::get('/friends', 'FriendController@index')->name('friend.index');
-Route::get('/friends/add/{email}', 'FriendController@getAdd')->name('friend.add');
-Route::get('/friends/accept/{email}', 'FriendController@getAccept')->name('friend.accept');
-Route::post('/friends/leavefriendship/{email}', 'FriendController@leaveFriendship')->name('friend.leave');
+Route::get('/friends/add/{id}', 'FriendController@getAdd')->name('friend.add');
+Route::get('/friends/accept/{id}', 'FriendController@getAccept')->name('friend.accept');
+Route::get('/friends/leavefriendship/{id}', 'FriendController@leaveFriendship')->name('friend.leave');
 
 /* Status & Posts */
 Route::post('/status', 'StatusController@postStatus')->name('status.store');

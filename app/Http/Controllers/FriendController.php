@@ -26,37 +26,44 @@ class FriendController extends Controller
         return view('friends.index', compact('user', 'friends', 'requests') );
     }
 
-    public function getAdd($email)
+    public function getAdd($id)
     {
-        $user = User::where('email', $email)->first();
+        $response = array();
+        $response['code'] = 400;
+
+        $user = User::find($id);
+
         if (!$user) {
-            return redirect()
-            ->route('index')
-            ->with('info', 'That user could not be found');
+            $response['code'] = 404;
+            $response['message'] = "404 - Uusuário não encontrado";
+            return response()->json($response);
         }
 
         if (Auth::user()->id == $user->id ){
-            return redirect()
-            ->route('index');
+            $response['message'] = "400 - Você não pode ser amigo de você mesmo(a)";
+            return response()->json($response);
         }
 
         if (Auth::user()->hasFriendRequestPending($user) || 
         $user->hasFriendRequestPending(Auth::user()) ){
-            return redirect()
-            ->route('profile.show', ['email'=>$email])
-            ->with('info', 'Friend request already pending.');
+            $response['message'] = "400 - Já existe um pedido em espera";
+            return response()->json($response);
         }
 
         if (Auth::user()->isFriendsWith($user)){
-            return redirect()
-            ->route('profile.show', ['email'=>$user->email])
-            ->with('info', 'You are already friends.');
+            $response['message'] = "400 - Vocês já são amigos(as)";
+            return response()->json($response);
         }
 
         Auth::user()->addFriend($user);
-        return redirect()
-        ->route('profile.show', ['email'=>$email])
-        ->with('info','Friend request sent.');
+        if ( Auth::user()->hasFriendRequestPending($user) || 
+        $user->hasFriendRequestPending(Auth::user()) ){
+            $response['message'] = "Pedido de amizade enviado com sucesso!";
+            $response['html'] = "<p>Esperando por @".$user->getNameOrUsername()." aceitar a sua solicitação de amizade</p>";
+            $response['code'] = 200;
+        }
+        
+        return response()->json($response); 
     }
 
     public function getAccept($email)

@@ -130,6 +130,49 @@ function autoFindLocation(){
     }, 1);
 }
 
+function friends(user_id, element, action){
+
+    var data = new FormData();
+    data.append('user_id', user_id);
+    var ActionUrl = "";
+
+    if(action=="add"){
+        ActionUrl = BASE_URL + '/friends/add/'+user_id;
+    } else if (action=="accept") {
+        ActionUrl = BASE_URL + '/friends/accept/'+user_id;
+    } else if (action=="leavefriendship"){
+        ActionUrl = BASE_URL + '/friends/leavefriendship/'+user_id;
+    }
+
+    if(ActionUrl=="") return false;
+
+    $.ajax({
+        url: ActionUrl,
+        type: "GET",
+        timeout: 5000,
+        data: data,
+        contentType: false,
+        cache: false,
+        processData: false,
+        headers: {'X-CSRF-TOKEN': CSRF},
+        success: function (response) {
+            console.log(response);
+            if (response.code == 200) {
+                $(element).html(response.html);
+            } else {
+                $('#errorMessageModal').modal('show');
+                $('#errorMessageModal #errors').html(response.message);
+            }
+        },
+        error: function () {
+            $('#errorMessageModal').modal('show');
+            $('#errorMessageModal #errors').html('Something went wrong!');
+        }
+    });
+
+}
+
+
 
 function follow(following, follower, element, size){
 
