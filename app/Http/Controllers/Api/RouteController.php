@@ -327,14 +327,6 @@ class RouteController extends Controller
      *          description="Route id in database",
      * 	   ),
      *     @SWG\Parameter(
-     *          name="google_place_id",
-     *          in="body",
-     *          schema={"$ref": "#/definitions/NewPlace"},
-     *          required=false,
-     *          type="string",
-     *          description="Google place - id",
-     * 	   ),
-     *     @SWG\Parameter(
      *          name="google_places",
      *          in="body",
      *          schema={"$ref": "#/definitions/NewPlace"},
@@ -396,22 +388,8 @@ class RouteController extends Controller
                     $item->save();
                 }
             }
-
-        } else if( isset($input['google_place_id']) ) {
-            $place = Place::where('google_place_id',$input['google_place_id'])->first();
-            if (!$place){
-                $place = new Place();
-                $place->google_place_id = $input['google_place_id'];
-                $place->google_json = GooglePlaces::placeDetails($input['google_place_id'], ['language'=>'pt-BR']);
-                $place->save();
-            }
-            $item = new Item();
-                    $item->route_id = $route->id;
-                    $item->place_id = $place->id;
-                    $item->order = 1;
-                    $item->save();
         } else {
-            return response()->json(['error' => 'Param google_place_id OR google_places not provided'], 400);
+            return response()->json(['error' => 'Param google_places not provided'], 400);
         }
 
         return response()->json(['info' => 'Item(s) added to Route '.$route->name], 201);
