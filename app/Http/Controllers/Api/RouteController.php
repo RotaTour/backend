@@ -340,7 +340,7 @@ class RouteController extends Controller
      *     ),
      *     @SWG\Response(
      *         response=401,
-     *         description="Param google_place_id OR google_places not provided",
+     *         description="Param google_places not provided",
      *     ),
      *     @SWG\Response(
      *         response=403,
