@@ -905,7 +905,7 @@
                         "description": "Success - Add to Route."
                     },
                     "401": {
-                        "description": "Param google_place_id OR google_places not provided"
+                        "description": "Param google_places not provided"
                     },
                     "403": {
                         "description": "Forbbiden - You are not the owner"
