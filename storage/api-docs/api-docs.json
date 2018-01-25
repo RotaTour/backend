@@ -890,16 +890,6 @@
                         "type": "string"
                     },
                     {
-                        "name": "google_place_id",
-                        "in": "body",
-                        "description": "Google place - id",
-                        "required": false,
-                        "schema": {
-                            "$ref": "#/definitions/NewPlace"
-                        },
-                        "type": "string"
-                    },
-                    {
                         "name": "google_places",
                         "in": "body",
                         "description": "List (Array) of Google Places Ids to include in the Especified Route",
