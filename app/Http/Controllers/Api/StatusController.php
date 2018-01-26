@@ -105,7 +105,7 @@ class StatusController extends Controller
             $posts = Status::notReply()->where(function($query){
                 return $query->where('user_id', $this->user->id)
                     ->orWhereIn('user_id', $this->user->friends()->pluck('id'));
-            });
+            })->with('user');
         }
 
         if ($post_min_id > -1){
