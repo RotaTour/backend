@@ -949,6 +949,64 @@
                 }
             }
         },
+        "/api/posts": {
+            "post": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Return a list of Statuses based on params",
+                "description": "Return a list of Statuses based on params.",
+                "operationId": "api.posts.index",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "wall_type",
+                        "in": "path",
+                        "description": "0 => all posts, 1 => profile posts, 2 => group posts",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "optional_id",
+                        "in": "path",
+                        "description": "If wall_type == 1: Group ID, User ID, or empty",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "path",
+                        "description": "The max limit of itens",
+                        "required": false,
+                        "type": "number"
+                    },
+                    {
+                        "name": "post_min_id",
+                        "in": "path",
+                        "description": "If not empty, post_id < post_min_id",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "post_max_id",
+                        "in": "path",
+                        "description": "If not empty, post_id > post_max_id",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - User found and will return Statuses/Posts."
+                    },
+                    "404": {
+                        "description": "User not found."
+                    }
+                }
+            }
+        },
         "/api/tags": {
             "get": {
                 "tags": [
