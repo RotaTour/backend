@@ -41,20 +41,21 @@ class SearchController extends Controller
     public function results(Request $request)
     {
         $query = $request->input('query');
-        if (!$query){
+        if (empty($query)){
             return response()->json(['error' => 'no input query'], 400);
         }
 
+        $userJWT = JWTAuth::parseToken()->authenticate();
+        $user = User::find($userJWT->id);
+        if (!$user) return response()->json(['error' => 'User not found'], 404);
+
         // Tive que usar o ILIKE, fazer o LOWER('name') retorna erro
         $users = User::where(
-            DB::raw("CONCAT(first_name, ' ', last_name)"), 
-            'ILIKE',
-            "%{$query}%")
-            ->orWhere('name',
-            'ILIKE', 
-            "%{$query}%")
+            DB::raw("CONCAT(first_name, ' ', last_name)"),'ILIKE',"%{$query}%")
+            ->orWhere('name','ILIKE', "%{$query}%")
+            ->orWhere('username', 'ILIKE', "%{$query}%")
             ->get();
 
-        return response()->json(compact('users'));
+        return response()->json(compact('users', 'user'));
     }
 }

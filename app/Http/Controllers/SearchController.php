@@ -30,7 +30,7 @@ class SearchController extends Controller
         $users = User::where(
             DB::raw("CONCAT(first_name, ' ', last_name)"),'ILIKE',"%{$query}%")
             ->orWhere('name','ILIKE', "%{$query}%")
-            ->orWhere('username', 'ILIKE', '%'.$query.'%')
+            ->orWhere('username', 'ILIKE', "%{$query}%")
             ->get();
 
         return view('search.results', compact('user','users') );
