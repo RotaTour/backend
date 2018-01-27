@@ -31,6 +31,7 @@ class ProfileController extends Controller
             'new_post_group_id' => 0
         ];
         $can_see = true;
+        
 
         return view('profile.index', 
             compact(
@@ -42,24 +43,27 @@ class ProfileController extends Controller
         );
     }
 
-    public function edit()
-    {   
-        return view('profile.edit');
-    }
-
-    public function store(Request $request)
+    public function friends($username)
     {
-        $this->validate($request, [
-            'first_name' => 'required|alpha|max:50',
-            'last_name' => 'required|alpha|max:50',
-            'location' => 'nullable|max: 50',
-        ]);
+        $user = User::getUser($username);
+        if(!$user) abort(404);
 
-        $input = $request->input();
-        Auth::user()->update($input);
+        $authUserIsFriend = Auth::user()->isFriendsWith($user);
+        $wall = [
+            'new_post_group_id' => 0
+        ];
+        $can_see = true;
+        $friends = $user->friends();
 
-        return redirect()
-        ->route('profile.edit')
-        ->with('info', 'Updated');
+        return view('profile.friends', 
+            compact(
+                'user', 
+                'authUserIsFriend',
+                'wall',
+                'can_see',
+                'friends'
+                )
+        );
     }
+
 }

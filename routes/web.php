@@ -76,9 +76,9 @@ Route::group(['middleware' => ['role:superuser'], 'prefix'=>'admin'], function (
 });
 
 /* User Profile */
-Route::get('/{username}', 'ProfileController@show')->name('profile.show');
-Route::get('/{username}/friends', 'ProfileController@show')->name('profile.friends');
+Route::get('/{username}/friends', 'ProfileController@friends')->name('profile.friends');
 Route::get('/{username}/routes', 'ProfileController@show')->name('profile.routes');
+Route::get('/{username}', 'ProfileController@show')->name('profile.show');
 
 /* Index */
 Route::get('/', 'HomeController@index')->name('index');
