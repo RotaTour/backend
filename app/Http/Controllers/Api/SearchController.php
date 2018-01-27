@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Route;
 use DB;
 
 class SearchController extends Controller
@@ -56,6 +57,8 @@ class SearchController extends Controller
             ->orWhere('username', 'ILIKE', "%{$query}%")
             ->get();
 
-        return response()->json(compact('users', 'user'));
+        $routes = Route::where('name', 'ILIKE', "%{$query}%")->get();
+
+        return response()->json(compact('users', 'routes','user'));
     }
 }
