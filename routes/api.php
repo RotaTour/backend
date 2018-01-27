@@ -35,12 +35,20 @@ Route::group(['middleware'=>'cors'], function(){
         /* Search */
         Route::get('/search', 'Api\SearchController@results')->name('api.search.results');
 
+        /* Settings */
+
         /* Users */
-        //Route::resource('users', 'Api\UserController');
         Route::get('users/{email}', 'Api\UserController@show')->name('api.users.show');
         Route::get('users/{email}/status', 'Api\UserController@getStatus')->name('api.users.getstatus');
         Route::get('myself', 'Api\UserController@myself')->name('api.myself');
         Route::delete('users/{email}', 'Api\UserController@destroy')->name('api.users.delete');
+
+        /* Friends */
+        Route::get('friends', 'Api\FriendController@index')->name('api.friends.index');
+        Route::get('/friends/requests', 'Api\FriendController@getRequests')->name('api.friends.requests');
+        Route::get('friends/add/{email}', 'Api\FriendController@getAdd')->name('api.friends.add');
+        Route::get('friends/accept/{email}', 'Api\FriendController@getAdd')->name('api.friends.accept');
+        Route::post('friends/leavefriendship/{email}', 'Api\FriendController@getAdd')->name('api.friends.leave');
 
         /* Posts & Statuses */
         Route::get('posts', 'Api\StatusController@list')->name('api.posts.index');
@@ -52,11 +60,7 @@ Route::group(['middleware'=>'cors'], function(){
         Route::delete('posts/comments/delete/{id}', 'Api\StatusController@commentDelete')->name('api.post.comment.delete');
         Route::get('posts/show/{id}', 'Api\StatusController@single')->name('api.post.single');
 
-        /* Friends */
-        Route::get('friends', 'Api\FriendController@index')->name('api.friends.index');
-        Route::get('friends/add/{email}', 'Api\FriendController@getAdd')->name('api.friends.add');
-        Route::get('friends/accept/{email}', 'Api\FriendController@getAdd')->name('api.friends.accept');
-        Route::post('friends/leavefriendship/{email}', 'Api\FriendController@getAdd')->name('api.friends.leave');
+        
 
         /* Places */
         //Route::get('places', 'Api\PlaceController@index')->name('api.places.index');

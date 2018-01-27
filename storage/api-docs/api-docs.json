@@ -492,6 +492,33 @@
                     },
                     "401": {
                         "description": "Unauthorized action."
+                    },
+                    "404": {
+                        "description": "User not Found."
+                    }
+                }
+            }
+        },
+        "/api/friends/requests": {
+            "get": {
+                "tags": [
+                    "friends"
+                ],
+                "summary": "Display a listing of friendship requests.",
+                "description": "Returns friends.",
+                "operationId": "api.friends.index",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Friends overview."
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+                        "description": "User not Found."
                     }
                 }
             }

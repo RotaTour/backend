@@ -27,6 +27,10 @@ class FriendController extends Controller
      *     @SWG\Response(
      *         response=401,
      *         description="Unauthorized action.",
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="User not Found.",
      *     )
      * )
      */
@@ -34,10 +38,50 @@ class FriendController extends Controller
     {
         $userJWT = JWTAuth::parseToken()->authenticate();
         $user = User::find($userJWT->id);
+        if(!$user) return response()->json(['error' => 'User not be found'], 404);
+
         $friends = $user->friends();
         return response()->json(compact('friends'));
     }
     
+    /**
+     * Display a listing of friendship requests.
+     *
+     * @return \Illuminate\Http\Response
+     * 
+     * @SWG\Get(
+     *     path="/api/friends/requests",
+     *     description="Returns friends.",
+     *     operationId="api.friends.index",
+     *     produces={"application/json"},
+     *     tags={"friends"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Friends overview."
+     *     ),
+     *     @SWG\Response(
+     *         response=401,
+     *         description="Unauthorized action.",
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="User not Found.",
+     *     )
+     * )
+     */
+    public function getRequests()
+    {
+        $userJWT = JWTAuth::parseToken()->authenticate();
+        $user = User::find($userJWT->id);
+        if(!$user) return response()->json(['error' => 'User not be found'], 404);
+
+        $response = array();
+        $response['code'] = 200;
+        $response['requests'] = $user->friendRequests();
+        return response()->json($response);
+    }
+
+
     /**
      * Send a friendship request.
      *
