@@ -34,6 +34,8 @@ class AppServiceProvider extends ServiceProvider
             $filter = "[^a-zA-Z0-9\-\_\.]";
             return preg_match("~" . $filter . "~iU", $value) ? false : true;
         });
+
+        \Carbon\Carbon::setLocale('pt_BR');
     }
 
     /**

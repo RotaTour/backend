@@ -66,4 +66,25 @@ class ProfileController extends Controller
         );
     }
 
+    public function routes($username)
+    {
+        $user = User::getUser($username);
+        if(!$user) abort(404);
+        $authUserIsFriend = Auth::user()->isFriendsWith($user);
+        $wall = [
+            'new_post_group_id' => 0
+        ];
+        $can_see = true;
+        $routes = $user->routes()->get();
+        return view('profile.routes', 
+        compact(
+            'user', 
+            'authUserIsFriend',
+            'wall',
+            'can_see',
+            'routes'
+            )
+        );
+    }
+
 }

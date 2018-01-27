@@ -19,7 +19,7 @@
             </a>
         </li>
         <li class="list-group-item">
-            <a href="#" class="menu-routes">
+            <a href="{{ route('route.index') }}" class="menu-routes">
                 <i class="fa fa-map-marker"></i>
                 Rotas
             </a>

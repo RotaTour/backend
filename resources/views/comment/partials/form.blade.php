@@ -13,7 +13,8 @@
     <input type="hidden" name="localClass" value="{{$localClass}}">
     <div class="form-group">
         <textarea name="body" id="body" rows="2"  class="form-control" placeholder="Faça um comentário"></textarea>
-        <input type="submit" value="Comentar" class="btn btn-default btn-sm">
+        <div class="m-t-20"></div>
+        <input type="submit" value="Comentar" class="btn btn-primary btn-sm">
     </div>
 </div>
 <script type="text/javascript">

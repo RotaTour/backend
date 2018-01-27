@@ -27,8 +27,9 @@ class RouteController extends Controller
      */
     public function index()
     {
-        $routes = Auth::user()->routes()->get();
-        return view('route.index', compact('routes'));
+        $user = Auth::user();
+        $routes = $user->routes()->get();
+        return view('route.index', compact('routes','user'));
     }
 
     /**
@@ -68,6 +69,7 @@ class RouteController extends Controller
      */
     public function show($id)
     {
+        $user = Auth::user();
         $route = Route::where('id', $id)->with('itens.place')->first();
         if(!$route) {
             return redirect()
@@ -75,8 +77,7 @@ class RouteController extends Controller
             ->with('info', 'A rota selecionada não foi encontrada');
         }
 
-        //dd($route->itens->first()->place()->first()->json()->result->icon);
-        return view('route.show', compact('route'));
+        return view('route.show', compact('route','user'));
     }
 
     /**

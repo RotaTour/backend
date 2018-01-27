@@ -63,7 +63,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{ route('route.index') }}">
                             <i class="fa fa-map-marker"></i> Rotas
                             </a>
                         </li>
