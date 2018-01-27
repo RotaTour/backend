@@ -58,7 +58,7 @@ class SearchController extends Controller
             ->orWhere('username', 'ILIKE', "%{$query}%")
             ->get();
 
-        $routes = Route::where('name', 'ILIKE', "%{$query}%")->get();
+        $routes = Route::where('name', 'ILIKE', "%{$query}%")->with('user')->get();
 
         return response()->json(compact('users', 'routes','user'));
     }
