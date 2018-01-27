@@ -952,7 +952,7 @@
         "/api/posts": {
             "get": {
                 "tags": [
-                    "Posts"
+                    "posts"
                 ],
                 "summary": "Return a list of Statuses based on params",
                 "description": "Return a list of Statuses based on params.",
@@ -1010,7 +1010,7 @@
         "/api/posts/new": {
             "post": {
                 "tags": [
-                    "Posts"
+                    "posts"
                 ],
                 "summary": "Store a newly created resource in storage.",
                 "description": "Return a list of Statuses based on params.",
@@ -1036,6 +1036,217 @@
                     },
                     "404": {
                         "description": "User not found."
+                    },
+                    "400": {
+                        "description": "Bad Request - some param are not present"
+                    }
+                }
+            }
+        },
+        "/api/posts/show/{id}": {
+            "get": {
+                "tags": [
+                    "posts"
+                ],
+                "summary": "Return a status/post specified",
+                "description": "Return a status/post specified",
+                "operationId": "api.posts.single",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Status/Post id in database",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success - Status/Post Post returned."
+                    },
+                    "404": {
+                        "description": "Status/Post/User not found."
+                    }
+                }
+            }
+        },
+        "/api/posts/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "posts"
+                ],
+                "summary": "Delete a status/post specified.",
+                "description": "Delete a status/post specified",
+                "operationId": "api.posts.delete",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Status/Post id in database",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success - Status/Post Post deleted."
+                    },
+                    "404": {
+                        "description": "Status/Post/User not found."
+                    }
+                }
+            }
+        },
+        "/api/posts/like": {
+            "post": {
+                "tags": [
+                    "posts"
+                ],
+                "summary": "Like or unlike a Status/Post.",
+                "description": "Like or unlike a Status/Post.",
+                "operationId": "api.posts.like",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "body",
+                        "description": "Status/Post id in batabase",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Status"
+                        },
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success - Status/Post liked/unliked."
+                    },
+                    "404": {
+                        "description": "Status/Post/User not found."
+                    },
+                    "400": {
+                        "description": "Bad Request - some param are not present"
+                    }
+                }
+            }
+        },
+        "/api/posts/likes": {
+            "post": {
+                "tags": [
+                    "posts"
+                ],
+                "summary": "Get a list of Likes from a Status/Post.",
+                "description": "Get a list of Likes from a Status/Post.",
+                "operationId": "api.posts.like",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "body",
+                        "description": "Status/Post id in batabase",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Status"
+                        },
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success - Status/Post liked/unliked."
+                    },
+                    "404": {
+                        "description": "Status/Post/User not found."
+                    },
+                    "400": {
+                        "description": "Bad Request - some param are not present"
+                    }
+                }
+            }
+        },
+        "/api/posts/comment": {
+            "post": {
+                "tags": [
+                    "posts"
+                ],
+                "summary": "Add a comment to a Status/Post.",
+                "description": "Add a comment to a Status/Post.",
+                "operationId": "api.posts.comment",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "body",
+                        "description": "Status/Post id in batabase",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Status"
+                        },
+                        "type": "integer"
+                    },
+                    {
+                        "name": "comment",
+                        "in": "body",
+                        "description": "The body of comment content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Status"
+                        },
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success - Status/Post commented."
+                    },
+                    "404": {
+                        "description": "Status/Post/User not found."
+                    },
+                    "400": {
+                        "description": "Bad Request - some param are not present"
+                    }
+                }
+            }
+        },
+        "/api/posts/comments/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "posts"
+                ],
+                "summary": "Delete a comment specified.",
+                "description": "Delete a comment specified.",
+                "operationId": "api.posts.comments.delete",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Status/Post id in database",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success - Comment deleted."
+                    },
+                    "404": {
+                        "description": "Status/Post/User not found."
                     },
                     "400": {
                         "description": "Bad Request - some param are not present"

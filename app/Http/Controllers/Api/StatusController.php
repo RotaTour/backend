@@ -34,7 +34,7 @@ class StatusController extends Controller
      *     description="Return a list of Statuses based on params.",
      *     operationId="api.posts.index",
      *     produces={"application/json"},
-     *     tags={"Posts"},
+     *     tags={"posts"},
      *     @SWG\Parameter(
      *          name="wall_type",
      *          in="path",
@@ -141,12 +141,12 @@ class StatusController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      * * 
-     * @SWG\Post(
+     * @SWG\post(
      *     path="/api/posts/new",
      *     description="Return a list of Statuses based on params.",
      *     operationId="api.posts.new",
      *     produces={"application/json"},
-     *     tags={"Posts"},
+     *     tags={"posts"},
      *     @SWG\Parameter(
      *          name="body",
      *          in="body",
@@ -209,47 +209,356 @@ class StatusController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
+     * Return a status/post specified
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
+     * 
+     * @SWG\Get(
+     *     path="/api/posts/show/{id}",
+     *     description="Return a status/post specified",
+     *     operationId="api.posts.single",
+     *     produces={"application/json"},
+     *     tags={"posts"},
+     *     @SWG\Parameter(
+     *          name="id",
+     *          in="path",
+     *          required=true,
+     *          type="integer",
+     *          description="Status/Post id in database",
+     * 	   ),
+     *     @SWG\Response(
+     *         response=201,
+     *         description="Success - Status/Post Post returned."
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Status/Post/User not found.",
+     *     )
+     * )
      */
-    public function update(Request $request, $id)
+    public function single($id)
     {
-        //
+        $post = Status::find($id);
+        if (!$post) return response()->json(['error' => 'Status/Post not found'], 404);
+        
+        $userJWT = JWTAuth::parseToken()->authenticate();
+        $user = User::find($userJWT->id);
+        if (!$user) return response()->json(['error' => 'User not found'], 404);
+
+        $post->load('user','replies.user', 'likes.user');
+        $post->likesCount = $post->getLikeCount();
+        return response()->json( compact('post') );
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a status/post specified.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     * 
+     *  @SWG\Delete(
+     *     path="/api/posts/delete/{id}",
+     *     description="Delete a status/post specified",
+     *     operationId="api.posts.delete",
+     *     produces={"application/json"},
+     *     tags={"posts"},
+     *     @SWG\Parameter(
+     *          name="id",
+     *          in="path",
+     *          required=true,
+     *          type="integer",
+     *          description="Status/Post id in database",
+     * 	   ),
+     *     @SWG\Response(
+     *         response=201,
+     *         description="Success - Status/Post Post deleted."
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Status/Post/User not found.",
+     *     )
+     * )
      */
     public function destroy($id)
     {
-        //
+        $response = array();
+        $response['code'] = 400;
+
+        $userJWT = JWTAuth::parseToken()->authenticate();
+        $user = User::find($userJWT->id);
+        if (!$user) return response()->json(['error' => 'User not found'], 404);
+
+        $post = Status::find($id);
+        if ($post){
+            if ($post->user_id == $user->id) {
+                $response['obj'] = $post;
+                if ($post->delete()) {
+                    $response['code'] = 200;
+                }
+            }
+        } else {
+            return response()->json(['error' => 'Status/Post not found'], 404);
+        }
+
+        return response()->json($response);
+    }
+
+
+    /**
+     * Like or unlike a Status/Post.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     * * 
+     * @SWG\post(
+     *     path="/api/posts/like",
+     *     description="Like or unlike a Status/Post.",
+     *     operationId="api.posts.like",
+     *     produces={"application/json"},
+     *     tags={"posts"},
+     *     @SWG\Parameter(
+     *          name="id",
+     *          in="body",
+     *          schema={"$ref": "#/definitions/Status"},
+     *          required=true,
+     *          type="integer",
+     *          description="Status/Post id in batabase",
+     * 	   ),
+     *     @SWG\Response(
+     *         response=201,
+     *         description="Success - Status/Post liked/unliked."
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Status/Post/User not found.",
+     *     ),
+     *     @SWG\Response(
+     *         response=400,
+     *         description="Bad Request - some param are not present",
+     *     )
+     * )
+     */
+    public function like(Request $request)
+    {
+        $userJWT = JWTAuth::parseToken()->authenticate();
+        $user = User::find($userJWT->id);
+        if (!$user) return response()->json(['error' => 'User not found'], 404);
+
+        $response = array();
+        $response['code'] = 400;
+
+        $post = Status::find($request->input('id'));
+        if ($post){
+            if($user->hasLikedStatus($post)) // Unlike
+            {
+                $deleted = $post->likes
+                            ->where('user_id', $user->id)
+                            ->first()
+                            ->delete();
+                if($deleted){
+                    $response['code'] = 200;
+                    $response['type'] = 'unlike';
+                }
+                
+            } else {                        // Like
+                $like = $post->likes()->create([
+                    'user_id' => $user->id,
+                ]);
+                if($like){
+                    $response['code'] = 200;
+                    $response['type'] = 'like';
+                }
+            }
+            if ($response['code'] == 200){
+                $response['like_count'] = $post->getLikeCount();
+            }
+        } else {
+            return response()->json(['error' => 'Status/Post not found'], 404);
+        }
+        return response()->json($response);
+    }
+
+    /**
+     * Get a list of Likes from a Status/Post.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     * * 
+     * @SWG\post(
+     *     path="/api/posts/likes",
+     *     description="Get a list of Likes from a Status/Post.",
+     *     operationId="api.posts.like",
+     *     produces={"application/json"},
+     *     tags={"posts"},
+     *     @SWG\Parameter(
+     *          name="id",
+     *          in="body",
+     *          schema={"$ref": "#/definitions/Status"},
+     *          required=true,
+     *          type="integer",
+     *          description="Status/Post id in batabase",
+     * 	   ),
+     *     @SWG\Response(
+     *         response=201,
+     *         description="Success - Status/Post liked/unliked."
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Status/Post/User not found.",
+     *     ),
+     *     @SWG\Response(
+     *         response=400,
+     *         description="Bad Request - some param are not present",
+     *     )
+     * )
+     */
+    public function likes(Request $request)
+    {
+        $userJWT = JWTAuth::parseToken()->authenticate();
+        $user = User::find($userJWT->id);
+        if (!$user) return response()->json(['error' => 'User not found'], 404);
+
+        $response = array();
+        $response['code'] = 400;
+
+        $post = Status::find($request->input('id'));
+        
+        if ($post){
+            $post->load('likes.user');
+            $post->likesCount = $post->getLikeCount();
+            $response['code'] = 200;
+            return response()->json(compact('post'));
+        }
+
+        return response()->json($response);
+    }
+
+
+    /**
+     * Add a comment to a Status/Post.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     * * 
+     * @SWG\post(
+     *     path="/api/posts/comment",
+     *     description="Add a comment to a Status/Post.",
+     *     operationId="api.posts.comment",
+     *     produces={"application/json"},
+     *     tags={"posts"},
+     *     @SWG\Parameter(
+     *          name="id",
+     *          in="body",
+     *          schema={"$ref": "#/definitions/Status"},
+     *          required=true,
+     *          type="integer",
+     *          description="Status/Post id in batabase",
+     * 	   ),
+     *     @SWG\Parameter(
+     *          name="comment",
+     *          in="body",
+     *          schema={"$ref": "#/definitions/Status"},
+     *          required=true,
+     *          type="string",
+     *          description="The body of comment content",
+     * 	   ),
+     *     @SWG\Response(
+     *         response=201,
+     *         description="Success - Status/Post commented."
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Status/Post/User not found.",
+     *     ),
+     *     @SWG\Response(
+     *         response=400,
+     *         description="Bad Request - some param are not present",
+     *     )
+     * )
+     */
+    public function comment(Request $request)
+    {
+        $userJWT = JWTAuth::parseToken()->authenticate();
+        $user = User::find($userJWT->id);
+        if (!$user) return response()->json(['error' => 'User not found'], 404);
+
+        $response = array();
+        $response['code'] = 400;
+
+        $post = Status::find($request->input('id'));
+        $text = $request->input('comment');
+
+        if ($post && !empty($text)){
+            $comment = new Status();
+            $comment->parent_id = $post->id;
+            $comment->user_id = $user->id;
+            $comment->body = $text;
+            if ($comment->save()){
+                $response['code'] = 200;
+                $response['post'] = $post;
+                $response['comment'] = $comment;
+                return response()->json($response);
+            }
+        }
+
+        return response()->json($response, $response['code']);
+    }
+
+    /**
+     * Delete a comment specified.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     * 
+     *  @SWG\Delete(
+     *     path="/api/posts/comments/delete/{id}",
+     *     description="Delete a comment specified.",
+     *     operationId="api.posts.comments.delete",
+     *     produces={"application/json"},
+     *     tags={"posts"},
+     *     @SWG\Parameter(
+     *          name="id",
+     *          in="path",
+     *          required=true,
+     *          type="integer",
+     *          description="Status/Post id in database",
+     * 	   ),
+     *     @SWG\Response(
+     *         response=201,
+     *         description="Success - Comment deleted."
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Status/Post/User not found.",
+     *     ),
+     *     @SWG\Response(
+     *         response=400,
+     *         description="Bad Request - some param are not present",
+     *     )
+     * )
+     */
+    public function commentDelete($id)
+    {
+        $userJWT = JWTAuth::parseToken()->authenticate();
+        $user = User::find($userJWT->id);
+        if (!$user) return response()->json(['error' => 'User not found'], 404);
+
+        $response = array();
+        $response['code'] = 400;
+
+        $post_comment = Status::find($id);
+
+        if ($post_comment){
+            $post = $post_comment->parent();
+            if ($post_comment->user_id == $user->id || $post->user_id == $user->id ) {
+                if ($post_comment->delete()) {
+                    $response['code'] = 200;
+                    $response['deleted_comment'] = $post_comment;
+                }
+            }
+        }
+
+        return response()->json($response, $response['code']);
     }
 }

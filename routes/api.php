@@ -45,6 +45,12 @@ Route::group(['middleware'=>'cors'], function(){
         /* Posts & Statuses */
         Route::get('posts', 'Api\StatusController@list')->name('api.posts.index');
         Route::post('posts/new', 'Api\StatusController@new')->name('api.post.new');
+        Route::delete('posts/delete/{id}', 'Api\StatusController@destroy')->name('api.post.delete');
+        Route::post('posts/like', 'Api\StatusController@like')->name('api.post.like');
+        Route::post('posts/likes', 'Api\StatusController@likes')->name('api.post.likes');
+        Route::post('posts/comment', 'Api\StatusController@comment')->name('api.post.comment');
+        Route::delete('posts/comments/delete/{id}', 'Api\StatusController@commentDelete')->name('api.post.comment.delete');
+        Route::get('posts/show/{id}', 'Api\StatusController@single')->name('api.post.single');
 
         /* Friends */
         Route::get('friends', 'Api\FriendController@index')->name('api.friends.index');
