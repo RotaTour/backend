@@ -43,21 +43,21 @@ class UserController extends Controller
     /**
      * Display the specified user.
      *
-     * @param  string  $email
+     * @param  string  $username
      * @return \Illuminate\Http\Response
      * 
      * @SWG\Get(
-     *     path="/api/users/{email}",
+     *     path="/api/users/{username}",
      *     description="Returns the user details.",
      *     operationId="api.users.show",
      *     produces={"application/json"},
      *     tags={"users"},
      *     @SWG\Parameter(
-     *          name="email",
+     *          name="username",
      *          in="path",
      *          required=true,
      *          type="string",
-     *          description="Email used by user",
+     *          description="Username used by user",
      * 	   ),
      *     @SWG\Response(
      *         response=200,
@@ -69,9 +69,9 @@ class UserController extends Controller
      *     )
      * )
      */
-    public function show($email)
+    public function show($username)
     {
-        $user = User::where('email', $email)->first();
+        $user = User::getUser($username);
         // https://laracasts.com/discuss/channels/laravel/laravel-51-404-response-to-json
         /*
          * @todo implementar o ModelNotFound Exception Handler
@@ -110,21 +110,21 @@ class UserController extends Controller
     /**
      * Remove the specified user from storage.
      *
-     * @param  int  $id
+     * @param  int  $username
      * @return \Illuminate\Http\Response
      * 
      * @SWG\Delete(
-     *     path="/api/users/{email}",
+     *     path="/api/users/{username}",
      *     description="Delete yourself from database",
      *     operationId="api.users.delete",
      *     produces={"application/json"},
      *     tags={"users"},
      *     @SWG\Parameter(
-     *          name="email",
+     *          name="username",
      *          in="path",
      *          required=true,
      *          type="string",
-     *          description="Email used by user",
+     *          description="Username used by user",
      * 	   ),
      *     @SWG\Response(
      *         response=200,
@@ -140,38 +140,42 @@ class UserController extends Controller
      *     )
      * )
      */
-    public function destroy($email)
+    public function destroy($username)
     {
         $userJWT = JWTAuth::parseToken()->authenticate();
         $user = User::find($userJWT->id);
         if (!$user){
             return response()->json(['error' => 'User not found'], 404);
         }
-        if ($user->email != $email){
+        if ($user->username != $username){
             return response()->json(['error' => "User could not be deleted."], 403);
         }
-        $user->delete();
-        return response()->json(['info' => 'User deleted.'], 200);
+        if ($user->delete()){
+            return response()->json(['info' => 'User deleted.'], 200);
+        } else {
+            return response()->json(['error' => "User could not be deleted."], 500);
+        }
+        
     }
 
     /**
      * Display the statuses of a specified user.
      *
-     * @param  string  $email
+     * @param  string  $username
      * @return \Illuminate\Http\Response
      * 
      * @SWG\Get(
-     *     path="/api/users/{email}/status",
+     *     path="/api/users/{username}/status",
      *     description="Returns the statuses of a specified user.",
      *     operationId="api.users.getstatus",
      *     produces={"application/json"},
      *     tags={"users"},
      *     @SWG\Parameter(
-     *          name="email",
+     *          name="username",
      *          in="path",
      *          required=true,
      *          type="string",
-     *          description="Email used by user",
+     *          description="Username used by user",
      * 	   ),
      *     @SWG\Response(
      *         response=200,
@@ -183,9 +187,9 @@ class UserController extends Controller
      *     )
      * )
      */
-    public function getStatus($email)
+    public function getStatus($username)
     {
-        $user = User::where('email', $email)->first();
+        $user = User::getUser($username);
         if (!$user){
             return response()->json(['error' => 'User not found'], 404);
         } else {

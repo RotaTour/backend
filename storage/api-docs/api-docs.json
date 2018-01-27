@@ -523,7 +523,7 @@
                 }
             }
         },
-        "/api/friends/add/{email}": {
+        "/api/friends/add/{username}": {
             "get": {
                 "tags": [
                     "friends"
@@ -536,9 +536,9 @@
                 ],
                 "parameters": [
                     {
-                        "name": "email",
+                        "name": "username",
                         "in": "path",
-                        "description": "Email used by user",
+                        "description": "username used by user",
                         "required": true,
                         "type": "string"
                     }
@@ -565,7 +565,7 @@
                 }
             }
         },
-        "/api/friends/accept/{email}": {
+        "/api/friends/accept/{username}": {
             "get": {
                 "tags": [
                     "friends"
@@ -578,9 +578,9 @@
                 ],
                 "parameters": [
                     {
-                        "name": "email",
+                        "name": "username",
                         "in": "path",
-                        "description": "Email used by user",
+                        "description": "Username used by user",
                         "required": true,
                         "type": "string"
                     }
@@ -601,7 +601,7 @@
                 }
             }
         },
-        "/api/friends/leavefriendship/{email}": {
+        "/api/friends/leavefriendship/{username}": {
             "post": {
                 "tags": [
                     "friends"
@@ -614,9 +614,9 @@
                 ],
                 "parameters": [
                     {
-                        "name": "email",
+                        "name": "username",
                         "in": "path",
-                        "description": "Email used by user",
+                        "description": "Username used by user",
                         "required": true,
                         "type": "string"
                     }
@@ -1393,7 +1393,7 @@
                 }
             }
         },
-        "/api/users/{email}": {
+        "/api/users/{username}": {
             "get": {
                 "tags": [
                     "users"
@@ -1406,9 +1406,9 @@
                 ],
                 "parameters": [
                     {
-                        "name": "email",
+                        "name": "username",
                         "in": "path",
-                        "description": "Email used by user",
+                        "description": "Username used by user",
                         "required": true,
                         "type": "string"
                     }
@@ -1434,9 +1434,9 @@
                 ],
                 "parameters": [
                     {
-                        "name": "email",
+                        "name": "username",
                         "in": "path",
-                        "description": "Email used by user",
+                        "description": "Username used by user",
                         "required": true,
                         "type": "string"
                     }
@@ -1454,7 +1454,7 @@
                 }
             }
         },
-        "/api/users/{email}/status": {
+        "/api/users/{username}/status": {
             "get": {
                 "tags": [
                     "users"
@@ -1467,9 +1467,9 @@
                 ],
                 "parameters": [
                     {
-                        "name": "email",
+                        "name": "username",
                         "in": "path",
-                        "description": "Email used by user",
+                        "description": "Username used by user",
                         "required": true,
                         "type": "string"
                     }

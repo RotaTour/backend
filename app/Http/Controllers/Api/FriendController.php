@@ -88,17 +88,17 @@ class FriendController extends Controller
      * @return \Illuminate\Http\Response
      * 
      * @SWG\Get(
-     *     path="/api/friends/add/{email}",
+     *     path="/api/friends/add/{username}",
      *     description="Send a friendship request.",
      *     operationId="api.friends.add",
      *     produces={"application/json"},
      *     tags={"friends"},
      *     @SWG\Parameter(
-     *          name="email",
+     *          name="username",
      *          in="path",
      *          required=true,
      *          type="string",
-     *          description="Email used by user",
+     *          description="username used by user",
      * 	   ),
      *     @SWG\Response(
      *         response=200,
@@ -126,9 +126,9 @@ class FriendController extends Controller
      *     )
      * )
      */
-    public function getAdd($email)
+    public function getAdd($username)
     {
-        $user = User::where('email', $email)->first();
+        $user = User::getUser($username);
         if (!$user) {
             return response()->json(['error' => 'That user could not be found'], 400);
         }
@@ -158,17 +158,17 @@ class FriendController extends Controller
      * @return \Illuminate\Http\Response
      * 
      * @SWG\Get(
-     *     path="/api/friends/accept/{email}",
+     *     path="/api/friends/accept/{username}",
      *     description="Accept a friendship request.",
      *     operationId="api.friends.accept",
      *     produces={"application/json"},
      *     tags={"friends"},
      *     @SWG\Parameter(
-     *          name="email",
+     *          name="username",
      *          in="path",
      *          required=true,
      *          type="string",
-     *          description="Email used by user",
+     *          description="Username used by user",
      * 	   ),
      *     @SWG\Response(
      *         response=200,
@@ -188,9 +188,9 @@ class FriendController extends Controller
      *     )
      * )
      */
-    public function getAccept($email)
+    public function getAccept($username)
     {
-        $user = User::where('email', $email)->first();
+        $user = User::getUser($username);
         if (!$user) {
             return response()->json(['error' => 'That user could not be found'], 400);
         }
@@ -213,17 +213,17 @@ class FriendController extends Controller
      * @return \Illuminate\Http\Response
      * 
      * @SWG\Post(
-     *     path="/api/friends/leavefriendship/{email}",
+     *     path="/api/friends/leavefriendship/{username}",
      *     description="Leave a friendship.",
      *     operationId="api.friends.leave",
      *     produces={"application/json"},
      *     tags={"friends"},
      *     @SWG\Parameter(
-     *          name="email",
+     *          name="username",
      *          in="path",
      *          required=true,
      *          type="string",
-     *          description="Email used by user",
+     *          description="Username used by user",
      * 	   ),
      *     @SWG\Response(
      *         response=200,
@@ -239,9 +239,9 @@ class FriendController extends Controller
      *     )
      * )
      */
-    public function leaveFriendship($email)
+    public function leaveFriendship($username)
     {
-        $user = User::where('email', $email)->first();
+        $user = User::getUser($username);
         if (!$user) {
             return response()->json(['error' => 'That user could not be found'], 400);
         }
