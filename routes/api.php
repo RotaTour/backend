@@ -36,6 +36,8 @@ Route::group(['middleware'=>'cors'], function(){
         Route::get('/search', 'Api\SearchController@results')->name('api.search.results');
 
         /* Settings */
+        Route::get('settings', 'SettingsController@index')->name('api.settings.index');
+        Route::post('settings', 'SettingsController@update')->name('api.settings.update');
 
         /* Users */
         Route::get('users/{username}', 'Api\UserController@show')->name('api.users.show');

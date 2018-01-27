@@ -41,7 +41,7 @@ class SettingsController extends Controller
                 Auth::user()->password = Hash::make($request->input("password"));
                 $save = Auth::user()->save();
             }
-        }elseif ($request->input("type") == "username"){
+        } elseif ($request->input("type") == "username"){
             $validator = Validator::make($request->all(), [
                 'username' => 'required|max:191|unique:users,username,' . Auth::user()->id
             ]);

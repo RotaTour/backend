@@ -976,6 +976,121 @@
                 }
             }
         },
+        "/api/settings": {
+            "get": {
+                "tags": [
+                    "settings"
+                ],
+                "summary": "Display details of current user.",
+                "description": "Display details of current user.",
+                "operationId": "api.settings.index",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - User found and return details."
+                    },
+                    "404": {
+                        "description": "User not found."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "settings"
+                ],
+                "summary": "Save Settings of a user.",
+                "description": "Save Settings of a user.",
+                "operationId": "api.settings.update",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "body",
+                        "description": "Type of operation to proceed. Values are: 'password', 'username', 'avatar' & 'rest'",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        },
+                        "type": "string"
+                    },
+                    {
+                        "name": "current_password",
+                        "in": "body",
+                        "description": "Current password of user",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        },
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "body",
+                        "description": "The new password",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        },
+                        "type": "string"
+                    },
+                    {
+                        "name": "username",
+                        "in": "body",
+                        "description": "The new username for user",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        },
+                        "type": "string"
+                    },
+                    {
+                        "name": "avatar",
+                        "in": "body",
+                        "description": "The new Avatar URL for user",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        },
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "body",
+                        "description": "The new full name for user",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        },
+                        "type": "string"
+                    },
+                    {
+                        "name": "email",
+                        "in": "body",
+                        "description": "The new email for user",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        },
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success - User settings saved."
+                    },
+                    "404": {
+                        "description": "User not found."
+                    },
+                    "400": {
+                        "description": "Bad Request - some param are not present"
+                    }
+                }
+            }
+        },
         "/api/posts": {
             "get": {
                 "tags": [

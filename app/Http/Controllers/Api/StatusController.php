@@ -141,7 +141,7 @@ class StatusController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      * * 
-     * @SWG\post(
+     * @SWG\Post(
      *     path="/api/posts/new",
      *     description="Return a list of Statuses based on params.",
      *     operationId="api.posts.new",
@@ -311,7 +311,7 @@ class StatusController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      * * 
-     * @SWG\post(
+     * @SWG\Post(
      *     path="/api/posts/like",
      *     description="Like or unlike a Status/Post.",
      *     operationId="api.posts.like",
@@ -385,7 +385,7 @@ class StatusController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      * * 
-     * @SWG\post(
+     * @SWG\Post(
      *     path="/api/posts/likes",
      *     description="Get a list of Likes from a Status/Post.",
      *     operationId="api.posts.like",
@@ -441,7 +441,7 @@ class StatusController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      * * 
-     * @SWG\post(
+     * @SWG\Post(
      *     path="/api/posts/comment",
      *     description="Add a comment to a Status/Post.",
      *     operationId="api.posts.comment",
