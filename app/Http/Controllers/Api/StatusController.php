@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 use JWTAuth;
 use App\Models\Status;
 use App\Models\User;
@@ -28,7 +29,7 @@ class StatusController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      * 
-     * @SWG\Post(
+     * @SWG\Get(
      *     path="/api/posts",
      *     description="Return a list of Statuses based on params.",
      *     operationId="api.posts.index",
@@ -133,25 +134,78 @@ class StatusController extends Controller
         );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
+    
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     * * 
+     * @SWG\Post(
+     *     path="/api/posts/new",
+     *     description="Return a list of Statuses based on params.",
+     *     operationId="api.posts.new",
+     *     produces={"application/json"},
+     *     tags={"Posts"},
+     *     @SWG\Parameter(
+     *          name="body",
+     *          in="body",
+     *          schema={"$ref": "#/definitions/NewStatus"},
+     *          required=true,
+     *          type="string",
+     *          description="Status/Post body content",
+     * 	   ),
+     *     @SWG\Response(
+     *         response=201,
+     *         description="Success - Status/Post Post saved."
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="User not found.",
+     *     ),
+     *     @SWG\Response(
+     *         response=400,
+     *         description="Bad Request - some param are not present",
+     *     )
+     * )
      */
-    public function store(Request $request)
+    public function new(Request $request)
     {
-        //
+        $input = $request->all();
+
+        $userJWT = JWTAuth::parseToken()->authenticate();
+        $user = User::find($userJWT->id);
+        if (!$user){
+            return response()->json(['error' => 'User not found'], 404);
+        } else {
+            $this->user = $user;
+        }
+
+        $response = array();
+        $response['code'] = 400;
+
+        $validator_data['body'] = 'required'; // $input['body']
+
+        $validator = Validator::make($input, $validator_data);
+        if ($validator->fails()) {
+            $response['code'] = 400;
+            $response['message'] = implode(' ', $validator->errors()->all());
+
+        }else{
+            $post = new Status();
+            $post->body = !empty($input['body'])?$input['body']:'';
+            $post->user_id = $this->user->id;
+            if($post->save()){
+                $response['code'] = 201;
+                $response['message'] = "Post saved";
+                $response['obj'] = $post;
+            } else {
+                $response['code'] = 400;
+                $response['message'] = "Something went wrong!";
+            }
+        }
+
+        return response()->json($response, $response['code']);
     }
 
     /**

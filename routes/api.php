@@ -41,8 +41,10 @@ Route::group(['middleware'=>'cors'], function(){
         Route::get('users/{email}/status', 'Api\UserController@getStatus')->name('api.users.getstatus');
         Route::get('myself', 'Api\UserController@myself')->name('api.myself');
         Route::delete('users/{email}', 'Api\UserController@destroy')->name('api.users.delete');
-        
+
+        /* Posts & Statuses */
         Route::get('posts', 'Api\StatusController@list')->name('api.posts.index');
+        Route::post('posts/new', 'Api\StatusController@new')->name('api.post.new');
 
         /* Friends */
         Route::get('friends', 'Api\FriendController@index')->name('api.friends.index');

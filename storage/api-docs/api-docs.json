@@ -950,7 +950,7 @@
             }
         },
         "/api/posts": {
-            "post": {
+            "get": {
                 "tags": [
                     "Posts"
                 ],
@@ -1003,6 +1003,42 @@
                     },
                     "404": {
                         "description": "User not found."
+                    }
+                }
+            }
+        },
+        "/api/posts/new": {
+            "post": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Store a newly created resource in storage.",
+                "description": "Return a list of Statuses based on params.",
+                "operationId": "api.posts.new",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Status/Post body content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NewStatus"
+                        },
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success - Status/Post Post saved."
+                    },
+                    "404": {
+                        "description": "User not found."
+                    },
+                    "400": {
+                        "description": "Bad Request - some param are not present"
                     }
                 }
             }
@@ -1397,6 +1433,43 @@
             "allOf": [
                 {
                     "$ref": "#/definitions/NewRoute"
+                },
+                {
+                    "$ref": "#/definitions/Timestamps"
+                },
+                {
+                    "required": [
+                        "id"
+                    ]
+                }
+            ]
+        },
+        "NewStatus": {
+            "required": [
+                "body",
+                "user_id"
+            ],
+            "properties": {
+                "body": {
+                    "description": "Status/post body content",
+                    "type": "string",
+                    "example": "Lorem ipsum ..."
+                },
+                "user_id": {
+                    "description": "Owner (user) id in database",
+                    "type": "integer"
+                },
+                "parent_id": {
+                    "description": "Status/Post Parent of current post, empty == is not a answer post",
+                    "type": "integer",
+                    "example": "Dollor set it..."
+                }
+            }
+        },
+        "Status": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/NewStatus"
                 },
                 {
                     "$ref": "#/definitions/Timestamps"

@@ -4,6 +4,42 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Status
+ *
+ * @package App\Models
+ *
+ * @SWG\Definition(
+ *     definition="NewStatus",
+ *     required={"body", "user_id"},
+ *     @SWG\Property(
+ *          property="body",
+ *          type="string",
+ *          description="Status/post body content",
+ *          example="Lorem ipsum ..."
+ *    ),
+ *     @SWG\Property(
+ *          property="user_id",
+ *          type="integer",
+ *          description="Owner (user) id in database"
+ *    ),
+ *     @SWG\Property(
+ *          property="parent_id",
+ *          type="integer",
+ *          description="Status/Post Parent of current post, empty == is not a answer post",
+ *          example="Dollor set it..."
+ *    )
+ * )
+ * @SWG\Definition(
+ *     definition="Status",
+ *     allOf = {
+ *          { "$ref": "#/definitions/NewStatus" },
+ *          { "$ref": "#/definitions/Timestamps" },
+ *          { "required": {"id"} }
+ *     }
+ * )
+ *
+ */
 class Status extends Model
 {
     protected $table = 'statuses';

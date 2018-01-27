@@ -46,7 +46,7 @@
         </span>
         <hr class="fix-hr">
         <div class="post-content post-content-s">
-            {{ $post->body }}
+            {!! $post->body !!}
         </div>
         <hr class="fix-hr">
         <div class="comments-title">
