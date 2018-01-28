@@ -114,6 +114,39 @@ a, a:hover, a:active, a:visited, a:focus {
     height: 100px;
 }
 
+.like-box {
+    margin-top: 20px;
+    color: #454545;
+    font-size: 12px;
+}
+
+.like-box a {
+    color: #454545;
+    display: block;
+    /*text-align: center;*/
+}
+
+.like-box a.all_likes:hover {
+    text-decoration: underline;
+}
+
+.like-box a:first-child:hover {
+    color: #d63737;
+}
+
+.like-box a:last-child {
+    margin-top: 5px;
+    font-style: italic;
+    font-size: 11px;
+}
+
+.like-box i {
+    color: #d63737;
+    font-size: 19px;
+    float: left;
+    margin-right: 10px;
+}
+
 /******************/
 .navbar-around .navbar-nav li a.parent{
     min-height: 61px;

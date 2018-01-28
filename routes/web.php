@@ -55,7 +55,8 @@ Route::post('/routes/store', 'RouteController@store')->name('route.store');
 Route::post('/routes/update/{id}', 'RouteController@update')->name('route.update');
 Route::get('/routes/addToRoute', 'RouteController@addToRoute')->name('route.addToRoute');
 Route::get('/routes/checkItem/{id}', 'RouteController@checkItem')->name('route.checkItem');
-
+Route::get('/routes/like/{id}', 'RouteController@like')->name('route.like');
+Route::get('/routes/likes/{id}', 'RouteController@like')->name('route.likes');
 Route::get('/routes/show/{id}', 'RouteController@show')->name('route.show');
 Route::get('/routes/delete/{id}', 'RouteController@destroy')->name('route.delete');
 

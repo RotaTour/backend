@@ -55,6 +55,9 @@ class Route extends Model
         'created_at', 'updated_at',
     ];
 
+    private $like_count = null;
+    private $comment_count = null;
+    
     /*
      * Relationships
      */
@@ -84,6 +87,22 @@ class Route extends Model
     public function likes()
     {
         return $this->morphMany('App\Models\Like', 'likeable');
+    }
+
+    public function checkLike($user_id)
+    {
+        if ($this->likes()->where('user_id', $user_id)->get()->first()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function getLikeCount(){
+        if ($this->like_count == null){
+            $this->like_count = $this->likes()->count();
+        }
+        return $this->like_count;
     }
 
 }

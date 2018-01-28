@@ -485,6 +485,41 @@ function deleteComment($commentId)
 
 }
 
+function likeRoute(id)
+{
+    $.ajax({
+        url: BASE_URL+'/routes/like/'+id,
+        type: "GET",
+        timeout: 5000,
+        contentType: false,
+        cache: false,
+        processData: false,
+        headers: {'X-CSRF-TOKEN': CSRF},
+        success: function(response){
+            if (response.code == 200){
+                if (response.type == 'like'){
+                    $('#like-box-'+id+' .like-text span').html('Unlike!');
+                    $('#like-box-'+id+' .like-text i').removeClass('fa-heart-o').addClass('fa-heart');
+                }else{
+                    $('#like-box-'+id+' .like-text span').html('Like!');
+                    $('#like-box-'+id+' .like-text i').removeClass('fa-heart').addClass('fa-heart-o');
+                }
+                if (response.like_count > 1){
+                    $('#like-box-'+id+' .all_likes span').html(response.like_count+' likes');
+                }else{
+                    $('#like-box-'+id+' .all_likes span').html(response.like_count+' like');
+                }
+            }else{
+                $('#errorMessageModal').modal('show');
+                $('#errorMessageModal #errors').html('Something went wrong! return code');
+            }
+        },
+        error: function(){
+            $('#errorMessageModal').modal('show');
+            $('#errorMessageModal #errors').html('Something went wrong! Server');
+        }
+    });
+}
 
 function checkItem(itemId)
 {

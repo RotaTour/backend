@@ -187,6 +187,41 @@ class RouteController extends Controller
         return response()->json($retorno);   
     }
 
+    public function like($id)
+    {
+        $user = Auth::user();
+
+        $response = array();
+        $response['code'] = 400;
+
+        $route = Route::find($id);
+        if ($route){
+            if($route->checkLike($user->id)) // Unlike
+            {
+                $deleted = $route->likes
+                            ->where('user_id', $user->id)
+                            ->first()
+                            ->delete();
+                if($deleted){
+                    $response['code'] = 200;
+                    $response['type'] = 'unlike';
+                }
+            } else {                        // Like
+                $like = $route->likes()->create([
+                    'user_id' => $user->id,
+                ]);
+                if($like){
+                    $response['code'] = 200;
+                    $response['type'] = 'like';
+                }
+            }
+            if ($response['code'] == 200){
+                $response['like_count'] = $route->getLikeCount();
+            }
+        }
+        return response()->json($response);
+    }
+
     /**
      * Check/uncheck a item
      *
@@ -197,6 +232,7 @@ class RouteController extends Controller
     {
         $user = Auth::user();
         
+        $response = array();
         $response['code'] = 400;
         $response['check'] = 0;
         $save = false;
