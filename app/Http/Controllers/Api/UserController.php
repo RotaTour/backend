@@ -159,7 +159,7 @@ class UserController extends Controller
     }
 
     /**
-     * Display the statuses of a specified user.
+     * Returns the statuses of a specified user.
      *
      * @param  string  $username
      * @return \Illuminate\Http\Response
@@ -200,6 +200,87 @@ class UserController extends Controller
             ->paginate(10);
         }
         
+    }
+
+    /**
+     * Returns a friends list of a specified user.
+     *
+     * @param  string  $username
+     * @return \Illuminate\Http\Response
+     * 
+     * @SWG\Get(
+     *     path="/api/users/{username}/friends",
+     *     description="Returns a friends list of a specified user.",
+     *     operationId="api.users.getfriends",
+     *     produces={"application/json"},
+     *     tags={"users"},
+     *     @SWG\Parameter(
+     *          name="username",
+     *          in="path",
+     *          required=true,
+     *          type="string",
+     *          description="Username used by user",
+     * 	   ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Success - User found."
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="User not found.",
+     *     )
+     * )
+     */
+    public function getFriends($username)
+    {
+        $user = User::getUser($username);
+        if (!$user){
+            return response()->json(['error' => 'User not found'], 404);
+        } else {
+            $friends = $user->friends();
+            return response()->json(compact('friends', 'user'));
+        }
+
+    }
+
+    /**
+     * Returns a routes list of a specified user.
+     *
+     * @param  string  $username
+     * @return \Illuminate\Http\Response
+     * 
+     * @SWG\Get(
+     *     path="/api/users/{username}/routes",
+     *     description="Returns a routes list of a specified user.",
+     *     operationId="api.users.getroutes",
+     *     produces={"application/json"},
+     *     tags={"users"},
+     *     @SWG\Parameter(
+     *          name="username",
+     *          in="path",
+     *          required=true,
+     *          type="string",
+     *          description="Username used by user",
+     * 	   ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Success - User found."
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="User not found.",
+     *     )
+     * )
+     */
+    public function getRoutes($username)
+    {
+        $user = User::getUser($username);
+        if (!$user){
+            return response()->json(['error' => 'User not found'], 404);
+        } else {
+            $routes = $user->routes()->get();
+            return response()->json(compact('routes', 'user'));
+        }
     }
 
     /**

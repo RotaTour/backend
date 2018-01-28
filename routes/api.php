@@ -42,6 +42,8 @@ Route::group(['middleware'=>'cors'], function(){
         /* Users */
         Route::get('users/{username}', 'Api\UserController@show')->name('api.users.show');
         Route::get('users/{username}/status', 'Api\UserController@getStatus')->name('api.users.getstatus');
+        Route::get('users/{username}/friends', 'Api\UserController@getFriends')->name('api.users.getfriends');
+        Route::get('users/{username}/routes', 'Api\UserController@getRoutes')->name('api.users.getroutes');
         Route::get('myself', 'Api\UserController@myself')->name('api.myself');
         Route::delete('users/{username}', 'Api\UserController@destroy')->name('api.users.delete');
 
