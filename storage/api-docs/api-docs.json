@@ -1574,9 +1574,69 @@
                 "tags": [
                     "users"
                 ],
-                "summary": "Display the statuses of a specified user.",
+                "summary": "Returns the statuses of a specified user.",
                 "description": "Returns the statuses of a specified user.",
                 "operationId": "api.users.getstatus",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "description": "Username used by user",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - User found."
+                    },
+                    "404": {
+                        "description": "User not found."
+                    }
+                }
+            }
+        },
+        "/api/users/{username}/friends": {
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Returns a friends list of a specified user.",
+                "description": "Returns a friends list of a specified user.",
+                "operationId": "api.users.getfriends",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "description": "Username used by user",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - User found."
+                    },
+                    "404": {
+                        "description": "User not found."
+                    }
+                }
+            }
+        },
+        "/api/users/{username}/routes": {
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Returns a routes list of a specified user.",
+                "description": "Returns a routes list of a specified user.",
+                "operationId": "api.users.getroutes",
                 "produces": [
                     "application/json"
                 ],
