@@ -8,6 +8,7 @@ $(function() {
     $('[data-toggle="tooltip"]').tooltip();
 
     $(".select2-multiple").select2();
+    $(".select2").select2();
     $(".js-example-placeholder-single").select2({
         placeholder: "Select a state",
         allowClear: true

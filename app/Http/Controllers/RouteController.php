@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Route;
 use App\Models\Place;
 use App\Models\Item;
+use GooglePlaces;
 use Auth;
 
 class RouteController extends Controller
@@ -163,7 +164,10 @@ class RouteController extends Controller
         
         $place = Place::where('google_place_id',$input['google_place_id'])->first();
         if (!$place){
-            $place = Place::create($input);
+            $place = new Place();
+            $place->google_place_id = $input['google_place_id'];
+            $place->google_json = GooglePlaces::placeDetails($place_id, ['language'=>'pt-BR']);
+            $place->save();
         }
 
         $route = Route::where('id', $input['routeId'])->first();

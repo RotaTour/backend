@@ -97,6 +97,18 @@ a, a:hover, a:active, a:visited, a:focus {
     font-size: 16px;
 }
 
+.selectCat {
+    width: 200px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.selectRad {
+    width: 80px;
+    margin: 5px;
+    padding: 5px;
+}
+
 .navbar-around .navbar-nav li a.parent{
     min-height: 61px;
     color: #fff;

@@ -55,9 +55,8 @@
     <script src="{{ asset('plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('plugins/bootstrap3-dialog/dist/js/bootstrap-dialog.min.js') }}"></script>
     <script src="{{ asset('plugins/select2/dist/js/select2.full.min.js') }}"></script>
-    <!-- <script src="//maps.google.com/maps/api/js?key=<?=config('google.places.key')?>"></script> -->
+    <!-- <script src="//maps.google.com/maps/api/js?key=AIzaSyAa42oli-edAepQHbkhPmgjx6Cdtw-DMe0"></script> -->
     <!-- <script src="{{ asset('plugins/gmaps/gmaps.min.js') }}"></script> -->
-    
     
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5a39c44a0b3c086c"></script>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->

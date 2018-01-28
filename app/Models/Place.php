@@ -42,7 +42,7 @@ class Place extends Model
     * @var array
     */
    protected $fillable = [
-       'name', 'google_place_id', 'address', 'lat', 'lng', 'scope', 'icon'
+       'google_place_id', 'google_json'
    ];
 
    protected $dates = [
