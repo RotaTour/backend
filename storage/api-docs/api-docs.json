@@ -943,6 +943,66 @@
                 }
             }
         },
+        "/api/routes/like/{id}": {
+            "post": {
+                "tags": [
+                    "routes"
+                ],
+                "summary": "Like/Unlike a route.",
+                "description": "Like/Unlike a route.",
+                "operationId": "api.routes.like",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "body",
+                        "description": "Route id in database",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NewRoute"
+                        },
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - Like/Unlike."
+                    },
+                    "400": {
+                        "description": "Some problem with param provided"
+                    },
+                    "403": {
+                        "description": "Forbbiden - You are not the owner"
+                    },
+                    "404": {
+                        "description": "User not found."
+                    }
+                }
+            }
+        },
+        "/api/routes/likeds": {
+            "get": {
+                "tags": [
+                    "routes"
+                ],
+                "summary": "Return a list of likeds routes.",
+                "description": "Return a list of likeds routes.",
+                "operationId": "api.routes.like",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - list of likeds routes."
+                    },
+                    "404": {
+                        "description": "User not found."
+                    }
+                }
+            }
+        },
         "/api/search": {
             "get": {
                 "tags": [

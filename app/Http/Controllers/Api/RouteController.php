@@ -11,6 +11,7 @@ use App\Models\Route;
 use App\Models\Place;
 use App\Models\Item;
 use App\Models\Tag;
+use App\Models\Like;
 use GooglePlaces;
 
 class RouteController extends Controller
@@ -415,4 +416,123 @@ class RouteController extends Controller
         }
         
     }
+
+    /**
+     * Like/Unlike a route.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     * 
+     * @SWG\Post(
+     *     path="/api/routes/like/{id}",
+     *     description="Like/Unlike a route.",
+     *     operationId="api.routes.like",
+     *     produces={"application/json"},
+     *     tags={"routes"},
+     *     @SWG\Parameter(
+     *          name="id",
+     *          in="body",
+     *          schema={"$ref": "#/definitions/NewRoute"},
+     *          required=true,
+     *          type="string",
+     *          description="Route id in database",
+     * 	   ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Success - Like/Unlike."
+     *     ),
+     *     @SWG\Response(
+     *         response=400,
+     *         description="Some problem with param provided",
+     *     ),
+     *     @SWG\Response(
+     *         response=403,
+     *         description="Forbbiden - You are not the owner",
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="User not found.",
+     *     )
+     * )
+     */
+    public function like(Request $request)
+    {
+        $id = $request->input('id');
+        $userJWT = JWTAuth::parseToken()->authenticate();
+        $user = User::find($userJWT->id);
+        if (!$user){
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        $response = array();
+        $response['code'] = 400;
+
+        $route = Route::find($id);
+        if ($route){
+            if($route->checkLike($user->id)) // Unlike
+            {
+                $deleted = $route->likes
+                            ->where('user_id', $user->id)
+                            ->first()
+                            ->delete();
+                if($deleted){
+                    $response['code'] = 200;
+                    $response['type'] = 'unlike';
+                }
+            } else {                        // Like
+                $like = $route->likes()->create([
+                    'user_id' => $user->id,
+                ]);
+                if($like){
+                    $response['code'] = 200;
+                    $response['type'] = 'like';
+                }
+            }
+            if ($response['code'] == 200){
+                $response['like_count'] = $route->getLikeCount();
+            }
+        }
+        return response()->json($response, $response['code']);
+    }
+
+    /**
+     * Return a list of likeds routes.
+     *
+     * @return \Illuminate\Http\Response
+     * 
+     * @SWG\Get(
+     *     path="/api/routes/likeds",
+     *     description="Return a list of likeds routes.",
+     *     operationId="api.routes.like",
+     *     produces={"application/json"},
+     *     tags={"routes"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Success - list of likeds routes."
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="User not found.",
+     *     )
+     * )
+     */
+    public function likeds()
+    {
+        $userJWT = JWTAuth::parseToken()->authenticate();
+        $user = User::find($userJWT->id);
+        if (!$user){
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        $collection = Like::whereLikeableType('App\Models\Route')->whereUserId($user->id)->get();
+
+        $routes = collect([]);
+        foreach($collection as $r)
+        {
+            $routes->push( Route::find($r->likeable_id)  );
+        }
+        
+        return response()->json(compact('routes'));
+    }
+
 }

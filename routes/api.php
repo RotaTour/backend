@@ -75,6 +75,8 @@ Route::group(['middleware'=>'cors'], function(){
         Route::get('/routes/show/{id}', 'Api\RouteController@show')->name('api.route.show');
         Route::delete('/routes/delete/{id}', 'Api\RouteController@destroy')->name('api.route.delete');
         Route::post('/routes/addToRoute', 'Api\RouteController@addToRoute')->name('api.route.addToRoute');
+        Route::post('routes/like', 'Api\RouteController@like')->name('api.route.like');
+        Route::get('routes/likeds', 'Api\RouteController@likeds')->name('api.route.likeds');
 
         /* Itens */
         Route::delete('/itens/delete/{id}', 'ItemController@destroy')->name('api.item.delete');
