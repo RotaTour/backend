@@ -52,6 +52,7 @@ Route::get('/places/getdetails', 'PlaceController@getdetails')->name('place.getd
 Route::get('/routes', 'RouteController@index')->name('route.index');
 Route::get('/routes/create', 'RouteController@create')->name('route.create');
 Route::post('/routes/store', 'RouteController@store')->name('route.store');
+Route::post('/routes/update/{id}', 'RouteController@update')->name('route.update');
 Route::get('/routes/addToRoute', 'RouteController@addToRoute')->name('route.addToRoute');
 Route::get('/routes/show/{id}', 'RouteController@show')->name('route.show');
 Route::get('/routes/delete/{id}', 'RouteController@destroy')->name('route.delete');

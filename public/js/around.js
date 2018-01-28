@@ -15,11 +15,10 @@ $(function() {
 
     
     friendsRequests();
-    /*
+    
     setInterval(function(){
         friendsRequests();
     }, 40000);
-    */
     
 });
 
@@ -413,4 +412,15 @@ function removeRelation(type, id){
             }
         }]
     });
+}
+
+/*
+ * Inform only id, and if it exists will be open the modal
+ * dialog
+ */
+function openModalForm(modalId)
+{
+    if( $("#"+modalId).length != 0 ){
+        $("#"+modalId).modal('show');
+    }
 }

@@ -64,8 +64,6 @@ Route::group(['middleware'=>'cors'], function(){
         Route::delete('posts/comments/delete/{id}', 'Api\StatusController@commentDelete')->name('api.post.comment.delete');
         Route::get('posts/show/{id}', 'Api\StatusController@single')->name('api.post.single');
 
-        
-
         /* Places */
         //Route::get('places', 'Api\PlaceController@index')->name('api.places.index');
         Route::get('/places/show', 'Api\PlaceController@show')->name('api.place.show');

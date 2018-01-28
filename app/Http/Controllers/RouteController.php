@@ -88,7 +88,7 @@ class RouteController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -100,7 +100,22 @@ class RouteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+        ]);
+
+        $route = Route::find($id);
+        $input = $request->input();
+        if (!$route){
+            return redirect()
+            ->back()
+            ->with('error', 'A rota selecionada não foi encontrada');
+        }
+        $route->name = $input['name'];
+        $route->body = $input['body'];
+        $route->update();
+
+        return redirect()->route('route.index');
     }
 
     /**

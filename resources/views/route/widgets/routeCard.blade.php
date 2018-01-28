@@ -16,6 +16,10 @@
             </a>
             &nbsp;&nbsp;
             @if($route->user_id == Auth::user()->id)
+            <a href="javascript:;" onclick="openModalForm('editRouteModal-'+'{{ $route->id }}')">
+                <i class="fa fa-pencil-square-o"></i>
+            </a>
+            &nbsp;&nbsp;
             <a href="{{ route('route.delete', ['id'=>$route->id]) }}">
                 <i class="fa fa-trash"></i>
             </a>
@@ -24,4 +28,52 @@
         @endunless
     </div>
 </div>
+
+<div class="modal fade " id="editRouteModal-{{ $route->id }}" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title">Editar rota - {{ $route->name }}</h5>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <form action="{{ route('route.update', ['id'=>$route->id]) }}" method="post" role="form" class="form-vertical">
+                            {{ csrf_field() }}
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group {{ $errors->has('name') ? 'has-error': '' }}">
+                                        <label for="name" class="control-label">Nome</label>
+                                        <input type="text" name="name" class="form-control" id="name" 
+                                        placeholder="Informe o nome que será exibido como título da rota"
+                                        value="{{$route->name}}">
+                                        @if ($errors->has('name'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('name') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group {{ $errors->has('location') ? 'has-error': '' }}">
+                                <label for="body" class="control-label">Descrição</label>
+                                <input type="text" name="body" class="form-control" id="body" 
+                                    placeholder="Descreva em poucas palavras a rota a ser criada"
+                                    value="{{$route->body}}">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-default">Salvar</button>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- /modal-body -->
+        </div>
+    </div>
+
 <hr>
