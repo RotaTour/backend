@@ -1,6 +1,6 @@
 <div class="media" id="comment-{{$comment->id}}">
     <a href="{{ route('profile.show', ['username'=>$comment->user->username])}}" class="pull-left">
-        <img src="{{ $comment->user->getAvatarUrl() }}" alt="$comment->user->getNameOrUsername()" class="media-object">
+        <img src="{{ $comment->user->getAvatarUrl() }}" alt="$comment->user->getNameOrUsername()" class="media-object img-100">
     </a>
     <div class="media-body">
         <h4 class="media-heading">

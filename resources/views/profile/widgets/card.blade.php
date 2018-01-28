@@ -3,7 +3,7 @@
     <div class="detail">
         <div class="image">
             <a data-fancybox="group" href="{{ Auth::user()->getAvatarUrl() }}">
-                <img class="img-circle male" src="{{ Auth::user()->getAvatarUrl() }}" alt="" />
+                <img class="img-circle male img-100" src="{{ Auth::user()->getAvatarUrl() }}" alt="" />
             </a>
         </div>
         <div class="info">

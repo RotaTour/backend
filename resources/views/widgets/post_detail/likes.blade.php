@@ -6,7 +6,7 @@
         @foreach($post->likes()->limit(2000000)->with('user')->get() as $like)
         <li class="list-group-item">
             <a href="{{ url('/'.$like->user->username) }}">
-                <img src="{{ $like->user->getAvatarUrl() }}" alt="{{ $like->user->name }}" class="img-circle" />
+                <img src="{{ $like->user->getAvatarUrl() }}" alt="{{ $like->user->name }}" class="img-circle img-100" />
                 <span class="name">{{ $like->user->name }}</span><br />
                 <small>{{ '@'.$like->user->username }}</small>
             </a>

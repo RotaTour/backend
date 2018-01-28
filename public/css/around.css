@@ -97,6 +97,7 @@ a, a:hover, a:active, a:visited, a:focus {
     font-size: 16px;
 }
 
+/* classes para o Rotatour */
 .selectCat {
     width: 200px;
     margin: 5px;
@@ -108,7 +109,12 @@ a, a:hover, a:active, a:visited, a:focus {
     margin: 5px;
     padding: 5px;
 }
+.img-100 {
+    width: 100px;
+    height: 100px;
+}
 
+/******************/
 .navbar-around .navbar-nav li a.parent{
     min-height: 61px;
     color: #fff;

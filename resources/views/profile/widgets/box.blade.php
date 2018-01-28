@@ -6,7 +6,7 @@
                 <div class="cover"></div>
                 <div class="user">
                     <a href="{{ route('profile.show', ['username'=>$user_p->getUsernameOrEmail()]) }}">
-                        <img class="img-circle img-responsive" src="{{ $user_p->getAvatarUrl() }}"/>
+                        <img class="img-circle img-responsive img-100" src="{{ $user_p->getAvatarUrl() }}"/>
                     </a>
                 </div>
                 <div class="content" style="padding-bottom: 20px">
