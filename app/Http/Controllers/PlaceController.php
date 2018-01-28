@@ -29,8 +29,9 @@ class PlaceController extends Controller
     public function index()
     {
         $categories = Category::all();
-        $routes = Auth::user()->routes()->get();
-        return view('place.index', compact('categories', 'routes'));
+        $user = Auth::user();
+        $routes = $user->routes()->get();
+        return view('place.index', compact('categories', 'routes', 'user'));
     }
 
     /**

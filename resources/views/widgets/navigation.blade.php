@@ -58,7 +58,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{ route('place.index') }}">
                             <i class="fa fa-map"></i> Locais
                             </a>
                         </li>

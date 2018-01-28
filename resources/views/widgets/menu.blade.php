@@ -13,7 +13,7 @@
             </a>
         </li>
         <li class="list-group-item">
-            <a href="#" class="menu-nearby">
+            <a href="{{ route('place.index') }}" class="menu-nearby">
                 <i class="fa fa-map"></i>
                 Locais
             </a>
