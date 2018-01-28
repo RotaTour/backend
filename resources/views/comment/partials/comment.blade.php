@@ -1,10 +1,10 @@
-<div class="media">
-    <a href="{{ route('profile.show', ['email'=>$comment->user->email])}}" class="pull-left">
+<div class="media" id="comment-{{$comment->id}}">
+    <a href="{{ route('profile.show', ['username'=>$comment->user->username])}}" class="pull-left">
         <img src="{{ $comment->user->getAvatarUrl() }}" alt="$comment->user->getNameOrUsername()" class="media-object">
     </a>
     <div class="media-body">
         <h4 class="media-heading">
-            <a href="{{ route('profile.show', ['email'=>$comment->user->email])}}">
+            <a href="{{ route('profile.show', ['username'=>$comment->user->username])}}">
                 {{ $comment->user->getNameOrUsername() }}
             </a>
         </h4>
@@ -13,7 +13,9 @@
             <li>{{ $comment->created_at->diffForHumans() }}</li>
             @if($comment->user->id == Auth::user()->id)
             <li>
-                <a href="{{ route('comment.delete', ['comment_id'=>$comment->id]) }}"> Excluir </a>
+                <a href="javascript:;" onclick="deleteComment('{{$comment->id}}')">
+                    <i class="fa fa-trash"></i>
+                </a>
             </li>
             @endif
         </ul>

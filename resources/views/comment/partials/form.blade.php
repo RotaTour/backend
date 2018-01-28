@@ -7,7 +7,7 @@
     }
 ?>
 <div>
-    <form action="{{route('comment.add')}}" method="post" role="form">
+    <form action="{{route('comment.add')}}" method="post" id="commentForm" onsubmit="addComment()" role="form" >
     {{ csrf_field() }}
     <input type="hidden" name="localId" value="{{$localId}}">
     <input type="hidden" name="localClass" value="{{$localClass}}">

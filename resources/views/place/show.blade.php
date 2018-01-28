@@ -35,7 +35,7 @@
                             <?php $localClass="place"; $localId=$place->id; ?>
                             @include('comment.partials.form')
                             </div>
-                            <div class="col-xs-12 col-sm-6 col-lg-8">
+                            <div class="col-xs-12 col-sm-6 col-lg-8" id="comment-list">
                             @foreach ($place->comments as $comment)
                                 @include('comment.partials.comment')
                             @endforeach

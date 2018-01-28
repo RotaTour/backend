@@ -7,6 +7,7 @@ use App\Models\Comment;
 use App\Models\Place;
 use App\Models\Route;
 use Auth;
+use View;
 
 class CommentController extends Controller
 {
@@ -22,30 +23,34 @@ class CommentController extends Controller
 
     public function add(Request $request)
     {
-        $input = $request->input();
-        $resposta = false;
+        $data = $request->all();
+        $input = json_decode($data['data'], true);
+        unset($data['data']);
+        foreach ($input as $key => $value) $data[$key] = $value;
 
-        switch ($input['localClass']) {
+        $response['code'] = 400;
+        $response['comment'] = false;
+
+        switch ($data['localClass']) {
             case 'place':
-                $resposta = $this->addPlaceComment($input);
+                $response['comment'] = $this->addPlaceComment($data);
                 break;
             case 'route':
-                $resposta = $this->addRouteComment($input);
+                $response['comment'] = $this->addRouteComment($data);
                 break;
             case 'anything':
-                $resposta = false;
+                $response['comment'] = false;
                 break;
         }
 
-        if($resposta){
-            return redirect()
-            ->back()
-            ->with('info', 'Comentário salvo');
-        } else {
-            return redirect()
-            ->back()
-            ->with('info', 'Não foi possível salvar o comentário');
+        if($response['comment']){
+            $response['code'] = 200;
+            $comment = $response['comment'];
+            $html = View::make('comment.partials.comment', compact('comment'));
+            $response['html'] = $html->render();
         }
+        
+        return response()->json($response, $response['code']);
     }
 
     protected function addPlaceComment($input)
@@ -57,7 +62,7 @@ class CommentController extends Controller
         $c = new Comment();
         $c->body = $input['body'];
         $c->user_id = Auth::user()->id;
-        if ($place->comments()->save($c)) return true;
+        if ($place->comments()->save($c)) return $c;
         else return false;
     }
 
@@ -70,30 +75,33 @@ class CommentController extends Controller
         $c = new Comment();
         $c->body = $input['body'];
         $c->user_id = Auth::user()->id;
-        if ($route->comments()->save($c)) return true;
+        if ($route->comments()->save($c)) return $c;
         else return false;
     }
     
     public function delete($comment_id)
     {
+        
+        $response['code'] = 400;
+        $response['msg'] = "";
         $comment = Comment::find($comment_id);
+
         if(!$comment){
-            return redirect()
-            ->back()
-            ->with('info', 'Não foi possível encontrar o comentário');
+            $response['code'] = 404;
+            $response['msg'] = "Comentário not found";
+            return response()->json($response, $response['code']);
         }
 
-        if( $comment->user_id !==  Auth::user()->id){
-            return redirect()
-            ->back()
-            ->with('info', 'Não foi possível excluir o comentário, você não é o dono');
+        if( $comment->user_id !=  Auth::user()->id){
+            $response['code'] = 403;
+            $response['msg'] = "Você não é o dono do comentário";
+            return response()->json($response, $response['code']);
         }
 
         if($comment->delete()){
-            return redirect()
-            ->back()
-            ->with('info', 'O comentário foi excluido com sucesso.');
+            $response['code'] = 200;
+            $response['msg'] = "Comentário deletado com sucesso";
+            return response()->json($response, $response['code']);
         }
-        
     }
 }

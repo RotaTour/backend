@@ -60,8 +60,8 @@ Route::get('/routes/show/{id}', 'RouteController@show')->name('route.show');
 Route::get('/routes/delete/{id}', 'RouteController@destroy')->name('route.delete');
 
 Route::get('/itens/delete/{id}', 'ItemController@destroy')->name('item.delete');
-Route::post('/comments', 'CommentController@add')->name('comment.add');
-Route::get('/comments/delete/{commnet_id}', 'CommentController@delete')->name('comment.delete');
+Route::post('comments', 'CommentController@add')->name('comment.add');
+Route::get('comments/delete/{commnet_id}', 'CommentController@delete')->name('comment.delete');
 
 /* Socialite */
 Route::get('social/redirect/{provider}', ['uses' => 'Auth\LoginController@redirectToProvider', 'as' => 'social.login']);

@@ -426,6 +426,66 @@ function openModalForm(modalId)
     }
 }
 
+function addComment()
+{
+    event.preventDefault();
+    
+    var form_name = '#commentForm';
+    var data = new FormData();
+    data.append('data', JSON.stringify(makeSerializable(form_name).serializeJSON()));
+
+    $.ajax({
+        url: BASE_URL + '/comments',
+        type: "POST",
+        timeout: 5000,
+        data: data,
+        contentType: false,
+        cache: false,
+        processData: false,
+        headers: {'X-CSRF-TOKEN': CSRF},
+        success: function(response){
+            if (response.code == 200){
+                $('#commentForm')[0].reset();
+                $("#comment-list").append(response.html);
+            }else{
+                $('#errorMessageModal').modal('show');
+                $('#errorMessageModal #errors').html('Something went wrong! return code');
+            }
+        },
+        error: function(){
+            $('#errorMessageModal').modal('show');
+            $('#errorMessageModal #errors').html('Something went wrong! Server');
+        }
+    });
+}
+
+function deleteComment($commentId)
+{
+    $.ajax({
+        url: BASE_URL + '/comments/delete/'+$commentId,
+        type: "GET",
+        timeout: 5000,
+        contentType: false,
+        cache: false,
+        processData: false,
+        headers: {'X-CSRF-TOKEN': CSRF},
+        success: function (response) {
+            if (response.code == 200) {
+                $("#comment-"+$commentId).hide();
+            } else {
+                $('#errorMessageModal').modal('show');
+                $('#errorMessageModal #errors').html('Something went wrong! return code');
+            }
+        },
+        error: function () {
+            $('#errorMessageModal').modal('show');
+            $('#errorMessageModal #errors').html('Something went wrong! Server');
+        }
+    });
+
+}
+
+
 function checkItem(itemId)
 {
     $.ajax({
