@@ -184,7 +184,51 @@ class RouteController extends Controller
         $item->save();
 
         $retorno = ['status'=>200, 'body'=>'Adicionado à Rota', 'name'=>$route->name];
-        return response()->json($retorno);
+        return response()->json($retorno);   
+    }
+
+    /**
+     * Check/uncheck a item
+     *
+     * @param  string $id
+     * @return \Illuminate\Http\Response
+     */
+    public function checkItem($id)
+    {
+        $user = Auth::user();
         
+        $response['code'] = 400;
+        $response['check'] = 0;
+        $save = false;
+
+        $item = Item::find($id);
+        if(!$item){
+            $response['code'] = 404;
+            $response['error'] = "Item not found";
+        } else {
+            if($item->route->user->id == $user->id){
+                $item->done = !($item->done);
+                $save = $item->save();
+            }
+        }
+
+        if($save){
+            $response['code'] = 200;
+            $response['check'] = $item->done;
+        }
+
+        return response()->json($response, $response['code']);
+    }
+
+    /**
+     * Check/uncheck a item
+     *
+     
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function action(Request $request)
+    {
+
     }
 }

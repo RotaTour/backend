@@ -425,3 +425,32 @@ function openModalForm(modalId)
         $("#"+modalId).modal('show');
     }
 }
+
+function checkItem(itemId)
+{
+    $.ajax({
+        url: BASE_URL + '/routes/checkItem/'+itemId,
+        type: "GET",
+        timeout: 5000,
+        contentType: false,
+        cache: false,
+        processData: false,
+        headers: {'X-CSRF-TOKEN': CSRF},
+        success: function (response) {
+            if (response.code == 200) {
+                if (response.check == 1){
+                    $("#item-check-"+itemId).html("<i class=\"fa fa-check-square-o\"></i>");
+                }else{
+                    $("#item-check-"+itemId).html("<i class=\"fa fa-square-o\"></i>");
+                }
+            } else {
+                $('#errorMessageModal').modal('show');
+                $('#errorMessageModal #errors').html('Something went wrong!');
+            }
+        },
+        error: function () {
+            $('#errorMessageModal').modal('show');
+            $('#errorMessageModal #errors').html('Something went wrong!');
+        }
+    });
+}

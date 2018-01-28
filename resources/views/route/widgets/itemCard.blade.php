@@ -9,7 +9,8 @@
         <p>{{ $item->place->json()->result->formatted_address }}</p>
         <p>Adicionado em: {{ $item->created_at->diffForHumans() }}</p>
         <p class="pull-right">
-            <a href="#" id="item-check-{{$item->id}}">
+            @if($item->route->user_id == Auth::user()->id)
+            <a href="javascript:;" onclick="checkItem({{$item->id}})" id="item-check-{{$item->id}}">
                 @if($item->done)
                 <i class="fa fa-check-square-o"></i>
                 @else
@@ -17,6 +18,7 @@
                 @endif
             </a>
             &nbsp;&nbsp;
+            @endif
             <a href="{{route('place.show', ['place_id'=>$item->place->google_place_id])}}">
                 <i class="fa fa-eye"></i>
             </a>

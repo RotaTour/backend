@@ -20,7 +20,7 @@
                         <!-- <li><a data-toggle="tab" href="#texto">Texto</a> -->
                         <li><a data-toggle="tab" href="#localizacao">Localização</a>
                         <!-- <li><a data-toggle="tab" href="#palavra-chave">Palavra Chave</a> -->
-                        <!-- <li><a data-toggle="tab" href="#demonstracao">demonstração</a> -->
+                        <li><a data-toggle="tab" href="#demonstracao">demonstração</a>
                     </ul>
 
                     <div class="tab-content">

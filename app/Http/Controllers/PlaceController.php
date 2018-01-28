@@ -64,7 +64,8 @@ class PlaceController extends Controller
     public function show(Request $request)
     {
         $place_id = $request->input('place_id');
-        $routes = Auth::user()->routes()->get();
+        $user = Auth::user();
+        $routes = $user->routes()->get();
 
         $place = Place::where('google_place_id', $place_id)->first();
         if(!$place){
@@ -76,7 +77,7 @@ class PlaceController extends Controller
         $place->google_json =  json_decode($place->google_json);
         
         //dd($place->google_json->result);
-        return view('place.show', compact('place', 'place_id', 'routes'));
+        return view('place.show', compact('place', 'place_id', 'routes', 'user'));
     }
 
     /**

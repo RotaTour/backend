@@ -1,45 +1,78 @@
-@extends('layouts.default')
+
+@extends('layouts.app')
 
 @section('content')
-<h3>Detalhes do Local</h3>
-
-@if( isset($place_id))
-    @if( isset($place))
-        @include('place.details')
-    @endif
-
-    <div id="compartilhar">
-        <h3>Compartilhar</h3>
-        <div class="addthis_inline_share_toolbox"></div>
-    </div>
-
-    <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#comentarios">Comentários</a></li>
-        <li><a data-toggle="tab" href="#fotos">Fotos</a></li>
-    </ul>
-    <div class="tab-content">
-        <div id="comentarios" class="tab-pane fade in active">
-            <h3>Comentários</h3>
-            <div class="col-xs-12 col-sm-6 col-lg-8">
-            <?php $localClass="place"; $localId=$place->id; ?>
-            @include('comment.partials.form')
+    <div class="h-20"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                @include('widgets.sidebar')
             </div>
-            <div class="col-xs-12 col-sm-6 col-lg-8">
-            @foreach ($place->comments as $comment)
-                @include('comment.partials.comment')
-            @endforeach
+            <div class="col-md-9">
+
+                <div class="content-page-title">
+                    <i class="fa fa-map"></i> Detalhes do Local
+                </div>
+
+                @if( isset($place_id))
+                    @if( isset($place))
+                        @include('place.details')
+                    @endif
+
+                    <div id="compartilhar">
+                        <h3>Compartilhar</h3>
+                        <div class="addthis_inline_share_toolbox"></div>
+                    </div>
+
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#comentarios">Comentários</a></li>
+                        <li><a data-toggle="tab" href="#fotos">Fotos</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="comentarios" class="tab-pane fade in active">
+                            <h3>Comentários</h3>
+                            <div class="col-xs-12 col-sm-6 col-lg-8">
+                            <?php $localClass="place"; $localId=$place->id; ?>
+                            @include('comment.partials.form')
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-lg-8">
+                            @foreach ($place->comments as $comment)
+                                @include('comment.partials.comment')
+                            @endforeach
+                            </div>
+                        </div>
+                        <div id="fotos" class="tab-pane fade">
+                            <h3>Fotos</h3>
+                            <div id="preloader"></div>
+                            <div id="resultado">Aqui é o ID resultado</div>
+                        </div>
+                    </div>
+                @else
+                <p>place_id não definido</p>
+                @endif
+                
             </div>
-        </div>
-        <div id="fotos" class="tab-pane fade">
-            <h3>Fotos</h3>
-            <div id="preloader"></div>
-            <div id="resultado">Aqui é o ID resultado</div>
+
+            <div class="modal fade " id="placeDetails" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h5 class="modal-title">Detalhes do local</h5>
+                        </div>
+
+                        <div class="modal-body">
+                        
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
-@else
-<p>place_id não definido</p>
-@endif
-
 @endsection
 
 @section('scripts')
@@ -84,25 +117,6 @@ function makeHtml(obj)
     localPlace.scope = obj.scope;
 
     var html = "";
-    /*
-    html = html.concat("Name: "+obj.name+"<br>\n");
-    html = html.concat("formatted_address: "+obj.formatted_address+"<br>\n");
-    html = html.concat('Icon: <img src="'+obj.icon+'" alt='+obj.place_id+' /><br>\n');
-    html = html.concat('Vicinity: '+obj.vicinity+'<br>\n');
-    html = html.concat('Scope: '+obj.scope+'<br>\n');
-    html = html.concat('Website: <a href="'+obj.website+'" target=_blank>'+obj.website+'</a><br>\n');
-    html = html.concat('<h3>Comentários</h3>\n');
-    for(var com in obj.reviews)
-    {
-        var author_name = obj.reviews[com].author_name;
-        var profile_photo_url = obj.reviews[com].profile_photo_url;
-        var text = obj.reviews[com].text;
-
-        html = html.concat('<img src="'+profile_photo_url+'" alt='+author_name+' /><br>\n');
-        html = html.concat('<strong>'+author_name+'</strong><br>\n');
-        html = html.concat('<p>'+text+'</p><br>\n');
-    }
-    */
     var contagem = 0;
     for(var photo in obj.photos)
     {
