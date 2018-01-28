@@ -116,15 +116,10 @@ class StatusController extends Controller
         }
 
         $posts = $posts->limit($limit)->orderBy('id', 'DESC')->get();
-
-        /*
-        if ($div_location == 'initialize'){
-            $div_location = ['top', 'bottom'];
-        }else{
-            $div_location = [$div_location];
-            if (count($posts) == 0) return "";
+        foreach($posts as $p)
+        {
+            $p->liked = $p->checkLike($user->id);
         }
-        */
 
         $comment_count = 2;
         return response()->json(
