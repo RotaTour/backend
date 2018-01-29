@@ -45,6 +45,7 @@ class RouteController extends Controller
             return response()->json(['error' => 'User not found'], 404);
         } else {
             $routes = $user->routes()->get();
+            if($routes) $routes->load('tags');
             return response()->json(compact('routes'));
         }
     }

@@ -257,6 +257,7 @@ function getPlaceDetail(google_place_id)
         dataType: 'html',
         success: function (result) {
             $("#placeDetails .modal-body").html(result);
+            $(".select2").select2();
             $("#placeDetails").modal('show');
             localPlace.google_place_id = google_place_id;     
         }

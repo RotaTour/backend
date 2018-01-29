@@ -59,6 +59,7 @@ class SearchController extends Controller
             ->get();
 
         $routes = Route::where('name', 'ILIKE', "%{$query}%")->with('user')->get();
+        if($routes) $routes->load('tags');
 
         return response()->json(compact('users', 'routes','user'));
     }

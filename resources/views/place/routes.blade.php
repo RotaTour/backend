@@ -1,6 +1,6 @@
 <div class="pull-right form-group">
     <div id="addToRouteForm">
-        <select name="addToRouteSelect" id="addToRouteSelect">
+        <select name="addToRouteSelect" id="addToRouteSelect" class="select2">
             @foreach($routes as $route)
             <option value="{{$route->id}}">{{$route->name}}</option>
             @endforeach
