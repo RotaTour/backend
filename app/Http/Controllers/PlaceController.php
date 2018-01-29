@@ -122,7 +122,8 @@ class PlaceController extends Controller
     public function categories()
     {
         $categories = Category::all();
-        return view('place.categories', compact('categories'));
+        $user = Auth::user();
+        return view('place.categories', compact('categories', 'user'));
     }
 
     /**
