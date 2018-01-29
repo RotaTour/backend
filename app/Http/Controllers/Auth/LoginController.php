@@ -69,7 +69,7 @@ class LoginController extends Controller
             'provider' => $provider
         ];
 
-        $username = explode("@", $user->getEmail)[0];
+        $username = explode("@", $user->getEmail())[0];
         $tryAgain = true;
         $contagem = 1;
         while($tryAgain)
