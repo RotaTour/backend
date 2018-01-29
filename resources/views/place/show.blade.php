@@ -125,8 +125,8 @@ function makeHtml(obj)
             html = html.concat('<br>');
         }
         var imgUrl = obj.photos[photo].getUrl({ 'maxWidth': 400 , 'maxHeight': 400 });
-        html = html.concat('<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">');
-        html = html.concat('<a href="'+imgUrl+'" class="grouped_elements" rel="group">');
+        html = html.concat('<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 img-400">');
+        html = html.concat('<a href="'+imgUrl+'" data-fancybox data-caption="'+obj.name+'">');
         html = html.concat('<img src="'+imgUrl+'" alt='+obj.place_id+' class="img-responsive img-rounded" />\n');
         html = html.concat('</a>\n');
         html = html.concat('</div>\n');
@@ -135,14 +135,7 @@ function makeHtml(obj)
     html = html.concat('<br>\n');
     
     $('#resultado').html(html);
-    $("a.grouped_elements").fancybox({
-		'transitionIn'		: 'none',
-		'transitionOut'		: 'none',
-		'titlePosition' 	: 'over',
-		'titleFormat'       : function(title, currentArray, currentIndex, currentOpts) {
-		    return '<span id="fancybox-title-over">Image ' +  (currentIndex + 1) + ' / ' + currentArray.length + ' ' + title + '</span>';
-		}
-	});
+    //$("a.grouped_elements").fancybox({});
     $('#preloader').html('');
 }
 

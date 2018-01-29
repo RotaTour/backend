@@ -114,6 +114,13 @@ a, a:hover, a:active, a:visited, a:focus {
     height: 100px;
 }
 
+.img-400 {
+    width: 400px;
+    height: 400px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
 .like-box {
     margin-top: 20px;
     color: #454545;
