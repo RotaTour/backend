@@ -69,7 +69,7 @@ class LoginController extends Controller
             'provider' => $provider
         ];
 
-        $username = explode("@", $user->getEmail())[0];
+        $username = explode("@", $user->getEmail() )[0];
         $tryAgain = true;
         $contagem = 1;
         while($tryAgain)
@@ -83,7 +83,7 @@ class LoginController extends Controller
         }    
         $data['username'] = $username;
     
-        $userLocal = User::query()->firstOrNew([ 'email' => $user->getEmail() ]);
+        $userLocal = User::query()->firstOrNew([ 'email' => $data['email'] ]);
         // Se não existir, cria o user
         if (!$userLocal->exists) {
             $userLocal = User::create($data);
