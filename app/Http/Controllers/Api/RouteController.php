@@ -45,7 +45,13 @@ class RouteController extends Controller
             return response()->json(['error' => 'User not found'], 404);
         } else {
             $routes = $user->routes()->get();
-            if($routes) $routes->load('tags');
+            if($routes){
+                $routes->load('tags');
+                foreach($routes as $r)
+                {
+                    $r->liked = $r->checkLike($user->id);
+                }
+            } 
             return response()->json(compact('routes'));
         }
     }
@@ -160,10 +166,14 @@ class RouteController extends Controller
      */
     public function show($id)
     {
+        $userJWT = JWTAuth::parseToken()->authenticate();
+        $user = User::find($userJWT->id);
+
         $route = Route::where('id', $id)->with(['itens.place', 'tags'])->first();
         if(!$route) {
             return response()->json(['error' => 'Route not found.'], 404);
         } else {
+            $route->liked = $r->checkLike($user->id);
             return response()->json(compact('route'));
         }
 
