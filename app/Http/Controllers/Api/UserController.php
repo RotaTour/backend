@@ -274,12 +274,21 @@ class UserController extends Controller
      */
     public function getRoutes($username)
     {
+        $userJWT = JWTAuth::parseToken()->authenticate();
+        $userLocal = User::find($userJWT->id);
+
         $user = User::getUser($username);
         if (!$user){
             return response()->json(['error' => 'User not found'], 404);
         } else {
             $routes = $user->routes()->get();
-            if($routes) $routes->load('tags');
+            if($routes){
+                $routes->load('tags');
+                foreach($routes as $r)
+                {
+                    $r->liked = $r->checkLike($userLocal->id);
+                }
+            } 
             return response()->json(compact('routes', 'user'));
         }
     }
