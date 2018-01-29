@@ -173,7 +173,7 @@ class RouteController extends Controller
         if(!$route) {
             return response()->json(['error' => 'Route not found.'], 404);
         } else {
-            $route->liked = $r->checkLike($user->id);
+            $route->liked = $route->checkLike($user->id);
             return response()->json(compact('route'));
         }
 
