@@ -322,6 +322,20 @@ class AuthenticateController extends Controller
             $user->avatar = $input['avatar'];
             $user->provider_id_mobile = $input['provider_id'];
             $user->provider = $input['provider'];
+
+            $username = explode("@", $user->email)[0];
+            $tryAgain = true;
+            $contagem = 1;
+            while($tryAgain)
+            {
+                $user = User::where('username', $username)->first();
+                if(!$user){
+                    $tryAgain = false;
+                } else {
+                    $username = $username . "-" . ($contagem++);
+                }
+            }
+            $user->username = $username;
             $user->save();
         }
         

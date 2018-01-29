@@ -241,4 +241,10 @@ class User extends Authenticatable implements JWTSubject
             ->where('user_id', $this->id)
             ->count();
     }
+
+    public static function existUsername($usename)
+    {
+        if( User::where('username', $username)->first() ) return true;
+        else false;
+    }
 }
