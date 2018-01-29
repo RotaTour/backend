@@ -76,7 +76,7 @@ Route::group(['middleware' => ['role:superuser'], 'prefix'=>'admin'], function (
     Route::get('/checkusernames', 'AdminController@checkUsernames')->name('admin.checkusernames');
     Route::get('/checkavatar', 'AdminController@checkAvatar')->name('admin.checkavatar');
     Route::get('/postsfactory', 'AdminController@postsFactory')->name('admin.postsfactory');
-    Route::get('/requestFriends', 'AdminController@requestFriends')->name('admin.requestfriends');
+    Route::get('/requestfriends', 'AdminController@requestFriends')->name('admin.requestfriends');
 });
 
 /* User Profile */

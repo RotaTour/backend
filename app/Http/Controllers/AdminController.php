@@ -136,6 +136,54 @@ class AdminController extends Controller
 
     public function requestFriends()
     {
-        return "";
+        $users = User::all();
+        $pedidos = array();
+        $fulano = User::where('email', 'fulano@gmail.com')->first();
+        $beltrano = User::where('email', 'beltrano@gmail.com')->first();
+        $cicrano = User::where('email', 'sicrano@gmail.com')->first();
+        if(!$cicrano){
+            $cicrano = User::where('email', 'cicrano@gmail.com')->first();
+        }
+
+        // fulano pede a amizade de todos
+        $current = $fulano;
+        foreach($users as $user)
+        {
+            if($current->hasFriendRequestPending($user)) continue;
+            if($current->isFriendsWith($user)) continue;
+            if($current->id == $user->id) continue;
+            else {
+                $current->addFriend($user);
+                array_push($pedidos, "de ".$current->name." para ".$user->name);
+            }
+        }
+
+        // beltrano pede a amizade de todos
+        $current = $beltrano;
+        foreach($users as $user)
+        {
+            if($current->hasFriendRequestPending($user)) continue;
+            if($current->isFriendsWith($user)) continue;
+            if($current->id == $user->id) continue;
+            else {
+                $current->addFriend($user);
+                array_push($pedidos, "de ".$current->name." para ".$user->name);
+            }
+        }
+
+        // fulano pede a amizade de todos
+        $current = $cicrano;
+        foreach($users as $user)
+        {
+            if($current->hasFriendRequestPending($user)) continue;
+            if($current->isFriendsWith($user)) continue;
+            if($current->id == $user->id) continue;
+            else {
+                $current->addFriend($user);
+                array_push($pedidos, "de ".$current->name." para ".$user->name);
+            }
+        }
+
+        return response()->json($pedidos);
     }
 }
