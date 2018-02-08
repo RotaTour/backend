@@ -8,6 +8,9 @@
         </a>
         <p>{{ $route->body }}</p>
         <p>Criada em: {{ $route->created_at->diffForHumans() }}</p>
+        @if($route->user_id != Auth::user()->id)
+        <p>Criada por: <a href="{{ route('profile.routes', ['username'=>$route->user->getUsernameOrEmail()]) }}">{{ $route->user->name }}</a></p>
+        @endif
         <p>Possui {{ $route->itens()->count() }} Itens</p>
         @unless( isset($hiddenOptions) )
         <p class="pull-right">

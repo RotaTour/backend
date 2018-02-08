@@ -40,6 +40,9 @@
                     <h5 class="text-muted">{{ $route->body }}</h5>
                 </div>
 
+                @if($route->user_id != Auth::user()->id)
+                <p>Criada por: <a href="{{ route('profile.routes', ['username'=>$route->user->getUsernameOrEmail()]) }}">{{ $route->user->name }}</a></p>
+                @endif
                 
                 <div class="row">
                 @if($route->itens()->count()<1)
