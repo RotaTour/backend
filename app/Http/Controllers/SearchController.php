@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Route;
 use Auth;
 use DB;
 
@@ -33,6 +34,9 @@ class SearchController extends Controller
             ->orWhere('username', 'ILIKE', "%{$query}%")
             ->get();
 
-        return view('search.results', compact('user','users') );
+        $routes = Route::where('name', 'ILIKE', "%{$query}%")->with('user')->get();
+        if($routes) $routes->load('tags');
+
+        return view('search.results', compact('user','users', 'routes') );
     }
 }

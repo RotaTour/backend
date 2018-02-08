@@ -464,10 +464,6 @@ a, a:hover, a:active, a:visited, a:focus {
 .footer{
     margin-top: 98px;
     border-top: 1px solid #dadada;
-    position:absolute;
-    bottom:0;
-    width: 80%;
-    height:40px;   /* Height of the footer */
 }
 
 .footer a{
