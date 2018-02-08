@@ -9,7 +9,7 @@
             <div class="col-md-6">
 
                 <div class="content-page-title">
-                    <i class="fa fa-users"></i> Minhas Rotas
+                    <i class="fa fa-map-marker"></i> Minhas Rotas
                 </div>
 
                 <div class="content-page-blue-title">
@@ -19,8 +19,6 @@
                         <button class="btn btn-success" id="addRouteButton">Criar nova rota</button>
                     </div>
                 </div>
-
-                
 
                 <div class="row">
 

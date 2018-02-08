@@ -27,13 +27,12 @@
                     </a>
                 </div>
                 
-                
             </div>
 
             <div class="col-md-6">
 
                 <div class="content-page-title">
-                    <i class="fa fa-users"></i> Minhas Rotas
+                    <i class="fa fa-map-marker"></i> Rota
                 </div>
 
                 <div class="content-page-blue-title">
